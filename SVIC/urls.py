@@ -1,27 +1,30 @@
-"""
-URL configuration for SVIC project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+# mi_proyecto/urls.py
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import RedirectView
-from usuarios import views as usuarios_views
+from django.conf import settings
+from django.conf.urls.static import static
+# Importa las vistas de login/logout directamente aquí porque el login es la raíz
+from usuarios.views import login_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', usuarios_views.custom_login, name='login'),
-    path('logout/', usuarios_views.custom_logout, name='logout'),
-    path('', RedirectView.as_view(url='/login/', permanent=True)),
+
+    # --- Login/Logout ---
+    # La URL raíz ('') apunta directamente a la vista de login
+    path('', login_view, name='login'), # Nombrar la URL es buena práctica
+    path('logout/', logout_view, name='logout'),
+
+    # --- Apps por Rol ---
+    # Incluye las URLs de tus otras apps con prefijos
+    # El namespace permite usar reverse('ceo:dashboard')
+    path('ceo/', include('ceo.urls', namespace='ceo')),
+    path('administrador/', include('administrador.urls', namespace='administrador')),
+    path('inventario/', include('inventario.urls', namespace='inventario')),
+    path('ventas/', include('ventas.urls', namespace='ventas')),
+    # Agrega otras apps aquí...
+
 ]
+
+# Servir archivos multimedia en desarrollo
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

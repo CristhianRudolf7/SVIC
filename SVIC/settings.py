@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,25 +28,27 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
-LOGIN_URL = 'usuarios:login'
-LOGOUT_REDIRECT_URL = 'usuarios:login'
-AUTH_USER_MODEL = 'usuarios.Usuario'
+LOGIN_REDIRECT_URL = 'ceo:home'  # O la página a la que quieres redirigir después del login
+LOGOUT_REDIRECT_URL = 'login'
 
 # Application definition
 
 INSTALLED_APPS = [
-    'usuarios',
-    'ceo',
-    'administrador',
-    'ventas',
-    'inventario',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'usuarios.apps.UsuariosConfig',
+    'ceo.apps.CeoConfig',
+    'administrador.apps.AdministradorConfig',
+    'inventario.apps.InventarioConfig',
+    'ventas.apps.VentasConfig',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +66,7 @@ ROOT_URLCONF = 'SVIC.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,7 +91,13 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'usuarios.Usuario' # 'nombre_app.NombreModelo'
+LOGIN_URL = '/'
 
+LOGOUT_REDIRECT_URL = '/'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 

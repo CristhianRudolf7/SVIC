@@ -1,7 +1,7 @@
 import sqlite3
 
 # Conexión a la base de datos
-conn = sqlite3.connect('database.sqlite3')
+conn = sqlite3.connect('database.db')
 cursor = conn.cursor()
 
 #### Tablas de usuarios #### 
@@ -27,13 +27,13 @@ CREATE TABLE IF NOT EXISTS negocios (
 # Crear tabla usuarios
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS usuarios (
-    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id INTEGER PRIMARY KEY AUTOINCREMENT,
     negocio_id INTEGER NOT NULL,
     nombre TEXT NOT NULL,
     dni TEXT NOT NULL UNIQUE,
     email TEXT,
     password TEXT NOT NULL,
-    rol TEXT NOT NULL,
+    rol INTEGER NOT NULL,
     PHONE TEXT NOT NULL,
     foto TEXT,
     fecha_creacion TEXT NOT NULL,
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS ventas (
     estado TEXT NOT NULL,
     tipo_venta TEXT NOT NULL,
     FOREIGN KEY (negocio_id) REFERENCES negocios (negocio_id),
-    FOREIGN KEY (usuario_id) REFERENCES usuarios (user_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios (usuario_id),
     FOREIGN KEY (cliente_id) REFERENCES clientes (cliente_id)
 )
 ''')
