@@ -28,11 +28,18 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+LOGIN_URL = 'usuarios:login'
+LOGOUT_REDIRECT_URL = 'usuarios:login'
+AUTH_USER_MODEL = 'usuarios.Usuario'
+
 # Application definition
 
 INSTALLED_APPS = [
-    'synaptIA',
     'usuarios',
+    'ceo',
+    'administrador',
+    'ventas',
+    'inventario',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,7 +63,7 @@ ROOT_URLCONF = 'SVIC.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,10 +84,9 @@ WSGI_APPLICATION = 'SVIC.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
+        'NAME': BASE_DIR / "database.db",
     }
 }
-
 
 
 # Password validation
