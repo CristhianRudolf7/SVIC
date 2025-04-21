@@ -45,17 +45,17 @@ class UsuarioManager(BaseUserManager):
 class Usuario(AbstractUser):
     ROL_CHOICES = (
         (1, 'CEO'),
-        (2, 'Administrador'), # Rol para superusuarios
+        (2, 'Administrador'),
         (3, 'Empleado'),
     )
-     
+    
+    username = None     
     usuario_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = None
     nombre = models.CharField(max_length=255)
     dni = models.CharField(max_length=8, unique=True)
     email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
-    foto = models.ImageField(upload_to='usuarios/fotos/', blank=True, null=True)
+    foto = models.ImageField(upload_to='static/images/', blank=True, null=True)
     fecha_creacion = models.DateTimeField(default=timezone.now)
     negocio_id = models.ForeignKey(Negocio, on_delete=models.CASCADE)
     rol = models.IntegerField(choices=ROL_CHOICES, default=2)

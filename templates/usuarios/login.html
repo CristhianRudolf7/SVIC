@@ -1,70 +1,79 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title|default:"Iniciar Sesión" }}</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; max-width: 500px; margin: auto; }
-        .errorlist { color: red; list-style-type: none; padding: 0; margin: 5px 0; }
-        .non-field-errors .errorlist li { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; }
-        .field-errors { color: red; font-size: 0.9em; }
-        .messages { list-style-type: none; padding: 0; margin-bottom: 15px; }
-        .messages li { padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid; }
-        .messages .success { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
-        .messages .error { background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; }
-        .messages .info { background-color: #d1ecf1; color: #0c5460; border-color: #bee5eb; }
-        .messages .warning { background-color: #fff3cd; color: #856404; border-color: #ffeeba; }
-        form p { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"], input[type="password"] { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
-        .field-errors { margin-top: 5px;} /* Estilo para errores de campo */
-        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 4px; font-size: 1em; }
-        button:hover { background-color: #0056b3; }
-    </style>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
 
-    <h2>{{ title|default:"Iniciar Sesión" }}</h2>
+{% block content %}
 
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+    <div class="page-header" style="background: url({% static 'img/banner1.jpg' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="breadcrumb-wrapper">
+                        <h2 class="product-title">Login</h2>
+                        <ol class="breadcrumb">
+                            <li><a href="#">Home /</a></li>
+                            <li class="current">Login</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    {% if form.non_field_errors %}
-      <div class="non-field-errors">
-           {{ form.non_field_errors }}
-      </div>
-    {% endif %}
 
-    <form method="post" action="{% url 'usuarios:login' %}"> {% csrf_token %}
+    <section class="login section-padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-12 col-xs-12">
+                    <div class="login-form login-area">
+                        <h3>
+                            Login Now
+                        </h3>
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger alert-dismissable">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger alert-dismissable">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <form role="form" class="login-form" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="input-icon">
+                                    <i class="lni-user"></i>
+                                    <input type="text" id="sender-email" class="form-control" name="email"
+                                           placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-icon">
+                                    <i class="lni-lock"></i>
+                                    <input type="password" class="form-control" name="password" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="checkedall">
+                                    <label class="custom-control-label" for="checkedall">Keep me logged in</label>
+                                </div>
+                                <a class="forgetpassword" href="#">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-common log-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <p>
-            {{ form.dni.label_tag }}
-            {{ form.dni }}
-            {% if form.dni.errors %}
-                <div class="field-errors">{{ form.dni.errors }}</div>
-            {% endif %}
-        </p>
-        <p>
-             {{ form.password.label_tag }}
-            {{ form.password }}
-            {% if form.password.errors %}
-                <div class="field-errors">{{ form.password.errors }}</div>
-            {% endif %}
-        </p>
-
-        <button type="submit">Entrar</button>
-    </form>
-
-    {# Opcional: Enlace para recuperar contraseña si lo implementas #}
-    {# <p><a href="#">¿Olvidaste tu contraseña?</a></p> #}
-    {# Opcional: Enlace para registrarse #}
-    {# <p>¿No tienes cuenta? <a href="{% url 'usuarios:registrar' %}">Regístrate aquí</a></p> #}
-
-</body>
-</html>
+{% endblock %}
