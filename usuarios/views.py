@@ -1,60 +1,41 @@
-# usuarios/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.urls import reverse
+from .forms import *
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, FormView, RedirectView, UpdateView
 
-def login_view(request):
-    if request.user.is_authenticated:
-        return redirect_based_on_role(request.user)
 
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            # AuthenticationForm valida usuario/contraseña
-            # Obtiene el usuario autenticado del formulario
-            user = form.get_user()
+class LoginView(FormView):
+    form_class = UserLoginForm
+    template_name = 'usuarios/login.html'
 
-            # Inicia sesión al usuario
-            login(request, user)
-            messages.success(request, f"Bienvenido, {user.nombre}")
+    extra_context = {
+        'title': 'Login'
+    }
 
-            # Redirigir basado en el rol
-            return redirect_based_on_role(user)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            if hasattr(request.user, 'rol') and request.user.rol == 1:
+                return HttpResponseRedirect(reverse('ceo:dashboard'))
+            else:
+                return HttpResponseRedirect(reverse('/'))
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        user = form.get_user()
+        auth.login(self.request, user)
+        messages.success(self.request, f"Bienvenido {user.nombre}")
+        if user.rol == 1:
+            return redirect(reverse('ceo:dashboard'))
         else:
-            # Mensaje de error si el formulario no es válido (credenciales incorrectas)
-            messages.error(request, "DNI o contraseña incorrectos.")
-    else:
-        # Si es GET, muestra el formulario vacío
-        form = AuthenticationForm()
-
-    # Renderiza la plantilla de login con el formulario
-    return render(request, 'login.html', {'form': form})
-
-def redirect_based_on_role(user):
-    # Lógica de redirección basada en el campo 'rol'
-    if user.rol == 1:
-        # Redirigir a la vista principal de CEO
-        # Asegúrate de tener una URL nombrada 'dashboard' en ceo/urls.py
-        return redirect(reverse('ceo:dashboard')) # Ejemplo: 'nombre_app:nombre_url'
-    elif user.rol == 2:
-        # Redirigir a la vista principal de Administrador
-        return redirect(reverse('administrador:dashboard'))
-    elif user.rol == 3:
-        # Redirigir a la vista principal de Inventario
-        return redirect(reverse('inventario:dashboard'))
-    elif user.rol == 4:
-        # Redirigir a la vista principal de Ventas
-        return redirect(reverse('ventas:dashboard'))
-    else:
-        # Rol desconocido o no asignado, redirigir a una página por defecto o de error
-        # O quizás al perfil del usuario si tienes uno
-        messages.warning(user.request, "Rol no definido, contacte al administrador.")
-        # Podrías redirigir a una vista de perfil o a la misma página de login
-        return redirect('/') # O a una URL específica de 'perfil'
-
-def logout_view(request):
-    logout(request)
-    messages.info(request, "Has cerrado sesión exitosamente.")
-    return redirect(reverse('login')) # Redirige a la URL nombrada 'login'
+            messages.warning(self.request, "Rol no definido o sin página de inicio asignada.")
+            return redirect('/')
+        
+    def form_invalid(self, form):
+        messages.error(self.request, "Error en el formulario. Por favor, corrige los campos indicados.")
+        return super().form_invalid(form)

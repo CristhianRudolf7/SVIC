@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard CEO</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        header { background-color: #f4f4f4; padding: 10px 20px; margin-bottom: 20px; border-bottom: 1px solid #ccc; display: flex; justify-content: space-between; align-items: center; }
+        nav a { margin-left: 15px; text-decoration: none; color: #007bff; }
+        nav a:hover { text-decoration: underline; }
+        .content { padding: 15px; border: 1px solid #eee; background-color: #fff; border-radius: 5px;}
+        h1, h2 { color: #333; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Panel de Control CEO</h1>
+        <nav>
+            <span>Bienvenido, {{ nombre_usuario }}</span>
+            <a href="{% url 'usuarios:logout' %}">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <main class="content">
+        <h2>Resumen General</h2>
+        <p>Aquí puedes ver información clave sobre el negocio.</p>
+
+        <section>
+            <h3>Indicadores Principales</h3>
+            <ul>
+                <li>Ventas del Mes: [Dato de ejemplo]</li>
+                <li>Nuevos Clientes: [Dato de ejemplo]</li>
+                <li>Rendimiento General: [Dato de ejemplo]</li>
+                </ul>
+        </section>
+
+        <section>
+            <h3>Accesos Rápidos</h3>
+            <ul>
+                <li><a href="#">Ver Reportes Detallados</a></li>
+                <li><a href="#">Gestionar Equipos</a></li>
+                <li><a href="#">Configuración del Negocio</a></li>
+                </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; {% now "Y" %} Nombre de tu Empresa</p>
+    </footer>
+
+</body>
+</html>
