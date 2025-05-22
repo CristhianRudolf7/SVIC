@@ -1,21 +1,5 @@
+{% load static %}
 <div class="leftside-menu">
-    <a href="{% url 'dashboard' %}" class="logo text-center logo-light">
-        <span class="logo-lg">
-            <img src="assets/images/logo final.jpg" alt="" height="16">
-        </span>
-        <span class="logo-sm">
-            <img src="assets/images/logo sin nombre.png" alt="" height="16">
-        </span>
-    </a>
-
-    <a href="{% url 'dashboard' %}" class="logo text-center logo-dark">
-        <span class="logo-lg">
-            <img src="assets/images/logo final.jpg" alt="" height="16">
-        </span>
-        <span class="logo-sm">
-            <img src="assets/images/logo sin nombre.png" alt="" height="16">
-        </span>
-    </a>
 
     <div class="h-100" id="leftside-menu-container" data-simplebar>
         <ul class="side-nav">
@@ -47,49 +31,42 @@
 
             <li class="side-nav-item">
                 <a href="{% url 'saleslist' %}" class="side-nav-link">
-                    <i class="fa fa-shopping-bag fa-fw me-2"></i>
+                    <i class="uil-store"></i>
                     <span> Ventas </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
                 <a href="{% url 'purchaseslist' %}" class="side-nav-link">
-                    <i class="fa fa-shopping-cart me-2"></i>
+                    <i class="uil-clipboard-alt"></i>
                     <span> Compras </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
                 <a href="{% url 'deliveries' %}" class="side-nav-link">
-                    <i class="fa-solid fa-box me-2"></i>
+                    <i class="uil-location-point"></i>
                     <span> Envíos </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
                 <a href="{% url 'invoicelist' %}" class="side-nav-link">
-                    <i class="fa-solid fa-receipt me-2"></i>
-                    <span> Facturas de ventas </span>
-                </a>
-            </li>
-
-            <li class="side-nav-item">
-                <a href="{% url 'invoicelist' %}" class="side-nav-link">
-                    <i class="fa-solid fa-receipt me-2"></i>
+                    <i class="uil-document-layout-center"></i>
                     <span> Facturas de ventas </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
                 <a href="{% url 'bill_list' %}" class="side-nav-link">
-                    <i class="fa-solid fa-file-invoice me-2"></i>
+                    <i class="uil-table"></i>
                     <span> Facturas de compras </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
                 <a href="{% url 'chat' %}" class="side-nav-link">
-                    <i class="fa-solid fa-comments me-2"></i>
+                    <i class="uil-comments-alt"></i>
                     <span> Chat </span>
                 </a>
             </li>
@@ -97,7 +74,7 @@
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCuentas" aria-expanded="false" aria-controls="sidebarCuentas"
                     class="side-nav-link">
-                    <i class="fa fa-users me-2"></i>
+                    <i class="uil-user-circle"></i>
                     <span> Cuentas </span>
                     <span class="menu-arrow"></span>
                 </a>
