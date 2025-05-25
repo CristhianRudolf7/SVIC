@@ -9,7 +9,7 @@ for root, dirs, files in os.walk("."):
         if file.endswith(".py") or file.endswith(".html"):
             ruta_archivo = os.path.join(root, file)
             try:
-                with open(ruta_archivo, 'r', encoding='utf-8') as f:
+                with open(ruta_archivo, "r", encoding="utf-8") as f:
                     contenido = f.read()
                     if texto_buscar in contenido:
                         print(f"Encontrado en: {ruta_archivo}")

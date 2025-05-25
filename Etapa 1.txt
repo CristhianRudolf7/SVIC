@@ -1,0 +1,23 @@
+REALIZADOS:
+	multiple empresas
+	historial de transacciones
+	ventas
+	credito
+	promociones y descuentos
+	impuestos
+	reportes de ventas
+	seguimiento de entregas
+	proveedores
+	modulo de compras de reabastecimiento
+	almacenes
+	alertas
+
+PENDIENTES:
+	gestion de usuarios
+	facturas
+	factura
+	dashboard de ventas inventario
+	rentabilidad por producto o canal
+	pagos con tarjeta
+	web de visualizar synaptia
+	chat
