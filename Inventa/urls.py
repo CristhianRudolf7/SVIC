@@ -1,13 +1,9 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('store.urls')),
-    path('chat/', include('chat.urls')),
-    path('staff/', include('accounts.urls')),
-    path('transactions/', include('transactions.urls')),
-    path('accounts/', include('accounts.urls')),
-    path('invoice/', include('invoice.urls')),
-    path('bills/', include('bills.urls'))
+    path('', TemplateView.as_view(template_name='index.html'), name='home'),
+    path('usuarios/', include('usuarios.urls')),
 ]

@@ -2,28 +2,21 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import Profile, Customer, Vendor
+from .models import Usuarios, Negocios
 
-
-class CreateUserForm(UserCreationForm):
-    """Form for creating a new user with an email field."""
+class CrearUsuarioForm(UserCreationForm):
     email = forms.EmailField()
-
     class Meta:
-        """Meta options for the CreateUserForm."""
-        model = User
+        model = Usuarios
         fields = [
-            'username',
+            'nombre',
             'email',
             'password1',
             'password2'
         ]
 
-
-class UserUpdateForm(forms.ModelForm):
-    """Form for updating existing user information."""
+class ModificarUsuarioForm(forms.ModelForm):
     class Meta:
-        """Meta options for the UserUpdateForm."""
         model = User
         fields = [
             'username',
@@ -31,74 +24,53 @@ class UserUpdateForm(forms.ModelForm):
         ]
 
 
-class ProfileUpdateForm(forms.ModelForm):
-    """Form for updating user profile information."""
+class NegociosForm(forms.ModelForm):
     class Meta:
-        """Meta options for the ProfileUpdateForm."""
-        model = Profile
+        model = Negocios
         fields = [
-            'telephone',
-            'email',
-            'first_name',
-            'last_name',
-            'profile_picture'
+            'nombre',
+            'sector',
+            'pais',
+            'region',
+            'ciudad',
+            'direccion',
+            'telefono',
+            'ruc',
+            'foto',
+            'descripcion',
+            'tipo_suscripcion'
         ]
 
-
-class CustomerForm(forms.ModelForm):
-    """Form for creating/updating customer information."""
-    class Meta:
-        model = Customer
-        fields = [
-            'first_name',
-            'last_name',
-            'address',
-            'email',
-            'phone',
-            'loyalty_points'
-        ]
         widgets = {
-            'first_name': forms.TextInput(attrs={
+            'nombre': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter first name'
+                'placeholder': 'Ingrese el nombre del negocio'
             }),
-            'last_name': forms.TextInput(attrs={
+            'sector': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter last name'
+                'placeholder': 'Ingrese el sector del negocio'
             }),
-            'address': forms.Textarea(attrs={
+            'pais': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter address',
-                'rows': 3
+                'placeholder': 'Ingrese el país del negocio'
             }),
-            'email': forms.EmailInput(attrs={
+            'region': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter email'
+                'placeholder': 'Ingrese la región del negocio'
             }),
-            'phone': forms.TextInput(attrs={
+            'ciudad': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter phone number'
+                'placeholder': 'Ingrese la ciudad del negocio'
             }),
-            'loyalty_points': forms.NumberInput(attrs={
+            'direccion': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter loyalty points'
+                'placeholder': 'Ingrese la dirección del negocio'
             }),
-        }
-
-
-class VendorForm(forms.ModelForm):
-    """Form for creating/updating vendor information."""
-    class Meta:
-        model = Vendor
-        fields = ['name', 'phone_number', 'address']
-        widgets = {
-            'name': forms.TextInput(
-                attrs={'class': 'form-control', 'placeholder': 'Vendor Name'}
-            ),
-            'phone_number': forms.NumberInput(
-                attrs={'class': 'form-control', 'placeholder': 'Phone Number'}
-            ),
-            'address': forms.TextInput(
-                attrs={'class': 'form-control', 'placeholder': 'Address'}
-            ),
+            'telefono': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ingrese el número de teléfono del negocio'
+            }),
+            'tipo_suscripcion': forms.Select(attrs={
+                'class': 'form-control'
+            }),
         }

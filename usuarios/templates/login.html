@@ -1,0 +1,232 @@
+{% load crispy_forms_tags %}{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Iniciar sesión</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Página web de ventas e inventario." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <link rel="shortcut icon" href="{% static 'images/logo/logo sin nombre.png' %}">
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+
+</head>
+
+<body class="loading authentication-bg" data-layout-config='{"darkMode":false}'>
+    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-4 col-lg-5">
+                    <div class="card">
+                        <div class="card-header pt-4 pb-4 text-center bg-primary">
+                            <a href="index.html">
+                                <span><img src="{% static 'images/logo/logo sin nombre.png' %}" alt="" height="18"></span>
+                            </a>
+                        </div>
+
+                        <div class="card-body p-4">
+
+                            <div class="text-center w-75 m-auto">
+                                <h4 class="text-dark-50 text-center pb-0 fw-bold">Iniciar sesión</h4>
+                                <p class="text-muted mb-4">Ingrese su DNI y su contraseña.
+                                </p>
+                            </div>
+
+                            <form action="#">
+
+                                <div class="mb-3">
+                                    <label for="emailaddress" class="form-label">DNI</label>
+                                    <input class="form-control" type="email" id="emailaddress" required=""
+                                        placeholder="Ingrese su DNI">
+                                </div>
+
+                                <div class="mb-3">
+                                    <a href="pages-recoverpw.html" class="text-muted float-end"><small>¿Olvidaste tu contraseña?</small></a>
+                                    <label for="password" class="form-label">Contraseña</label>
+                                    <div class="input-group input-group-merge">
+                                        <input type="password" id="password" class="form-control"
+                                            placeholder="Ingrese su contraseña">
+                                        <div class="input-group-text" data-password="false">
+                                            <span class="password-eye"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 mb-3">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="checkbox-signin" checked>
+                                        <label class="form-check-label" for="checkbox-signin">Recordar mi cuenta</label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 mb-0 text-center">
+                                    <button class="btn btn-primary" type="submit">Iniciar sesión</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-12 text-center">
+                            <p class="text-muted">¿No tienes una cuenta?<a href="pages-register.html"
+                                    class="text-muted ms-1"><b>Crear cuenta</b></a></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer footer-alt">
+        <script>document.write(new Date().getFullYear())</script> © SynaptIA - Desarrollado por Egoavil Huaman
+              Cristhian Rudolf
+    </footer>
+
+    <script src="assets/js/vendor.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+
+</body>
+
+</html>
+<html>
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous" />
+  </head>
+<body>
+  <div class="login-page">
+    <style>
+    .login-page {
+      width: 360px;
+      padding: 8% 0 0;
+      margin: auto;
+    }
+    .form {
+      position: relative;
+      z-index: 1;
+      background: #FFFFFF;
+      max-width: 360px;
+      margin: 0 auto 100px;
+      padding: 45px;
+      text-align: center;
+      box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+    .form input {
+      outline: 0;
+      background: #bbffbb;
+      width: 100%;
+      border: 0;
+      margin: 0 0 15px;
+      padding: 15px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    .form button {
+      text-transform: uppercase;
+      outline: 0;
+      background: #4CAF50;
+      width: 100%;
+      border: 0;
+      padding: 15px;
+      color: #FFFFFF;
+      font-size: 14px;
+      -webkit-transition: all 0.3 ease;
+      transition: all 0.3 ease;
+      cursor: pointer;
+    }
+    .form button:hover,.form button:active,.form button:focus {
+      background: #43A047;
+    }
+    .form .message {
+      margin: 15px 0 0;
+      color: #b3b3b3;
+      font-size: 12px;
+    }
+    .form .message a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+    .form .register-form {
+      display: none;
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .container:before, .container:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .container .info {
+      margin: 50px auto;
+      text-align: center;
+    }
+    .container .info h1 {
+      margin: 0 0 15px;
+      padding: 0;
+      font-size: 36px;
+      font-weight: 300;
+      color: #1a1a1a;
+    }
+    .container .info span {
+      color: #4d4d4d;
+      font-size: 12px;
+    }
+    .container .info span a {
+      color: #000000;
+      text-decoration: none;
+    }
+    .container .info span .fa {
+      color: #EF3B3A;
+    }
+    body {
+      background: #76b852; /* fallback for old browsers */
+      background: rgb(141,194,111);
+      background: linear-gradient(90deg, rgba(141,194,111,1) 0%, rgba(118,184,82,1) 50%);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    </style>
+    <div class="form">
+      <div>
+        <strong class="navbar-brand" style="font-size: 26px;">Synapt<span class="text-warning">IA</span></strong>
+      </div>
+      <div class="text-danger">
+        {% if messages %} {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">
+            {{ message }}
+        </div>
+        {% endfor %} {% endif %}
+
+    {% if form.non_field_errors %}
+        <ul>
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+  </div>
+      <form class="login-form" method="POST">
+        {% csrf_token %}
+        <p>{{ message }}</p>
+        <label>Nombre de usuario</label>
+        <span class="text-danger">{{ form.username.errors }}</span>
+        {{form.username}}
+        <label>Contraseña</label>
+        <span class="text-danger">{{ form.password.errors }}</span>
+        {{form.password}}
+        <button  type="submit" name="button">iniciar sesión</button>
+        <p class="message">¿No tienes cuenta? <a href="{% url 'user-register' %}">Crear una cuenta</a></p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -29,9 +29,13 @@ class Negocios(models.Model):
     )
     descripcion = models.TextField(blank=True, null=True, verbose_name='Descripción')
     tipo_suscripcion = models.CharField(
-        max_length=20, choices=[('Free', 'Free'), ('Basico', 'Básico'), ('Premium', 'Premium')],
+        max_length=20, choices=[('Free', 'Free'), ('Basico', 'Basico'), ('Premium', 'Premium')],
         default='Free', verbose_name='Tipo de suscripción'
     )
+    inicio_suscripcion = models.DateField(
+        blank=True, null=True, verbose_name='Inicio de suscripción')
+    fin_suscripcion = models.DateField(
+        blank=True, null=True, verbose_name='Fin de suscripción')
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -42,7 +46,7 @@ class Negocios(models.Model):
         verbose_name_plural = 'Negocios'
         ordering = ['fecha_creacion']
         unique_together = ('nombre', 'sector', 'pais', 'region', 'ciudad')
-        db_table = 'negocios'
+        db_table = 'Negocios'
 
 class Usuarios(models.Model):
     usuario_id = models.UUIDField(
@@ -54,10 +58,10 @@ class Usuarios(models.Model):
         Negocios, on_delete=models.CASCADE, verbose_name='Negocio', related_name='usuarios'
     )
     nombre = models.CharField(
-        max_length=30, blank=True, verbose_name='Nombre'
+        max_length=30, verbose_name='Nombre'
     )
     apellido = models.CharField(
-        max_length=30, blank=True, verbose_name='Apellido'
+        max_length=30, verbose_name='Apellido'
     )
     dni = models.CharField(
         max_length=8, unique=True, verbose_name='DNI'
@@ -101,4 +105,4 @@ class Usuarios(models.Model):
     class Meta:
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
-        db_table = 'usuarios'
+        db_table = 'Usuarios'
