@@ -22,7 +22,10 @@ INSTALLED_APPS = [
     'django_filters',
     'django_tables2',
 
-    'usuarios.apps.UsuariosConfig',
+    'store.apps.StoreConfig',
+    'accounts.apps.AccountsConfig',
+    'transactions.apps.TransactionsConfig',
+    'chat.apps.ChatConfig',
 ]
 
 MIDDLEWARE = [
@@ -77,9 +80,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'es-pe'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Lima'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

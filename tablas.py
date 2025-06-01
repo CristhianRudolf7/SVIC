@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS negocios (
     foto TEXT,
     descripcion TEXT,
     tipo_suscripcion TEXT NOT NULL,
+    inicio_suscripcion TEXT,
+    fin_suscripcion TEXT,
     fecha_creacion TEXT NOT NULL
 )
 """

@@ -1,0 +1,98 @@
+{% load static %}
+<div class="leftside-menu">
+
+    <div class="h-100" id="leftside-menu-container" data-simplebar>
+        <ul class="side-nav">
+            <li class="side-nav-item">
+                <a href="{% url 'dashboard' %}" class="side-nav-link">
+                    <i class="uil-home-alt"></i>
+                    <span> Dashboards </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarProductos" aria-expanded="false"
+                    aria-controls="sidebarProductos" class="side-nav-link">
+                    <i class="uil-box"></i>
+                    <span> Productos </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarProductos">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="{% url 'productslist' %}">Lista de productos</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'category-list' %}">Categorias</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="{% url 'saleslist' %}" class="side-nav-link">
+                    <i class="uil-store"></i>
+                    <span> Ventas </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="{% url 'purchaseslist' %}" class="side-nav-link">
+                    <i class="uil-clipboard-alt"></i>
+                    <span> Compras </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="{% url 'deliveries' %}" class="side-nav-link">
+                    <i class="uil-location-point"></i>
+                    <span> Envíos </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="{% url 'invoicelist' %}" class="side-nav-link">
+                    <i class="uil-document-layout-center"></i>
+                    <span> Facturas de ventas </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="{% url 'bill_list' %}" class="side-nav-link">
+                    <i class="uil-table"></i>
+                    <span> Facturas de compras </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="{% url 'chat' %}" class="side-nav-link">
+                    <i class="uil-comments-alt"></i>
+                    <span> Chat </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarCuentas" aria-expanded="false" aria-controls="sidebarCuentas"
+                    class="side-nav-link">
+                    <i class="uil-user-circle"></i>
+                    <span> Cuentas </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarCuentas">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="{% url 'profile_list' %}">Trabajadores</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'customer_list' %}">Clientes</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'vendor-list' %}">Proveedores</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</div>
