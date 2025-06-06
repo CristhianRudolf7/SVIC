@@ -3,3 +3,5 @@ PROBLEMAS:
     corregir elementos de tablas
     corregir logout
     cambiar plantilla de crear empresa
+
+Hacer terminos y condiciones
