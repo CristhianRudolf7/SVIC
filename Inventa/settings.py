@@ -17,6 +17,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'usuarios',
+    'compras',
+    'inventario',
+    'ventas'
 ]
 
 MIDDLEWARE = [
@@ -74,7 +77,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'usuarios.User'
+AUTH_USER_MODEL = 'usuarios.Usuarios'
 
 LANGUAGE_CODE = "en-us"
 

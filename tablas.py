@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS movimientos_inventario (
     tipo_movimiento TEXT NOT NULL,
     cantidad INTEGER NOT NULL,
     fecha TEXT NOT NULL,
+    observaciones TEXT,
     FOREIGN KEY (negocio_id) REFERENCES negocios (negocio_id),
     FOREIGN KEY (producto_id) REFERENCES productos (producto_id)
 )
@@ -139,30 +140,13 @@ cursor.execute(
 CREATE TABLE IF NOT EXISTS clientes (
     cliente_id INTEGER PRIMARY KEY AUTOINCREMENT,
     negocio_id INTEGER NOT NULL,
-    tipo_cliente_id INTEGER NOT NULL,
     nombre TEXT NOT NULL,
     apellido TEXT NOT NULL,
     dni TEXT NOT NULL UNIQUE,
     email TEXT,
     telefono TEXT,
-    foto TEXT,
     fecha_creacion TEXT NOT NULL,
     FOREIGN KEY (negocio_id) REFERENCES negocios (negocio_id),
-    FOREIGN KEY (tipo_cliente_id) REFERENCES tipos_clientes (tipo_cliente_id
-)
-"""
-)
-
-# Tabla tipos_clientes
-cursor.execute(
-    """
-CREATE TABLE IF NOT EXISTS tipos_clientes (
-    tipo_cliente_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    negocio_id INTEGER NOT NULL,
-    nombre TEXT NOT NULL,
-    descripcion TEXT,
-    fecha_creacion TEXT NOT NULL,
-    FOREIGN KEY (negocio_id) REFERENCES negocios (negocio_id)
 )
 """
 )
@@ -179,8 +163,9 @@ CREATE TABLE IF NOT EXISTS ventas (
     total REAL NOT NULL,
     metodo_pago TEXT NOT NULL,
     estado_pago TEXT NOT NULL,
-    estado_envio TEXT NOT NULL,               
-    tipo_venta TEXT NOT NULL,
+    estado_envio TEXT NOT NULL,
+    descuento_id INTEGER,
+    FOREIGN KEY (descuento_id) REFERENCES descuentos (descuento_id),
     FOREIGN KEY (negocio_id) REFERENCES negocios (negocio_id),
     FOREIGN KEY (usuario_id) REFERENCES usuarios (usuario_id),
     FOREIGN KEY (cliente_id) REFERENCES clientes (cliente_id)
@@ -196,7 +181,8 @@ CREATE TABLE IF NOT EXISTS detalle_venta (
     venta_id INTEGER NOT NULL,
     producto_id INTEGER NOT NULL,
     cantidad INTEGER NOT NULL,
-    precio REAL NOT NULL,
+    precio_unitario REAL NOT NULL,
+    subtotal REAL NOT NULL,
     FOREIGN KEY (venta_id) REFERENCES ventas (venta_id),
     FOREIGN KEY (producto_id) REFERENCES productos (producto_id)
 )
@@ -212,6 +198,7 @@ CREATE TABLE IF NOT EXISTS descuentos (
     nombre TEXT NOT NULL,
     descripcion TEXT NOT NULL,
     tipo_descuento TEXT,
+    monto REAL,
     porcentaje REAL NOT NULL,
     fecha_inicio TEXT NOT NULL,
     fecha_fin TEXT NOT NULL,
@@ -237,7 +224,6 @@ CREATE TABLE IF NOT EXISTS proveedores (
     ruc TEXT,
     telefono TEXT NOT NULL,
     email TEXT,
-    foto TEXT,
     direccion TEXT NOT NULL,
     fecha_creacion TEXT NOT NULL,
     FOREIGN KEY (negocio_id) REFERENCES negocios (negocio_id)
@@ -271,7 +257,8 @@ CREATE TABLE IF NOT EXISTS detalle_compra (
     compra_id INTEGER NOT NULL,
     producto_id INTEGER NOT NULL,
     cantidad INTEGER NOT NULL,
-    precio REAL NOT NULL,
+    precio_unitario REAL NOT NULL,
+    subtotal REAL NOT NULL,
     negocio_id INTEGER NOT NULL,
     FOREIGN KEY (negocio_id) REFERENCES negocios (negocio_id),
     FOREIGN KEY (compra_id) REFERENCES compras (compra_id),
