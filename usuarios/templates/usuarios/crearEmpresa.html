@@ -1,0 +1,233 @@
+{% extends "accounts/landing.html" %}
+{% load static %}
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container-fluid">
+    <div class="card-header pt-2 pb-3 text-center bg-primary rounded-top col-lg-6 mx-auto mb-4">
+        <h4 class="text-white text-center pb-0 fw-bold fs-3">Ingresa los datos de tu empresa</h4>
+    </div>
+
+    <div class="col-12 col-lg-10 mx-auto">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="input-types-preview">
+                        {% if negocio.errors %}
+                        <ul class="text-danger mb-3">
+                            {% for field in negocio %}
+                            {% for err in field.errors %}
+                            <li>{{ field.label }}: {{ err }}</li>
+                            {% endfor %}
+                            {% endfor %}
+                            {% for err in negocio.non_field_errors %}
+                            <li>{{ err }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if gerente.errors %}
+                        <ul class="text-danger mb-3">
+                            {% for field in gerente %}
+                            {% for err in field.errors %}
+                            <li>{{ field.label }}: {{ err }}</li>
+                            {% endfor %}
+                            {% endfor %}
+                            {% for err in gerente.non_field_errors %}
+                            <li>{{ err }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <form action="{% url 'crearEmpresa' %}" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                {% csrf_token %}
+
+                                <div class="col-lg-6">
+                                    <div class="mb-4">
+                                        <label class="form-label" for="nombre">Nombre de la empresa</label>
+                                        <input class="form-control" id="nombre" name="negocio-nombre" type="text"
+                                            required="" placeholder="Ingrese el nombre de la empresa">
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label" type="email" for="email">Email</label>
+                                        <input class="form-control" id="email" name="gerente-email" type="text"
+                                            required="" placeholder="Dirección de la empresa">
+                                    </div>
+
+
+                                    <div class="mb-4">
+                                        <label for="country" class="form-label">País</label>
+                                        <select id="country" name="negocio-pais" class="form-select">
+                                            <option value="">Seleccione un país</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="state" class="form-label">Región/Estado</label>
+                                        <select id="state" name="negocio-region" class="form-select" disabled>
+                                            <option value="">Seleccione una región</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="city" class="form-label">Ciudad</label>
+                                        <select id="city" name="negocio-ciudad" class="form-select" disabled>
+                                            <option value="">Seleccione una ciudad</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="foto" class="form-label">Foto</label>
+                                        <input class="form-control border-primary shadow-sm" type="file" id="foto"
+                                            name="negocio-foto" accept="image/*">
+                                        <div class="form-text">Sube una imagen en formato JPG, PNG o similar.</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="mb-4">
+                                        <label for="sectorEmpresa" class="form-label">Sector de la empresa</label>
+                                        <select class="form-select" id="sectorEmpresa" name="negocio-sector" required
+                                            style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; max-height: 200px;">
+                                            <option selected disabled>Seleccione un sector...</option>
+                                            <option value="tecnologia" title="Tecnología e Informática">🖥️ Tecnología
+                                            </option>
+                                            <option value="salud" title="Salud y Farmacéutico">🏥 Salud</option>
+                                            <option value="financiero" title="Servicios Financieros">💲 Financiero
+                                            </option>
+                                            <option value="educacion" title="Educación y Formación">📚 Educación
+                                            </option>
+                                            <option value="manufactura" title="Manufactura y Producción">🏭 Manufactura
+                                            </option>
+                                            <option value="comercio" title="Comercio Minorista">🛒 Comercio</option>
+                                            <option value="logistica" title="Logística y Transporte">🚚 Logística
+                                            </option>
+                                            <option value="construccion" title="Construcción e Inmobiliario">🏗️
+                                                Construcción</option>
+                                            <option value="energia" title="Energía y Utilities">⚡ Energía</option>
+                                            <option value="turismo" title="Turismo y Hostelería">🏨 Turismo</option>
+                                            <option value="agricultura" title="Agricultura y Agroindustria">🌾
+                                                Agricultura</option>
+                                            <option value="medios" title="Medios y Entretenimiento">🎬 Medios</option>
+                                            <option value="consultoria" title="Consultoría y Servicios Profesionales">📊
+                                                Consultoría</option>
+                                            <option value="textil" title="Textil y Moda">👗 Textil</option>
+                                            <option value="automotriz" title="Automotriz">🚗 Automotriz</option>
+                                            <option value="bienes" title="Bienes de Consumo">🛍️ Bienes</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label" for="direccion">Dirección</label>
+                                        <input class="form-control" id="direccion" name="negocio-direccion" type="text"
+                                            required="" placeholder="Dirección de la empresa">
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label" for="username">Nombre del gerente</label>
+                                        <input class="form-control" id="username" name="gerente-username" type="text"
+                                            required="" placeholder="Dirección de la empresa">
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label" for="password1">Password 1</label>
+                                        <input class="form-control" id="password1" name="gerente-password1" type="text"
+                                            required="" placeholder="Dirección de la empresa">
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label" for="password2">Password 2</label>
+                                        <input class="form-control" id="password2" name="gerente-password2" type="text"
+                                            required="" placeholder="Dirección de la empresa">
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label" for="ruc">RUC</label>
+                                        <input class="form-control" id="ruc" name="negocio-ruc" type="text"
+                                            placeholder="Ingresa el número de RUC">
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="example-textarea" class="form-label">Descripción</label>
+                                        <textarea class="form-control" id="example-textarea" name="negocio-descripcion"
+                                            rows="5" placeholder="Ingresa una descripción de la empresa."></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 mb-0 text-center">
+                                    <button class="btn btn-primary" type="submit">Crear cuenta</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let data = [];
+
+    fetch("{% static 'js/paises.json' %}")
+        .then(response => response.json())
+        .then(json => {
+            data = json;
+            populateCountries();
+        });
+
+    const countrySelect = document.getElementById('country');
+    const stateSelect = document.getElementById('state');
+    const citySelect = document.getElementById('city');
+
+    function populateCountries() {
+        data.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.iso2;
+            option.textContent = country.name;
+            countrySelect.appendChild(option);
+        });
+        countrySelect.disabled = false;
+    }
+
+    countrySelect.addEventListener('change', function () {
+        const selectedCountry = data.find(country => country.iso2 === this.value);
+        stateSelect.innerHTML = '<option value="">Seleccione una región</option>';
+        citySelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
+        citySelect.disabled = true;
+
+        if (selectedCountry && selectedCountry.states.length > 0) {
+            selectedCountry.states.forEach(state => {
+                const option = document.createElement('option');
+                option.value = state.state_code;
+                option.textContent = state.name;
+                stateSelect.appendChild(option);
+            });
+            stateSelect.disabled = false;
+        } else {
+            stateSelect.disabled = true;
+        }
+    });
+
+    stateSelect.addEventListener('change', function () {
+        const selectedCountry = data.find(country => country.iso2 === countrySelect.value);
+        const selectedState = selectedCountry.states.find(state => state.state_code === this.value);
+        citySelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
+
+        if (selectedState && selectedState.cities.length > 0) {
+            selectedState.cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.name;
+                option.textContent = city.name;
+                citySelect.appendChild(option);
+            });
+            citySelect.disabled = false;
+        } else {
+            citySelect.disabled = true;
+        }
+    });
+</script>
+{% endblock content %}
