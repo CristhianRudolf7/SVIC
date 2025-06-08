@@ -6,4 +6,6 @@ urlpatterns = [
     path('', usuarios_views.landing, name='home'),
     path('login/', usuarios_views.LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('crear-empresa/', usuarios_views.crearEmpresa, name='crearEmpresa'),
+    path('pagar/', usuarios_views.pagar, name='pagar')
 ]

@@ -1,173 +1,281 @@
-{% extends "accounts/landing.html" %}
+{% extends "usuarios/landing.html" %}
 {% load static %}
 
 {% block content %}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/vendor.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+
 
 <div class="container-fluid">
-    <div class="card-header pt-2 pb-3 text-center bg-primary rounded-top col-lg-6 mx-auto mb-4">
-        <h4 class="text-white text-center pb-0 fw-bold fs-3">Ingresa los datos de tu empresa</h4>
-    </div>
-
     <div class="col-12 col-lg-10 mx-auto">
         <div class="card">
             <div class="card-body">
+                <h4 class="header-title mb-3 text-center fw-bold">Ingrese sus datos y los de su empresa</h4>
 
-                <div class="tab-content">
-                    <div class="tab-pane show active" id="input-types-preview">
-                        {% if negocio.errors %}
-                        <ul class="text-danger mb-3">
-                            {% for field in negocio %}
-                            {% for err in field.errors %}
-                            <li>{{ field.label }}: {{ err }}</li>
-                            {% endfor %}
-                            {% endfor %}
-                            {% for err in negocio.non_field_errors %}
-                            <li>{{ err }}</li>
-                            {% endfor %}
+                <form action="{% url 'crearEmpresa' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div id="progressbarwizard">
+                        <ul class="nav nav-pills nav-justified form-wizard-header mb-3">
+                            <li class="nav-item">
+                                <a href="#usuario" data-bs-toggle="tab" data-toggle="tab"
+                                    class="nav-link rounded-0 pt-2 pb-2">
+                                    <i class="mdi mdi-account-circle me-1"></i>
+                                    <span class="d-none d-sm-inline">Gerente</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#empresa" data-bs-toggle="tab" data-toggle="tab"
+                                    class="nav-link rounded-0 pt-2 pb-2">
+                                    <i class="mdi mdi-account-group me-1"></i>
+                                    <span class="d-none d-sm-inline">Empresa</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#contacto" data-bs-toggle="tab" data-toggle="tab"
+                                    class="nav-link rounded-0 pt-2 pb-2">
+                                    <i class="mdi mdi-account-check me-1"></i>
+                                    <span class="d-none d-sm-inline">Finish</span>
+                                </a>
+                            </li>
                         </ul>
-                        {% endif %}
-                        {% if gerente.errors %}
-                        <ul class="text-danger mb-3">
-                            {% for field in gerente %}
-                            {% for err in field.errors %}
-                            <li>{{ field.label }}: {{ err }}</li>
-                            {% endfor %}
-                            {% endfor %}
-                            {% for err in gerente.non_field_errors %}
-                            <li>{{ err }}</li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
-                        <form action="{% url 'crearEmpresa' %}" method="post" enctype="multipart/form-data">
-                            <div class="row">
-                                {% csrf_token %}
 
-                                <div class="col-lg-6">
-                                    <div class="mb-4">
-                                        <label class="form-label" for="nombre">Nombre de la empresa</label>
-                                        <input class="form-control" id="nombre" name="negocio-nombre" type="text"
-                                            required="" placeholder="Ingrese el nombre de la empresa">
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label" type="email" for="email">Email</label>
-                                        <input class="form-control" id="email" name="gerente-email" type="text"
-                                            required="" placeholder="Dirección de la empresa">
-                                    </div>
-
-
-                                    <div class="mb-4">
-                                        <label for="country" class="form-label">País</label>
-                                        <select id="country" name="negocio-pais" class="form-select">
-                                            <option value="">Seleccione un país</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="state" class="form-label">Región/Estado</label>
-                                        <select id="state" name="negocio-region" class="form-select" disabled>
-                                            <option value="">Seleccione una región</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="city" class="form-label">Ciudad</label>
-                                        <select id="city" name="negocio-ciudad" class="form-select" disabled>
-                                            <option value="">Seleccione una ciudad</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="foto" class="form-label">Foto</label>
-                                        <input class="form-control border-primary shadow-sm" type="file" id="foto"
-                                            name="negocio-foto" accept="image/*">
-                                        <div class="form-text">Sube una imagen en formato JPG, PNG o similar.</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="mb-4">
-                                        <label for="sectorEmpresa" class="form-label">Sector de la empresa</label>
-                                        <select class="form-select" id="sectorEmpresa" name="negocio-sector" required
-                                            style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; max-height: 200px;">
-                                            <option selected disabled>Seleccione un sector...</option>
-                                            <option value="tecnologia" title="Tecnología e Informática">🖥️ Tecnología
-                                            </option>
-                                            <option value="salud" title="Salud y Farmacéutico">🏥 Salud</option>
-                                            <option value="financiero" title="Servicios Financieros">💲 Financiero
-                                            </option>
-                                            <option value="educacion" title="Educación y Formación">📚 Educación
-                                            </option>
-                                            <option value="manufactura" title="Manufactura y Producción">🏭 Manufactura
-                                            </option>
-                                            <option value="comercio" title="Comercio Minorista">🛒 Comercio</option>
-                                            <option value="logistica" title="Logística y Transporte">🚚 Logística
-                                            </option>
-                                            <option value="construccion" title="Construcción e Inmobiliario">🏗️
-                                                Construcción</option>
-                                            <option value="energia" title="Energía y Utilities">⚡ Energía</option>
-                                            <option value="turismo" title="Turismo y Hostelería">🏨 Turismo</option>
-                                            <option value="agricultura" title="Agricultura y Agroindustria">🌾
-                                                Agricultura</option>
-                                            <option value="medios" title="Medios y Entretenimiento">🎬 Medios</option>
-                                            <option value="consultoria" title="Consultoría y Servicios Profesionales">📊
-                                                Consultoría</option>
-                                            <option value="textil" title="Textil y Moda">👗 Textil</option>
-                                            <option value="automotriz" title="Automotriz">🚗 Automotriz</option>
-                                            <option value="bienes" title="Bienes de Consumo">🛍️ Bienes</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label" for="direccion">Dirección</label>
-                                        <input class="form-control" id="direccion" name="negocio-direccion" type="text"
-                                            required="" placeholder="Dirección de la empresa">
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label" for="username">Nombre del gerente</label>
-                                        <input class="form-control" id="username" name="gerente-username" type="text"
-                                            required="" placeholder="Dirección de la empresa">
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label" for="password1">Password 1</label>
-                                        <input class="form-control" id="password1" name="gerente-password1" type="text"
-                                            required="" placeholder="Dirección de la empresa">
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label" for="password2">Password 2</label>
-                                        <input class="form-control" id="password2" name="gerente-password2" type="text"
-                                            required="" placeholder="Dirección de la empresa">
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label class="form-label" for="ruc">RUC</label>
-                                        <input class="form-control" id="ruc" name="negocio-ruc" type="text"
-                                            placeholder="Ingresa el número de RUC">
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="example-textarea" class="form-label">Descripción</label>
-                                        <textarea class="form-control" id="example-textarea" name="negocio-descripcion"
-                                            rows="5" placeholder="Ingresa una descripción de la empresa."></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3 mb-0 text-center">
-                                    <button class="btn btn-primary" type="submit">Crear cuenta</button>
+                        <div class="tab-content b-0 mb-0">
+                            <div id="bar" class="progress mb-3" style="height: 7px;">
+                                <div class="bar progress-bar progress-bar-striped progress-bar-animated bg-success">
                                 </div>
                             </div>
-                        </form>
+
+                            <div class="tab-pane" id="usuario">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="nombre">Nombre</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="nombre"
+                                                    name="gerente-nombre" placeholder="Nombre">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="apellido">Apellido</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="apellido"
+                                                    name="gerente-apellido" placeholder="Apellido">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="dni">Dni</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="dni" name="gerente-dni"
+                                                    placeholder="Dni">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="password1">Contraseña</label>
+                                            <div class="col-md-9">
+                                                <input type="password" id="password1" name="gerente-password1"
+                                                    class="form-control" placeholder="123456789">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="password2">Repita su
+                                                contraseña</label>
+                                            <div class="col-md-9">
+                                                <input type="password" id="password2" name="gerente-password2"
+                                                    class="form-control" placeholder="123456789">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="telefono">Telefono personal</label>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" id="telefono"
+                                                    name="gerente-telefono" placeholder="Telefono">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="email">Correo personal
+                                                (opcional)</label>
+                                            <div class="col-md-9">
+                                                <input type="email" class="form-control" id="email" name="gerente-email"
+                                                    placeholder="ejemplo@gmail.com">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="foto">Foto del gerente (opcional)</label>
+                                            <div class="col-md-9">
+                                                <input class="form-control border-primary shadow-sm" type="file"
+                                                    id="foto" name="gerente-foto" accept="image/*">
+                                                <div class="form-text">Sube una imagen en formato JPG, PNG o similar.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="empresa">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="nombreNegocio">Nombre de la
+                                                empresa</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="nombreNegocio" name="negocio-nombre"
+                                                    class="form-control" placeholder="Nombre de la empresa">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="sectorEmpresa"> Sector de la
+                                                empresa</label>
+                                            <div class="col-md-9">
+                                                <select class="form-select" id="sectorEmpresa" name="negocio-sector"
+                                                    required
+                                                    style="max-width: 100%; overflow: hidden; text-overflow: ellipsis; max-height: 200px;">
+                                                    <option selected disabled>Seleccione un sector...</option>
+                                                    <option value="tecnologia" title="Tecnología e Informática">🖥️
+                                                        Tecnología
+                                                    </option>
+                                                    <option value="salud" title="Salud y Farmacéutico">🏥 Salud</option>
+                                                    <option value="financiero" title="Servicios Financieros">💲
+                                                        Financiero
+                                                    </option>
+                                                    <option value="educacion" title="Educación y Formación">📚 Educación
+                                                    </option>
+                                                    <option value="manufactura" title="Manufactura y Producción">🏭
+                                                        Manufactura
+                                                    </option>
+                                                    <option value="comercio" title="Comercio Minorista">🛒 Comercio
+                                                    </option>
+                                                    <option value="logistica" title="Logística y Transporte">🚚
+                                                        Logística
+                                                    </option>
+                                                    <option value="construccion" title="Construcción e Inmobiliario">🏗️
+                                                        Construcción</option>
+                                                    <option value="energia" title="Energía y Utilities">⚡ Energía
+                                                    </option>
+                                                    <option value="turismo" title="Turismo y Hostelería">🏨 Turismo
+                                                    </option>
+                                                    <option value="agricultura" title="Agricultura y Agroindustria">🌾
+                                                        Agricultura</option>
+                                                    <option value="medios" title="Medios y Entretenimiento">🎬 Medios
+                                                    </option>
+                                                    <option value="consultoria"
+                                                        title="Consultoría y Servicios Profesionales">📊
+                                                        Consultoría</option>
+                                                    <option value="textil" title="Textil y Moda">👗 Textil</option>
+                                                    <option value="automotriz" title="Automotriz">🚗 Automotriz</option>
+                                                    <option value="bienes" title="Bienes de Consumo">🛍️ Bienes</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="country" class="col-md-3 col-form-label">País</label>
+                                            <div class="col-md-9">
+                                                <select id="country" name="negocio-pais" class="form-select">
+                                                    <option value="">Seleccione un país</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="state" class="col-md-3 col-form-label">Región/Estado</label>
+                                            <div class="col-md-9">
+                                                <select id="state" name="negocio-region" class="form-select" disabled>
+                                                    <option value="">Seleccione una región</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="city" class="col-md-3 col-form-label">Ciudad</label>
+                                            <div class="col-md-9">
+                                                <select id="city" name="negocio-ciudad" class="form-select" disabled>
+                                                    <option value="">Seleccione una ciudad</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="direccion">Dirección</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="direccion" name="negocio-direccion" class="form-control"
+                                                    placeholder="Dirección de la empresa">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="negocio-telefono">Telefono</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="negocio-telefono" name="negocio-telefono" class="form-control"
+                                                    placeholder="Telefono de la empresa">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="ruc">RUC (opcional)</label>
+                                            <div class="col-md-9">
+                                                <input type="text" id="ruc" name="negocio-ruc" class="form-control"
+                                                    placeholder="RUC de la empresa">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="negocio-foto">Foto de la empresa (opcional)</label>
+                                            <div class="col-md-9">
+                                                <input class="form-control border-primary shadow-sm" type="file"
+                                                    id="negocio-foto" name="negocio-foto" accept="image/*">
+                                                <div class="form-text">Sube una imagen en formato JPG, PNG o similar.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-md-3 col-form-label" for="descripcion">Descripción de la empresa (opcional)</label>
+                                            <div class="col-md-9">
+                                                <textarea class="form-control" id="descripcion" name="negocio-descripcion"
+                                            rows="5" placeholder="Ingresa una descripción de la empresa"></textarea>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="contacto">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="text-center">
+                                            <h2 class="mt-0"><i class="mdi mdi-check-all"></i></h2>
+                                            <h3 class="mt-0">¡Gracias por confiar en nosotros!</h3>
+
+                                            <p class="w-75 mb-2 mx-auto">Por favor, acepta los terminos y condiciones para
+                                                crear tu cuenta.
+                                            </p>
+
+                                            <div class="mb-3">
+                                                <div class="form-check d-inline-block">
+                                                    <input type="checkbox" class="form-check-input" id="customCheck3">
+                                                    <label class="form-check-label" for="customCheck3">Acepto los terminos y condiciones.</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="list-inline mb-0 wizard">
+                                <li class="previous list-inline-item">
+                                    <a href="javascript:void(0);" class="btn btn-info">Anterior</a>
+                                </li>
+                                <li class="next list-inline-item float-end">
+                                    <a href="javascript:void(0);" id="btn-next" class="btn btn-primary">Siguiente</a>
+                                </li>
+                            </ul>
+
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
     let data = [];
@@ -228,6 +336,44 @@
         } else {
             citySelect.disabled = true;
         }
+    });
+
+    $(function() {
+        "use strict";
+        $("#basicwizard").bootstrapWizard();
+        $("#progressbarwizard").bootstrapWizard({
+            onTabShow: function(t,r,a) {
+                var o = ( a + 1) / r.find("li").length * 100;
+                $("#progressbarwizard").find(".bar").css({width:o+"%"});
+            }
+        });
+        $("#btnwizard").bootstrapWizard({
+            nextSelector:".button-next",
+            previousSelector:".button-previous",
+            firstSelector:".button-first",
+            lastSelector:".button-last"
+        });
+        $("#rootwizard").bootstrapWizard({
+            onNext: function(t,r,a) {
+                var o = $($(t).data("targetForm"));
+                if ( o && (o.addClass("was-validated"), !1 === o[0].checkValidity()))
+                    return event.preventDefault(),event.stopPropagation(),!1
+                }
+            })
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const nextBtn = document.getElementById("btn-next");
+
+        nextBtn.addEventListener("click", function (e) {
+            const activeTab = document.querySelector(".tab-pane.active");
+            const nextTab = activeTab.nextElementSibling;
+
+            if (!nextTab || !nextTab.classList.contains("tab-pane")) {
+                document.querySelector("form").submit();
+            }
+
+            e.preventDefault();
+        });
     });
 </script>
 {% endblock content %}

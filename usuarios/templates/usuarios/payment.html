@@ -1,4 +1,4 @@
-{% extends "accounts/landing.html" %}
+{% extends "usuarios/landing.html" %}
 {% load static %}
 
 {% block content %}
@@ -86,7 +86,7 @@
                 <div>
                     <form class="row mb-4">
                         <div class="mb-3 col-12 col-md-12 mb-4">
-                            <h5 class="mb-3">Credit / Debit card</h5>
+                            <h5 class="mb-3">Tarjeta de credito o débito</h5>
                             <div class="d-inline-flex">
                                 <div class="form-check me-2">
                                     <input type="radio" id="paymentRadioOne" name="paymentRadioOne"
@@ -110,69 +110,66 @@
                             </div>
                         </div>
                         <div class="mb-3 col-12 col-md-4">
-                            <label for="nameoncard" class="form-label">Name on card</label>
-                            <input id="nameoncard" type="text" class="form-control" name="nameoncard" placeholder="Name"
-                                required />
+                            <label for="nameoncard" class="form-label">Número de documento</label>
+                            <input id="nameoncard" type="text" class="form-control" name="nameoncard"
+                                placeholder="Número de DNI" />
                         </div>
                         <!-- Month -->
                         <div class="mb-3 col-12 col-md-4">
-                            <label class="form-label">Month</label>
+                            <label class="form-label">Mes</label>
                             <select class="form-select">
-                                <option value="">Month</option>
-                                <option value="Jan">Jan</option>
-                                <option value="Feb">Feb</option>
-                                <option value="Mar">Mar</option>
-                                <option value="Apr">Apr</option>
-                                <option value="May">May</option>
-                                <option value="June">June</option>
-                                <option value="July">July</option>
-                                <option value="Aug">Aug</option>
-                                <option value="Sep">Sep</option>
-                                <option value="Oct">Oct</option>
-                                <option value="Nov">Nov</option>
-                                <option value="Dec">Dec</option>
+                                <option value="">Mes</option>
+                                <option value="Jan">Enero</option>
+                                <option value="Feb">Febrero</option>
+                                <option value="Mar">Marzo</option>
+                                <option value="Apr">Abril</option>
+                                <option value="May">Mayo</option>
+                                <option value="June">Junio</option>
+                                <option value="July">Julio</option>
+                                <option value="Aug">Agosto</option>
+                                <option value="Sep">Setiembre</option>
+                                <option value="Oct">Octubre</option>
+                                <option value="Nov">Noviembre</option>
+                                <option value="Dec">Diciembre</option>
                             </select>
                         </div>
                         <!-- Year -->
                         <div class="mb-3 col-12 col-md-4">
-                            <label class="form-label">Year</label>
+                            <label class="form-label">Año</label>
                             <select class="form-select">
-                                <option value="">Year</option>
-                                <option value="June">2022</option>
-                                <option value="July">2023</option>
-                                <option value="August">2024</option>
-                                <option value="Sep">2025</option>
-                                <option value="Oct">2026</option>
+                                <option value="">Año</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                                <option value="2029">2029</option>
                             </select>
                         </div>
                         <!-- Card number -->
                         <div class="mb-3 col-md-8 col-12">
-                            <label for="cc-mask" class="form-label">Card Number</label>
-                            <input type="text" class="form-control" id="cc-mask" placeholder="xxxx-xxxx-xxxx-xxxx"
-                                required />
+                            <label for="cc-mask" class="form-label">Número de tarjeta</label>
+                            <input type="text" class="form-control" id="cc-mask" placeholder="xxxx-xxxx-xxxx-xxxx" />
                         </div>
                         <!-- CVV -->
                         <div class="mb-3 col-md-4 col-12">
                             <div class="mb-3">
-                                <label for="cvv" class="form-label">CVV Code
+                                <label for="cvv" class="form-label">CVV
                                     <i class="feather-icon icon-help-circle ms-1" data-bs-toggle="tooltip"
                                         data-placement="top"
                                         title="A 3 - digit number, typically printed on the back of a card."></i></label>
-                                <input type="password" class="form-control" id="cvv" placeholder="xxx" required />
+                                <input type="password" class="form-control" id="cvv" placeholder="xxx" />
                             </div>
                         </div>
                         <!-- Button -->
                         <div class="col-md-6 col-12">
-                            <button class="btn btn-primary" type="submit">
-                                Add New Card
-                            </button>
+                            <a class="btn btn-primary" href="{% url 'crearEmpresa' %}">
+                                Pagar
+                            </a>
                             <button class="btn btn-outline-gray-400 text-muted" type="button" data-bs-dismiss="modal">
-                                Close
+                                Cerrar
                             </button>
                         </div>
                     </form>
-                    <span><strong>Note:</strong> that you can later remove your card at
-                        the account setting page.</span>
                 </div>
             </div>
         </div>

@@ -19,7 +19,8 @@ INSTALLED_APPS = [
     'usuarios',
     'compras',
     'inventario',
-    'ventas'
+    'ventas',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +78,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 AUTH_USER_MODEL = 'usuarios.Usuarios'
 
 LANGUAGE_CODE = "en-us"
@@ -86,6 +90,10 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
+
+LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_URL = 'logout'
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')

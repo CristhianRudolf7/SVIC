@@ -83,6 +83,7 @@ class Usuarios(AbstractUser):
             ('EX', 'Ejecutivo'),
             ('AD', 'Administrador')
         ],
+        blank=True,
         max_length=13,
         verbose_name='Rol',
         default='OP'
