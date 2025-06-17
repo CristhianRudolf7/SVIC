@@ -1,0 +1,95 @@
+{% load static %}
+<div class="leftside-menu">
+    <a href="{% url 'home' %}" class="logo text-center">
+        <span class="logo-lg">
+            <img src="{% static 'imagenes/logo.png' %}" alt="" height="50">
+            <span id="textoMarca" class="fs-3 fw-bold text-white">Inventa</span>
+        </span>
+        <span class="logo-sm">
+            <img src="{% static 'imagenes/logo.png' %}" alt="" height="32">
+        </span>
+    </a>
+
+    <div class="h-100" id="leftside-menu-container" data-simplebar>
+        <ul class="side-nav">
+            <li class="side-nav-item">
+                <a href="{% url 'dashboard' %}" class="side-nav-link">
+                    <i class="uil-home"></i>
+                    <span> Dashboards </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarProductos" aria-expanded="false"
+                    aria-controls="sidebarProductos" class="side-nav-link">
+                    <i class="uil-box"></i>
+                    <span> Productos </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarProductos">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="{% url 'listaProductos' %}">Lista de productos</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'listaCategorias' %}">Categorias</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'listaUnidades' %}">Unidades de medida</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <i class="uil-store"></i>
+                    <span> Ventas </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <i class="uil-clipboard-alt"></i>
+                    <span> Compras </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <i class="uil-location-point"></i>
+                    <span> Envíos </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a href="#" class="side-nav-link">
+                    <i class="uil-comments-alt"></i>
+                    <span> Chat </span>
+                </a>
+            </li>
+
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarCuentas" aria-expanded="false" aria-controls="sidebarCuentas"
+                    class="side-nav-link">
+                    <i class="uil-user-circle"></i>
+                    <span> Cuentas </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarCuentas">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="#">Trabajadores</a>
+                        </li>
+                        <li>
+                            <a href="#">Clientes</a>
+                        </li>
+                        <li>
+                            <a href="#">Proveedores</a>
+                        </li>
+                    </ul>
+                </div>
+            </li> 
+
+        </ul>
+    </div>
+</div>

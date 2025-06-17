@@ -10,7 +10,7 @@ class UnidadMedida(models.Model):
         Negocios, on_delete=models.CASCADE, editable=False
     )
     nombre = models.CharField(max_length=100)
-    simbolo = models.CharField(max_length=10)
+    simbolo = models.CharField(max_length=10, blank=True, null=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -49,7 +49,10 @@ class Productos(models.Model):
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField()
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    unidad = models.ForeignKey(UnidadMedida, on_delete=models.CASCADE)
+    fecha_expiracion = models.DateTimeField(blank=True, null=True)
+    unidad = models.ForeignKey(
+        UnidadMedida, on_delete=models.CASCADE, blank=True, null=True
+    )
     foto = models.ImageField(
         default='productos/producto inicial.png',
         upload_to='productos',

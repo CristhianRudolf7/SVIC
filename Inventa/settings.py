@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'inventario',
     'ventas',
     'crispy_forms',
+    'django_tables2',
 ]
 
 MIDDLEWARE = [
@@ -83,16 +84,16 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 AUTH_USER_MODEL = 'usuarios.Usuarios'
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "es"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/Lima"
 
 USE_I18N = True
 
 USE_TZ = True
 
 LOGIN_URL = 'login'
-# LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_URL = 'logout'
 
 STATIC_URL = 'static/'

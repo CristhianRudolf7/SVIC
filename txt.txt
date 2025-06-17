@@ -5,3 +5,4 @@ PROBLEMAS:
     cambiar plantilla de crear empresa
 
 Hacer terminos y condiciones
+Probar que si la tabla que se muestran es visible en todas las empresas o solo en las de negocio_id

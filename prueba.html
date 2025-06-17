@@ -1,0 +1,110 @@
+{% extends "inventario/base.html" %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load querystring from django_tables2 %}
+{% block title %}Products{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Inventario</a></li>
+                        <li class="breadcrumb-item active">Productos</li>
+                    </ol>
+                </div>
+                <h3 class="page-title">Productos</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-5">
+                            <a href="javascript:void(0);" class="btn btn-danger mb-2"><i
+                                    class="mdi mdi-plus-circle me-2"></i> Agregar productos</a>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="text-sm-end">
+                                <button type="button" class="btn btn-success mb-2 me-1"><i
+                                        class="mdi mdi-cog-outline"></i></button>
+                                <button type="button" class="btn btn-light mb-2 me-1">Importar</button>
+                                <a class="btn btn-light mb-2" href="{% querystring '_export'='xlsx' %}">
+                                    <i class="fa-solid fa-file-excel"></i> Exportar a excel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="all" style="width: 20px;">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="customCheck1">
+                                            <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                                        </div>
+                                    </th>
+                                    <th class="all">Nombre</th>
+                                    <th>Categoría</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Unidad</th>
+                                    <th style="width: 85px;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for producto in productos %}
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="customCheck2">
+                                            <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img src="{{ producto.foto.url }}" alt="contact-img" title="contact-img"
+                                            class="rounded me-3" height="48" />
+                                        <p class="m-0 d-inline-block align-middle font-16">
+                                            <a href="#" class="text-body">{{ producto.nombre }}</a>
+                                            <br />
+                                        </p>
+                                    </td>
+                                    <td>
+                                        {{ producto.categoria }}
+                                    </td>
+                                    <td>
+                                        {{ producto.precio }}
+                                    </td>
+                                    <td>
+                                        {{ producto.stock }}
+                                    </td>
+
+                                    <td>
+                                        {{ producto.unidad }}
+                                    </td>
+
+                                    <td class="table-action">
+                                        <a href="javascript:void(0);" class="action-icon"> <i
+                                                class="mdi mdi-eye"></i></a>
+                                        <a href="javascript:void(0);" class="action-icon"> <i
+                                                class="mdi mdi-square-edit-outline"></i></a>
+                                        <a href="javascript:void(0);" class="action-icon"> <i
+                                                class="mdi mdi-delete"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

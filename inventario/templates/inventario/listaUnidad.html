@@ -1,0 +1,409 @@
+{% extends "inventario/base.html" %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load querystring from django_tables2 %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Inventario</a></li>
+                        <li class="breadcrumb-item active">Unidades de medida</li>
+                    </ol>
+                </div>
+                <h3 class="page-title">Unidades de medida</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-5">
+                            <a href="javascript:void(0);" class="btn btn-danger mb-2" id="agregarCategoria"><i
+                                    class="mdi mdi-plus-circle me-2"></i> Agregar unidad</a>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="text-sm-end">
+                                <button type="button" class="btn btn-success mb-2 me-1"><i
+                                        class="mdi mdi-cog-outline"></i></button>
+                                <button type="button" class="btn btn-light mb-2 me-1">Importar</button>
+                                <a class="btn btn-light mb-2" href="{% querystring '_export'='xlsx' %}">
+                                    <i class="fa-solid fa-file-excel"></i> Exportar a excel
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="all" style="width: 20px;">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="customCheck1">
+                                            <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                                        </div>
+                                    </th>
+                                    <th class="all">Nombre</th>
+                                    <th>Símbolo</th>
+                                    <th>Fecha de creación</th>
+                                    <th style="width: 85px;">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for unidad in unidades %}
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="customCheck2">
+                                            <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{ unidad.nombre }}
+                                    </td>
+                                    <td>
+                                        {{ unidad.simbolo }}
+                                    </td>
+                                    <td>
+                                        {{ unidad.fecha_creacion }}
+                                    </td>
+
+                                    <td class="table-action d-flex justify-content-center gap-2">
+                                        <button type="button" class="btn btn-bg font-14 btn-success btn-editar-unidad d-inline-flex" data-id="{{ unidad.unidad_id }}">
+                                            <i class="mdi mdi-square-edit-outline"></i> Editar
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm btn-eliminar d-inline-flex" data-id="{{ unidad.unidad_id }}">
+                                            <i class="mdi mdi-delete"></i> Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="ventanaUnidad" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="formUnidad" class="needs-validation">
+                            {% csrf_token %}
+                            <input type="hidden" name="unidad_id" id="unidad_id" value="">
+                            <div class="modal-header py-3 px-4 border-bottom-0">
+                                <h5 class="modal-title" id="modalTitle">Agregar unidad de medida</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body px-4 pb-4 pt-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="control-label form-label">Nombre de la unidad</label>
+                                            <input class="form-control" placeholder="Ingresa el nombre de la unidad"
+                                                type="text" name="nombre" id="nombreUnidad"  required />
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="control-label form-label">Símbolo de la unidad</label>
+                                            <input class="form-control" placeholder="Ingresa el simbolo de la unidad"
+                                                type="text" name="simbolo" id="simboloUnidad"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="button" class="btn btn-danger" id="cancelarUnidad">Cancelar</button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <button type="submit" class="btn btn-success"
+                                            id="btn-save-event">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Función para obtener el token CSRF
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Función para mostrar notificaciones
+function mostrarToast(tipo, mensaje) {
+    const toastContainer = document.getElementById('toastContainer');
+    const toastEl = document.createElement('div');
+    toastEl.className = `toast align-items-center text-white bg-${tipo} border-0`;
+    toastEl.innerHTML = `
+        <div class="d-flex">
+            <div class="toast-body">${mensaje}</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    `;
+    toastContainer.appendChild(toastEl);
+    new bootstrap.Toast(toastEl).show();
+    setTimeout(() => toastEl.remove(), 10000);
+}
+
+// Función para cargar datos de unidad en el modal
+function cargarDatosUnidad(unidadId) {
+    fetch(`/inventario/unidades/${unidadId}/`, {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Error en la respuesta del servidor");
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            // Actualizar campos del formulario
+            document.getElementById('unidad_id').value = data.unidad.unidad_id;
+            document.getElementById('nombreUnidad').value = data.unidad.nombre;
+            document.getElementById('simboloUnidad').value = data.unidad.simbolo || '';
+            
+            // Actualizar título del modal
+            document.getElementById('modalTitle').textContent = 'Editar unidad de medida';
+            
+            // Mostrar modal
+            const ventana = new bootstrap.Modal(document.getElementById("ventanaUnidad"));
+            ventana.show();
+        } else {
+            mostrarToast('danger', 'Error al cargar datos de la unidad');
+        }
+    })
+    .catch(error => {
+        mostrarToast('danger', 'Error en la conexión, values no encontrados: ' + error.message);
+    });
+}
+
+// Función para actualizar fila en la tabla
+function actualizarFilaUnidad(unidad) {
+    const fila = document.querySelector(`button[data-id="${unidad.unidad_id}"]`).closest('tr');
+    
+    if (fila) {
+        // Actualizar celdas específicas
+        fila.querySelector('td:nth-child(2)').textContent = unidad.nombre;
+        fila.querySelector('td:nth-child(3)').textContent = unidad.simbolo || '';
+    }
+}
+
+function formatearFecha(fechaISO) {
+    const fecha = new Date(fechaISO);
+    return new Intl.DateTimeFormat('es-PE', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    }).format(fecha).replace(',', ' a las');
+}
+
+// Función para agregar nueva categoría a la tabla
+function agregarUnidadATabla(unidad) {
+    const tabla = document.querySelector('#products-datatable tbody');
+    const nuevaFila = document.createElement('tr');
+    
+    nuevaFila.innerHTML = `
+        <td>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="customCheck2">
+                <label class="form-check-label" for="customCheck2">&nbsp;</label>
+            </div>
+        </td>
+        <td>${unidad.nombre}</td>
+        <td>${unidad.simbolo || ''}</td>
+        <td>${formatearFecha(unidad.fecha_creacion)}</td>
+        <td class="table-action d-flex justify-content-center gap-2">
+            <a href="javascript:void(0);" class="btn btn-bg font-14 btn-success d-inline-flex" id="btn-new-event">
+                <i class="mdi mdi-square-edit-outline"></i>Editar
+            </a>
+            <button type="button" class="btn btn-danger btn-sm btn-eliminar d-inline-flex" data-id="${unidad.unidad_id}">
+                <i class="mdi mdi-delete"></i> Eliminar
+            </button>
+        </td>
+    `;
+    
+    // Agregar al inicio de la tabla
+    if (tabla.children.length > 0) {
+        tabla.insertBefore(nuevaFila, tabla.firstChild);
+    } else {
+        tabla.appendChild(nuevaFila);
+    }
+}
+
+// Función para guardar cambios de unidad
+function guardarUnidad(event) {
+    event.preventDefault();
+    const form = event.target;
+    
+    if (!form.checkValidity()) {
+        event.stopPropagation();
+        form.classList.add('was-validated');
+        return;
+    }
+
+    const formData = new FormData(form);
+    const unidadId = formData.get('unidad_id');
+    const data = {};
+    formData.forEach((value, key) => data[key] = value);
+    const method = unidadId ? 'PUT' : 'POST';
+    const url = unidadId 
+        ?  "{% url 'metodosUnidades' '00000000-0000-0000-0000-000000000000' %}".replace('00000000-0000-0000-0000-000000000000', unidadId)
+        : "{% url 'listaUnidades' %}";
+    
+    fetch(url, {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errData => {
+                throw new Error(errData.message || 'Error en la respuesta del servidor');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            const ventana = bootstrap.Modal.getInstance(document.getElementById("ventanaUnidad"));
+            ventana.hide();
+            
+            mostrarToast('success', data.message);
+            
+            if (unidadId) {
+                // Actualizar fila existente en la tabla
+                actualizarFilaUnidad(data.unidad);
+            } else {
+                // Agregar nueva unidad a la tabla
+                agregarUnidadATabla(data.unidad);
+            }
+            form.reset();
+            form.classList.remove('was-validated');
+            document.getElementById('unidad_id').value = '';
+        } else {
+            mostrarToast('danger', data.message || 'Error al guardar');
+        }
+    })
+    .catch(error => {
+        mostrarToast('danger', 'Error en la conexión: ' + error.message);
+    });
+}
+
+// Función para eliminar una categoría
+function eliminarUnidad(btnEliminar) {
+    const unidadId = btnEliminar.getAttribute('data-id');
+    const fila = btnEliminar.closest('tr');
+    
+    if (confirm('¿Estás seguro de que deseas eliminar esta unidad?')) {
+        // Deshabilitar botón durante la solicitud
+        btnEliminar.disabled = true;
+        btnEliminar.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Eliminando...';
+        
+        fetch(`{% url 'metodosUnidades' '00000000-0000-0000-0000-000000000000' %}`.replace('00000000-0000-0000-0000-000000000000', unidadId), {
+            method: 'DELETE',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Error en la respuesta del servidor");
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                fila.remove();
+                mostrarToast('success', data.message);
+            } else {
+                btnEliminar.disabled = false;
+                btnEliminar.innerHTML = '<i class="mdi mdi-delete"></i> Eliminar';
+                mostrarToast('danger', data.message || 'Error al eliminar');
+            }
+        })
+        .catch(error => {
+            btnEliminar.disabled = false;
+            btnEliminar.innerHTML = '<i class="mdi mdi-delete"></i> Eliminar';
+            mostrarToast('danger', 'Error en la conexión: ' + error.message);
+        });
+    }
+}
+
+// Eventos cuando el DOM está listo
+document.addEventListener("DOMContentLoaded", function () {
+    const agregarBtn = document.getElementById("agregarCategoria");
+    const cancelarBtn = document.getElementById("cancelarUnidad");
+    const ventana = new bootstrap.Modal(document.getElementById("ventanaUnidad"));
+    const form = document.getElementById("formUnidad");
+
+    document.addEventListener('click', function(event) {
+        const btnEditar = event.target.closest('.btn-editar-unidad');
+        if (btnEditar) {
+            const unidadId = btnEditar.getAttribute('data-id');
+            cargarDatosUnidad(unidadId);
+        }
+    });
+
+    // Abrir modal
+    if (agregarBtn) {
+        agregarBtn.addEventListener("click", function () {
+            form.reset();
+            ventana.show();
+        });
+    }
+
+    // Cerrar modal
+    if (cancelarBtn) {
+        cancelarBtn.addEventListener("click", function () {
+            ventana.hide();
+        });
+    }
+
+    // Guardar nueva categoría
+    if (form) {
+        form.addEventListener('submit', guardarUnidad);
+    }
+    
+    // Delegación de eventos para los botones eliminar
+    document.addEventListener('click', function(event) {
+        const btnEliminar = event.target.closest('.btn-eliminar');
+        if (btnEliminar) {
+            eliminarUnidad(btnEliminar);
+        }
+    });
+});
+</script>
+
+{% endblock content %}
