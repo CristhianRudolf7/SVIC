@@ -9,50 +9,58 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("compras", "0001_initial"),
         ("inventario", "0001_initial"),
         ("usuarios", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name="compras",
+            model_name="alertas",
             name="negocio",
             field=models.ForeignKey(
-                editable=False,
-                on_delete=django.db.models.deletion.CASCADE,
-                to="usuarios.negocios",
+                on_delete=django.db.models.deletion.CASCADE, to="usuarios.negocios"
             ),
         ),
         migrations.AddField(
-            model_name="detallecompra",
-            name="compra",
-            field=models.ForeignKey(
-                editable=False,
-                on_delete=django.db.models.deletion.CASCADE,
-                to="compras.compras",
-            ),
-        ),
-        migrations.AddField(
-            model_name="detallecompra",
+            model_name="categorias",
             name="negocio",
             field=models.ForeignKey(
-                editable=False,
-                on_delete=django.db.models.deletion.CASCADE,
-                to="usuarios.negocios",
+                on_delete=django.db.models.deletion.CASCADE, to="usuarios.negocios"
             ),
         ),
         migrations.AddField(
-            model_name="detallecompra",
+            model_name="movimientosinventario",
+            name="negocio",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="usuarios.negocios"
+            ),
+        ),
+        migrations.AddField(
+            model_name="productos",
+            name="categoria",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="inventario.categorias",
+            ),
+        ),
+        migrations.AddField(
+            model_name="productos",
+            name="negocio",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="usuarios.negocios"
+            ),
+        ),
+        migrations.AddField(
+            model_name="movimientosinventario",
             name="producto",
             field=models.ForeignKey(
-                editable=False,
-                on_delete=django.db.models.deletion.CASCADE,
-                to="inventario.productos",
+                on_delete=django.db.models.deletion.CASCADE, to="inventario.productos"
             ),
         ),
         migrations.AddField(
-            model_name="proveedores",
+            model_name="unidadmedida",
             name="negocio",
             field=models.ForeignKey(
                 editable=False,
@@ -61,12 +69,13 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.AddField(
-            model_name="compras",
-            name="proveedor",
+            model_name="productos",
+            name="unidad",
             field=models.ForeignKey(
+                blank=True,
+                null=True,
                 on_delete=django.db.models.deletion.CASCADE,
-                to="compras.proveedores",
-                verbose_name="Proveedor",
+                to="inventario.unidadmedida",
             ),
         ),
     ]

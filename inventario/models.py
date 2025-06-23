@@ -3,6 +3,8 @@ import uuid
 from PIL import Image
 from django.db import models
 from usuarios.models import Negocios
+from django.forms import model_to_dict
+from ventas.models import Clientes
 
 class UnidadMedida(models.Model):
     unidad_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -44,7 +46,7 @@ class Productos(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField(blank=True, null=True)
     categoria = models.ForeignKey(
-        Categorias, on_delete=models.CASCADE
+        Categorias, on_delete=models.CASCADE, blank=True, null=True
     )
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField()
@@ -53,28 +55,7 @@ class Productos(models.Model):
     unidad = models.ForeignKey(
         UnidadMedida, on_delete=models.CASCADE, blank=True, null=True
     )
-    foto = models.ImageField(
-        default='productos/producto inicial.png',
-        upload_to='productos',
-        blank=True,
-        verbose_name='Foto del producto'
-    )
     codigo_barras = models.CharField(max_length=50, blank=True, null=True)
-
-    def save(self, *args, **kwargs):
-        if self.foto:
-            try:
-                img_path = self.foto.path
-                if os.path.exists(img_path):
-                    img = Image.open(img_path)
-                    if img.size != (500, 500):
-                        img = img.resize((500, 500))
-                        img.save(img_path)
-                    self.ancho, self.alto = img.size
-            except Exception as e:
-                print(f"Error al procesar la imagen: {e}")
-        
-        super().save(*args, **kwargs)
 
     class Meta:
         db_table = 'Productos'
@@ -83,6 +64,15 @@ class Productos(models.Model):
 
     def __str__(self):
         return self.nombre
+
+    def to_json(self):
+        product = model_to_dict(self)
+        product['id'] = str(self.producto_id)
+        product['text'] = self.nombre
+        product['category'] = self.categoria.nombre
+        product['quantity'] = 1
+        product['total_product'] = 0
+        return product
     
 class MovimientosInventario(models.Model):
     movimiento_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

@@ -6,7 +6,7 @@ class ProductosTable(tables.Table):
         model = Productos
         template_name = "django_tables2/semantic.html"
         fields = (
-            'foto','nombre', 'categoria', 'precio',
+            'nombre', 'categoria', 'precio',
             'stock', 'unidad'
         )
         order_by_field = 'sort'

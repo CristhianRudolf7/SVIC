@@ -1,7 +1,6 @@
 import uuid
 from django.db import models
 from usuarios.models import Negocios
-from inventario.models import Productos
 
 class Proveedores(models.Model):
     proveedor_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -66,7 +65,7 @@ class Compras(models.Model):
 class DetalleCompra(models.Model):
     detalle_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     compra = models.ForeignKey(Compras, on_delete=models.CASCADE, editable=False)
-    producto = models.ForeignKey(Productos, on_delete=models.CASCADE, editable=False)
+    producto = models.ForeignKey('inventario.Productos', on_delete=models.CASCADE, editable=False)
     cantidad = models.PositiveIntegerField(editable=False)
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, editable=False)

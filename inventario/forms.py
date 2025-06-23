@@ -12,7 +12,6 @@ class ProductoForm(forms.ModelForm):
             'stock',
             'fecha_expiracion',
             'unidad',
-            'foto',
             'codigo_barras'
         ]
 

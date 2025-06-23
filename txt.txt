@@ -1,8 +1,10 @@
-PROBLEMAS:
-    la imagen al cargar se debe subir al sistema y solo guardar el directorio
-    corregir elementos de tablas
-    corregir logout
-    cambiar plantilla de crear empresa
+AHORA:
+    se pasa correctamente los datos del producto pero agregarProducto no los lee correctamente
 
+corregir logout
+cambiar plantilla de crear empresa
 Hacer terminos y condiciones
 Probar que si la tabla que se muestran es visible en todas las empresas o solo en las de negocio_id
+ver los permisos para eliminar o editar algo
+Notificaciones para realizar pagos
+corregir la paginacion hacer que se mmuestre 10 productos por tabla
