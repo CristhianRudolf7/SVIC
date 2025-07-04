@@ -1,6 +1,10 @@
-AHORA:
-    se pasa correctamente los datos del producto pero agregarProducto no los lee correctamente
-
+corregir pdf de acuerdo al tamaño de la pantalla
+notificaciones toast
+en tabla de productos hacer que no se muestre none
+alertas
+reportes
+agregar promociones
+Hacer que solo los administrativos tengan acceso a todas las caracteristicas
 corregir logout
 cambiar plantilla de crear empresa
 Hacer terminos y condiciones
@@ -8,3 +12,8 @@ Probar que si la tabla que se muestran es visible en todas las empresas o solo e
 ver los permisos para eliminar o editar algo
 Notificaciones para realizar pagos
 corregir la paginacion hacer que se mmuestre 10 productos por tabla
+en forms trabajador corregir el select de rol
+
+cuentas con bancos
+mapa con ubicacion de los lugares de los emprendimientos
+ventas por chat automatizadas

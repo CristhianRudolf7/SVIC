@@ -11,34 +11,98 @@ import django_tables2 as tables
 from django.views.decorators.http import require_POST
 from django_tables2.export.views import ExportMixin
 from usuarios.models import Usuarios, Negocios
-from ventas.models import Ventas
 from .models import Categorias, Productos, UnidadMedida
 from .tables import ProductosTable, CategoriasTable, UnidadesTable
+from ventas.models import Ventas, DetalleVentas
+from inventario.models import Productos, MovimientosInventario, Alertas
 from .forms import ProductoForm, CategoriaForm
 from django.http import JsonResponse
 import json
+from compras.models import Compras
+from datetime import datetime, timedelta
+from django.utils.timezone import now
+from django.db.models.functions import TruncMonth
+from django.utils import timezone
+from django.db.models.functions import TruncDate
 
 @login_required
 def dashboard(request):
     negocio = request.user.negocio
-    usuarios = Usuarios.objects.filter(negocio=negocio)
-    productos = Productos.objects.all()
-    total_productos = (
-        Productos.objects.all()
-        .aggregate(Sum("stock"))
-        .get("cantidad", 0.00)
+    ventas = Ventas.objects.filter(negocio=negocio)
+    compras = Compras.objects.filter(negocio=negocio)
+    productos = Productos.objects.filter(negocio=negocio)
+    inventario = MovimientosInventario.objects.filter(negocio=negocio)
+    alertas = Alertas.objects.filter(negocio=negocio, estado='PN')
+    total_ventas = ventas.aggregate(total=Sum('total'))['total'] or 0
+    total_compras = compras.aggregate(total=Sum('total'))['total'] or 0
+    productos_bajo_stock = productos.filter(stock__lte=5).count()
+    productos_total = productos.count()
+    alertas_pendientes = alertas.count()
+    ventas_mes_actual = ventas.filter(fecha__month=now().month).aggregate(total=Sum('total'))['total'] or 0
+
+    hoy = timezone.localdate()
+    hace_30_dias = hoy - timedelta(days=30)
+
+    cantidad_ventas = Ventas.objects.filter(negocio=negocio).count()
+    ventas_actual = Ventas.objects.filter(
+        negocio=negocio,
+        fecha__lte=hoy
+    ).count()
+    ventas_anterior = Ventas.objects.filter(
+        negocio=negocio,
+        fecha__lte=hace_30_dias
+    ).count()
+    if ventas_anterior > 0:
+        porcentaje_ventas = ((ventas_actual - ventas_anterior) / ventas_anterior) * 100
+    else:
+        porcentaje_ventas = 0
+
+    cantidad_empleados = Usuarios.objects.filter(negocio=negocio, rol='Trabajador').count()
+    empleados_actual = Usuarios.objects.filter(
+        negocio=negocio,
+        rol='Trabajador',
+        fecha_creacion__lte=hoy
+    ).count()
+    empleados_periodo_anterior = Usuarios.objects.filter(
+        negocio=negocio,
+        rol='Trabajador',
+        fecha_creacion__lte=hace_30_dias
+    ).count()
+    if empleados_periodo_anterior > 0:
+        porcentaje_empleados = ((empleados_actual - empleados_periodo_anterior) / empleados_periodo_anterior) * 100
+    else:
+        porcentaje_empleados = 0
+
+    hace_15_dias = hoy - timedelta(days=14)
+    ventas = (
+        Ventas.objects
+        .filter(fecha__date__range=(hace_15_dias, hoy))
+        .annotate(dia=TruncDate('fecha'))
+        .values('dia')
+        .annotate(cantidad=Count('venta_id'))
     )
-    cantidad_productos = productos.count()
-    cantidad_usuarios = usuarios.count()
+    ventas_dict = {v['dia']: v['cantidad'] for v in ventas}
+    lista_cantidades = [
+        ventas_dict.get(hace_15_dias + timedelta(days=i), 0)
+        for i in range(15)
+    ]
 
     context = {
-        "productos": productos,
-        "usuarios": usuarios,
-        "cantidad_usuarios": cantidad_usuarios,
-        "cantidad_productos": cantidad_productos,
-        "total_productos": total_productos,
-        "ventas": Ventas.objects.all(),
+        "total_ventas": total_ventas,
+        "total_compras": total_compras,
+        "productos_total": productos_total,
+        "productos_bajo_stock": productos_bajo_stock,
+        "alertas_pendientes": alertas_pendientes,
+        "ventas_mes_actual": ventas_mes_actual,
+        "cantidad_empleados": cantidad_empleados,
+        "cantidad_ventas": cantidad_ventas,
+        "porcentaje_empleados": {'porcentaje': abs(round(porcentaje_empleados, 2)),
+                                            'signo': 'P' if porcentaje_empleados >= 0 else 'N'},
+        "porcentaje_ventas": {'porcentaje': abs(round(porcentaje_ventas, 2)),
+                                            'signo': 'P' if porcentaje_ventas >= 0 else 'N'},
+        "ventas_dia": lista_cantidades
     }
+    print(lista_cantidades)
     return render(request, "inventario/dashboard.html", context)
 
 class ListaProductosViews(LoginRequiredMixin, ExportMixin, SingleTableView):
@@ -235,7 +299,7 @@ class ProductoDetalleViews(LoginRequiredMixin, View):
                 'success': True,
                 'message': 'Producto eliminado correctamente'
             })
-        except Categorias.DoesNotExist:
+        except Productos.DoesNotExist:
             return JsonResponse({
                 'success': False,
                 'message': 'El producto no existe'
@@ -253,6 +317,9 @@ class ListaCategoriasViews(LoginRequiredMixin, ExportMixin, SingleTableView):
     context_object_name = "categorias"
     paginate_by = 10
     SingleTableView.table_pagination = False
+
+    def get_queryset(self):
+        return Categorias.objects.filter(negocio=self.request.user.negocio)
     
     def post(self, request):
         # Verificar si es una solicitud AJAX
@@ -385,6 +452,9 @@ class ListaUnidadesViews(LoginRequiredMixin, ExportMixin, SingleTableView):
     context_object_name = "unidades"
     paginate_by = 10
     SingleTableView.table_pagination = False
+
+    def get_queryset(self):
+        return UnidadMedida.objects.filter(negocio=self.request.user.negocio)
     
     def post(self, request):
         # Verificar si es una solicitud AJAX
@@ -519,11 +589,12 @@ def obtenerProductos(request):
             term = request.POST.get("term", "")
             data = []
 
-            productos = Productos.objects.filter(nombre__icontains=term)
+            productos = Productos.objects.filter(nombre__icontains=term, negocio=request.user.negocio)
             for producto in productos[:10]:
                 data.append(producto.to_json())
 
             return JsonResponse(data, safe=False)
         except Exception as e:
+            print(f'Error al obtener productos: {str(e)}')
             return JsonResponse({'error': str(e)}, status=500)
     return JsonResponse({'error': 'No es un request AJAX'}, status=400)

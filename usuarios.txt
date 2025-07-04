@@ -1,0 +1,12 @@
+gerentes:
+    Cristhian Egoavil: 77235743
+    Pepe Huaman: 12341234
+
+trabajadores:
+    Boris Egovil: 87654321
+
+clientes:
+    Rudolf Egoavil: 12345678
+
+contraseña:
+    12345@ABC

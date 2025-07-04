@@ -8,5 +8,6 @@ urlpatterns = [
     path('', include('usuarios.urls')),
     path('compras/', include('compras.urls')),
     path('inventario/', include('inventario.urls')),
-    path('ventas/', include('ventas.urls'))
+    path('ventas/', include('ventas.urls')),
+    path('chat/', include('chat.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

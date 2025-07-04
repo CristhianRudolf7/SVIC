@@ -1,23 +1,9 @@
-REALIZADOS:
-	multiple empresas
-	historial de transacciones
-	ventas
-	credito
-	promociones y descuentos
-	impuestos
-	reportes de ventas
-	seguimiento de entregas
-	proveedores
-	modulo de compras de reabastecimiento
-	almacenes
-	alertas
-
-PENDIENTES:
-	gestion de usuarios
-	facturas
-	factura
-	dashboard de ventas inventario
-	rentabilidad por producto o canal
-	pagos con tarjeta
-	web de visualizar synaptia
-	chat
+paginacion en listas
+corregir logout
+diseño responsivo en formularios
+poner permisos en barra lateral
+agregar proveedor a productos
+botones para regresar a pestaña anterior
+corregir PDF de factura
+corregir estado de compras y vetas
+interfaz de ver productos

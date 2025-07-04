@@ -2,111 +2,176 @@
 {% load static %}
 {% load render_table from django_tables2 %}
 {% load querystring from django_tables2 %}
-{% block title %}Sales{% endblock title %}
+{% block title %}Ventas{% endblock title %}
 {% block content %}
-<div class="container my-4">
-    <div class="card shadow-sm rounded p-3">
-        <div class="row align-items-center">
-            <div class="col-md-6">
-                <h4 class="display-6 mb-0 text-success">Ventas</h4>
-            </div>
-            <div class="col-md-6 d-flex justify-content-end gap-2">
-                <a class="btn btn-success btn-sm rounded-pill shadow-sm" href="{% url 'crearVenta' %}">
-                    <i class="fa-solid fa-plus"></i> Agregar venta
-                </a>
-                <a class="btn btn-primary btn-sm rounded-pill shadow-sm" href="#">
-                    <i class="fa-solid fa-download"></i> Exportar a excel
-                </a>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Ventas</a></li>
+                        <li class="breadcrumb-item active">Lista de ventas</li>
+                    </ol>
+                </div>
+                <h3 class="page-title">Ventas</h3>
             </div>
         </div>
     </div>
-</div>
-<div class="container px-3">
-    <style>
-        .table th, .table td {
-            text-align: center;
-        }
-        .btn-custom {
-            padding: 8px 20px;
-            margin: 4px;
-        }
-    </style>
-    <table class="table table-bordered table-striped table-hover table-sm">
-        <thead class="thead-light">
-            <tr>
-                <th>Fecha</th>
-                <th>Cliente</th>
-                <th>Costo Total</th>
-                <th>Método de pago</th>
-                <th>Estado de pago</th>
-                <th>Estado de envio</th>
-                <th>Descuento</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for venta in ventas %}
-            <tr>
-                <td>{{ venta.fecha|date:"Y-m-d H:i:s" }}</td>
-                <td>{{ venta.cliente.nombre }}</td>
-                <td>{{ venta.total }}</td>
-                <td>{{ venta.metodo_pago }}</td>
-                <td>{{ venta.estado_pago }}</td>
-                <td>{{ venta.estado_envio }}</td>
-                <td>{{ venta.descuento.nombre }}</td>
-                <td>
-                    <a class="btn btn-outline-info btn-sm" href="#">
-                        <i class="fa-solid fa-eye"></i> Ver detalles
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-center mt-4">
-        {% if is_paginated %}
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                {% else %}
-                <li class="page-item disabled">
-                    <span class="page-link" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </span>
-                </li>
-                {% endif %}
-                {% for i in paginator.page_range %}
-                {% if page_obj.number == i %}
-                <li class="page-item active">
-                    <span class="page-link">{{ i }} <span class="sr-only">(current)</span></span>
-                </li>
-                {% else %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                </li>
-                {% endif %}
-                {% endfor %}
-                {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-                {% else %}
-                <li class="page-item disabled">
-                    <span class="page-link" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </span>
-                </li>
-                {% endif %}
-            </ul>
-        </nav>
-        {% endif %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <a class="btn btn-success btn-sm rounded-pill shadow-sm" href="{% url 'crearVenta' %}">
+                            <i class="fa-solid fa-plus"></i> Agregar venta
+                        </a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-centered table-nowrap mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Cliente</th>
+                                    <th scope="col">Costo Total</th>
+                                    <th scope="col">Método de pago</th>
+                                    <th scope="col">Estado de pago</th>
+                                    <th scope="col">Estado de envio</th>
+                                    <th scope="col">Descuento</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for venta in ventas %}
+                                <tr>
+                                    <td>
+                                        <i class="mdi mdi-calendar me-1"></i>{{ venta.fecha }}
+                                    </td>
+                                    <td>
+                                        <div class="flex-grow-1 ms-2">
+                                            {{ venta.cliente.nombre }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{ venta.total }}
+                                    </td>
+                                    <td>
+                                        {% if venta.metodo_pago == 'EF' %}
+                                        <span class="badge bg-success-lighten text-success">Efectivo</span>
+                                        {% elif venta.metodo_pago == 'TR' %}
+                                        <span class="badge bg-primary-lighten text-primary">Tarjeta</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if venta.estado_pago == 'CT' %}
+                                        <span class="badge bg-success-lighten text-success">Completado</span>
+                                        {% elif venta.estado_pago == 'PD' %}
+                                        <span class="badge bg-danger-lighten text-danger">Pendiente</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if venta.estado_envio == 'ET' %}
+                                        <span class="badge bg-success-lighten text-success">Entregado</span>
+                                        {% elif venta.estado_envio == 'EV' %}
+                                        <span class="badge bg-warning-lighten text-warning">En envio</span>
+                                        {% elif venta.estado_envio == 'PT' %}
+                                        <span class="badge bg-danger-lighten text-danger">Pendiente</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if venta.descuento == '' %}
+                                            Sin descuento
+                                        {% else %}
+                                            {{ venta.descuento.nombre }}
+                                        {% endif %}
+                                    </td>
+
+                                    <td class="table-action d-flex justify-content-center gap-2">
+                                        <a class="btn btn-bg font-14 btn-success btn-ver d-inline-flex"
+                                            href="{% url 'detalleVenta' venta.venta_id %}">
+                                            <i class="mdi mdi-eye-outline"></i>Ver detalles
+                                        </a>
+                                        <a class="btn btn-bg font-14 btn-info btn-ver d-inline-flex"
+                                            href="{% url 'pdfVenta' venta.venta_id %}">
+                                            PDF
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-sm btn-eliminar d-inline-flex"
+                                            data-id="{{ venta.venta_id }}">
+                                            <i class="mdi mdi-delete"></i>Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+        </div>
     </div>
 </div>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function eliminarVenta(btnEliminar) {
+        const ventaId = btnEliminar.getAttribute('data-id');
+        const fila = btnEliminar.closest('tr');
+
+        if (confirm('¿Estás seguro de que deseas eliminar esta venta?')) {
+            btnEliminar.disabled = true;
+            btnEliminar.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Eliminando...';
+
+            fetch(`/ventas/${ventaId}/eliminar`, {
+                method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("Error en la respuesta del servidor");
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        fila.remove();
+                    } else {
+                        btnEliminar.disabled = false;
+                        btnEliminar.innerHTML = '<i class="mdi mdi-delete"></i> Eliminar';
+                        console.log('Error al eliminar el servidor:', data.message);
+                    }
+                })
+                .catch(error => {
+                    btnEliminar.disabled = false;
+                    btnEliminar.innerHTML = '<i class="mdi mdi-delete"></i> Eliminar';
+                    console.error('Error al eliminar el producto:', error);
+                });
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener('click', function (event) {
+            const btnEliminar = event.target.closest('.btn-eliminar');
+            if (btnEliminar) {
+                eliminarVenta(btnEliminar);
+            }
+        });
+    });
+</script>
 {% endblock content %}

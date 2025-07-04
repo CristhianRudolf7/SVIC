@@ -1,0 +1,124 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="card shadow-sm rounded p-3">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h4 class="display-6 mb-0 text-success">Trabajadores</h4>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end gap-2">
+                <a class="btn btn-success btn-sm rounded-pill shadow-sm" href="{% url 'crearTrabajador' %}">
+                    <i class="fa-solid fa-plus"></i> Agregar trabajador
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <style>
+        .table th,
+        .table td {
+            text-align: center;
+        }
+    </style>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Dni</th>
+                <th scope="col">Email</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trabajador in trabajadores %}
+            <tr>
+                <td>{{ trabajador.nombre }}</td>
+                <td>{{ trabajador.apellido }}</td>
+                <td>{{ trabajador.dni }}</td>
+                <td>{{ trabajador.email }}</td>
+                <td>{{ trabajador.rol }}</td>
+                <td>{{ trabajador.telefono }}</td>
+                <td>{{ trabajador.estado }}</td>
+                <td>
+                    <a href="{% url 'editarTrabajador' trabajador.usuario_id %}" class="btn btn-outline-primary btn-sm me-2">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <button type="button" class="btn btn-danger btn-sm btn-eliminar d-inline-flex"
+                        data-id="{{ trabajador.usuario_id  }}">
+                        <i class="mdi mdi-delete"></i>Eliminar
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function eliminarTrabajador(btnEliminar) {
+        const trabajadorId = btnEliminar.getAttribute('data-id');
+        const fila = btnEliminar.closest('tr');
+
+        if (confirm('¿Estás seguro de que desea eliminar este trabajador?')) {
+            btnEliminar.disabled = true;
+            btnEliminar.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Eliminando...';
+
+            fetch(`/eliminarTrabajador/${trabajadorId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("Error en la respuesta del servidor");
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        fila.remove();
+                    } else {
+                        btnEliminar.disabled = false;
+                        btnEliminar.innerHTML = '<i class="mdi mdi-delete"></i> Eliminar';
+                        console.log('Error al eliminar el servidor:', data.message);
+                    }
+                })
+                .catch(error => {
+                    btnEliminar.disabled = false;
+                    btnEliminar.innerHTML = '<i class="mdi mdi-delete"></i> Eliminar';
+                    console.error('Error al eliminar el trabajador:', error);
+                });
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener('click', function (event) {
+            const btnEliminar = event.target.closest('.btn-eliminar');
+            if (btnEliminar) {
+                eliminarTrabajador(btnEliminar);
+            }
+        });
+    });
+</script>
+{% endblock %}

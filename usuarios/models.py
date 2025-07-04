@@ -18,8 +18,7 @@ class Negocios(models.Model):
     )
     ruc = models.CharField(max_length=20, blank=True, null=True, verbose_name='RUC')
     foto = models.ImageField(
-        default='negocios/negocio inicial.png',
-        upload_to='usuarios',
+        null=True,
         blank=True,
         verbose_name='Logo de negocio'
     )
@@ -33,21 +32,9 @@ class Negocios(models.Model):
     fecha_creacion = models.DateTimeField(
         auto_now_add=True, editable=False
     )
-
-    def save(self, *args, **kwargs):
-        if self.foto:
-            try:
-                img_path = self.foto.path
-                if os.path.exists(img_path):
-                    img = Image.open(img_path)
-                    if img.size != (224, 224):
-                        img = img.resize((224, 224))
-                        img.save(img_path)
-                    self.ancho, self.alto = img.size
-            except Exception as e:
-                print(f"Error al procesar la imagen: {e}")
-        
-        super().save(*args, **kwargs)
+    numero_ventas = models.PositiveIntegerField(
+        default=0, editable=False, verbose_name='Número de Ventas'
+    )
 
     def __str__(self):
         return self.nombre
@@ -92,8 +79,8 @@ class Usuarios(AbstractUser):
         max_length=15, null=True, blank=True, verbose_name='Telefono'
     )
     foto = models.ImageField(
-        default='usuarios/usuario inicial.png',
-        upload_to='usuarios',
+        null=True,
+        blank=True,
         verbose_name='Foto de perfil'
     )
     fecha_creacion = models.DateTimeField(auto_now_add=True)
@@ -112,21 +99,6 @@ class Usuarios(AbstractUser):
 
     def __str__(self):
         return f"Nombre: {self.nombre} {self.apellido} - DNI:({self.dni})"
-    
-    def save(self, *args, **kwargs):
-        if self.foto:
-            try:
-                img_path = self.foto.path
-                if os.path.exists(img_path):
-                    img = Image.open(img_path)
-                    if img.size != (224, 224):
-                        img = img.resize((224, 224))
-                        img.save(img_path)
-                    self.ancho, self.alto = img.size
-            except Exception as e:
-                print(f"Error al procesar la imagen: {e}")
-        
-        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['negocio']

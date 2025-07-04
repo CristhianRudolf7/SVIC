@@ -1,0 +1,169 @@
+{% extends "inventario/base.html" %}
+{% load static %}
+{% load render_table from django_tables2 %}
+{% load querystring from django_tables2 %}
+{% block title %}Compras{% endblock title %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Compras</a></li>
+                        <li class="breadcrumb-item active">Lista de compras</li>
+                    </ol>
+                </div>
+                <h3 class="page-title">Compras</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <a class="btn btn-success btn-sm rounded-pill shadow-sm" href="{% url 'crearCompra' %}">
+                            <i class="fa-solid fa-plus"></i> Agregar compra
+                        </a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-centered table-nowrap mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Proveedor</th>
+                                    <th scope="col">Costo Total</th>
+                                    <th scope="col">Método de pago</th>
+                                    <th scope="col">Estado de pago</th>
+                                    <th scope="col">Estado de envio</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for compra in compras %}
+                                <tr>
+                                    <td>
+                                        <i class="mdi mdi-calendar me-1"></i>{{ compra.fecha }}
+                                    </td>
+                                    <td>
+                                        <div class="flex-grow-1 ms-2">
+                                            {{ compra.proveedor.nombre }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{ compra.total }}
+                                    </td>
+                                    <td>
+                                        {% if compra.metodo_pago == 'EF' %}
+                                        <span class="badge bg-success-lighten text-success">Efectivo</span>
+                                        {% elif compra.metodo_pago == 'TR' %}
+                                        <span class="badge bg-primary-lighten text-primary">Tarjeta</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if compra.estado_pago == 'CT' %}
+                                        <span class="badge bg-success-lighten text-success">Completado</span>
+                                        {% elif compra.estado_pago == 'PD' %}
+                                        <span class="badge bg-danger-lighten text-danger">Pendiente</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if compra.estado_envio == 'ET' %}
+                                        <span class="badge bg-success-lighten text-success">Entregado</span>
+                                        {% elif compra.estado_envio == 'EV' %}
+                                        <span class="badge bg-warning-lighten text-warning">En envio</span>
+                                        {% elif compra.estado_envio == 'PT' %}
+                                        <span class="badge bg-danger-lighten text-danger">Pendiente</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td class="table-action d-flex justify-content-center gap-2">
+                                        <a class="btn btn-bg font-14 btn-success btn-ver d-inline-flex"
+                                            href="{% url 'detalleCompra' compra.compra_id %}">
+                                            <i class="mdi mdi-eye-outline"></i>Ver detalles
+                                        </a>
+                                        <a class="btn btn-bg font-14 btn-info btn-ver d-inline-flex"
+                                            href="{% url 'pdfCompra' compra.compra_id %}">
+                                            PDF
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-sm btn-eliminar d-inline-flex"
+                                            data-id="{{ compra.compra_id }}">
+                                            <i class="mdi mdi-delete"></i>Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+        </div>
+    </div>
+</div>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function eliminarCompra(btnEliminar) {
+        const compraId = btnEliminar.getAttribute('data-id');
+        const fila = btnEliminar.closest('tr');
+
+        if (confirm('¿Estás seguro de que deseas eliminar esta compra?')) {
+            btnEliminar.disabled = true;
+            btnEliminar.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Eliminando...';
+
+            fetch(`/compras/${compraId}/eliminar`, {
+                method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("Error en la respuesta del servidor");
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        fila.remove();
+                    } else {
+                        btnEliminar.disabled = false;
+                        btnEliminar.innerHTML = '<i class="mdi mdi-delete"></i> Eliminar';
+                        console.log('Error al eliminar el servidor:', data.message);
+                    }
+                })
+                .catch(error => {
+                    btnEliminar.disabled = false;
+                    btnEliminar.innerHTML = '<i class="mdi mdi-delete"></i> Eliminar';
+                    console.error('Error al eliminar la compra:', error);
+                });
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener('click', function (event) {
+            const btnEliminar = event.target.closest('.btn-eliminar');
+            if (btnEliminar) {
+                eliminarVenta(btnEliminar);
+            }
+        });
+    });
+</script>
+{% endblock content %}

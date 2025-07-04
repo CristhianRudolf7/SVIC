@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'compras',
     'inventario',
     'ventas',
+    'chat',
     'crispy_forms',
     'django_tables2',
 ]

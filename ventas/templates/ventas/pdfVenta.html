@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Comprobante de pago - PDF</title>
+
+  <link rel="shortcut icon" href="{% static 'imagenes/logo.png' %}" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/pdf/theme.minc619.css' %}">
+  <link rel="stylesheet" href="{% static 'css/pdf/vendor.min.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <main id="content" role="main">
+    <div class="container content-space-2">
+      <div class="w-lg-85 mx-lg-auto">
+        <div class="d-flex justify-content-end d-print-none gap-3">
+          <a class="btn btn-white" onclick="generatePDF()">
+            <i class="mdi mdi-file-download me-1"></i> PDF
+          </a>
+
+          <a class="btn btn-primary" href="javascript:;" onclick="window.print(); return false;">
+            <i class="mdi mdi-printer me-1"></i> Print details
+          </a>
+        </div>
+        <div class="card card-lg mb-5">
+          <div class="card-body">
+            <div class="row justify-content-lg-between">
+              <div class="col-sm order-2 order-sm-1 mb-3">
+                <div class="mb-2">
+                </div>
+
+                <h1 class="h2 text-primary">{{ nombre_negocio }}</h1>
+              </div>
+
+              <div class="col-sm-auto order-1 order-sm-2 text-sm-end mb-3">
+                <div class="mb-3">
+                  <h2>Factura #{{ venta_numero }}</h2>
+                </div>
+
+                <address class="text-dark">
+                  {{ direccion_negocio }}
+                </address>
+              </div>
+            </div>
+
+            <div class="row justify-content-md-between mb-3">
+              <div class="col-md">
+                <h4>Cliente:</h4>
+                <h4>{{ cliente }}</h4>
+              </div>
+
+              <div class="col-md text-md-end">
+                <dl class="row">
+                  <dt class="col-sm-8">Fecha:</dt>
+                  <dd class="col-sm-4">{{ fecha_venta }}</dd>
+                </dl>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-borderless table-nowrap table-align-middle">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio unitario</th>
+                    <th class="table-text-end">Subtotal</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {% for detalle in venta_detalle %}
+                  <tr>
+                    <td>{{ detalle.producto.nombre }}</td>
+                    <td>{{ detalle.cantidad }}</td>
+                    <td>S/. {{ detalle.precio_unitario }}</td>
+                    <td class="table-text-end">S/. {{ detalle.subtotal }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+            <!-- End Table -->
+
+            <hr class="my-5">
+
+            <div class="row justify-content-md-end mb-3">
+              <div class="col-md-8 col-lg-7">
+                <dl class="row text-sm-end">
+                  <dt class="col-sm-6">Total:</dt>
+                  <dd class="col-sm-6">S/ {{ total }}</dd>
+                  <dt class="col-sm-6">IGV:</dt>
+                  <dd class="col-sm-6">S/ {{ impuesto }}</dd>
+                </dl>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <h3>¡Gracias!</h3>
+            </div>
+
+            <p class="small mb-0">&copy; 2025 Inventa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Content -->
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    function generatePDF() {
+      const element = document.querySelector('.card.card-lg.mb-5');
+
+      html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false
+      }).then(canvas => {
+        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+        const imgData = canvas.toDataURL('image/png');
+
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+        pdf.save('factura.pdf');
+      });
+    }
+  </script>
+
+</body>
+
+</html>

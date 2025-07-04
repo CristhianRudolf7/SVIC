@@ -11,6 +11,11 @@ class Clientes(models.Model):
     email = models.EmailField(max_length=254, blank=True, null=True, verbose_name='Email')
     telefono = models.CharField(max_length=15, blank=True, null=True, verbose_name='Teléfono')
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+    foto = models.ImageField(
+        null=True,
+        blank=True,
+        verbose_name='Foto de perfil'
+    )
 
     class Meta:
         db_table = 'Clientes'
@@ -63,6 +68,9 @@ class Ventas(models.Model):
         choices=[('EF', 'Efectivo'), ('TR', 'Tarjeta')], default="EF",
         blank=True, null=True,
     )
+    venta_numero = models.PositiveIntegerField(
+        verbose_name='Número de venta', editable=False
+    ) 
     estado_pago = models.CharField(
         max_length=10, choices=[('PD', 'Pendiente'), ('CT', 'Completado')], 
         verbose_name='Estado de pago', default="CT",

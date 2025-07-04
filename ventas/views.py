@@ -8,13 +8,15 @@ from .models import Clientes, Ventas, DetalleVentas
 from inventario.models import Productos
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
-    DetailView, CreateView, UpdateView, DeleteView, ListView
+    DetailView, CreateView, UpdateView, DeleteView, ListView, View
 )
 
 from .forms import clienteForm
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
+from decimal import Decimal, ROUND_HALF_UP
 
+@login_required
 def crearVentaView(request):
     context = {
         "clientes": [cliente for cliente in Clientes.objects.filter(negocio_id=request.user.negocio.negocio_id)]
@@ -24,12 +26,17 @@ def crearVentaView(request):
         if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
             try:
                 data = json.loads(request.body)
+                print(f'DATA: {data}')
 
                 atributos_venta = {
                     "negocio": request.user.negocio,
                     "usuario": request.user,
                     "cliente": Clientes.objects.get(cliente_id=data['cliente']),
                     "total": float(data["total"]),
+                    "metodo_pago": data["metodo_pago"],
+                    "estado_pago": data["estado_pago"],
+                    "estado_envio": data["estado_envio"],
+                    "venta_numero": int(request.user.negocio.numero_ventas) + 1,
                 }
 
                 with transaction.atomic():
@@ -82,12 +89,76 @@ class listaVentasView(LoginRequiredMixin, ListView):
     paginate_by = 10
     ordering = ['fecha']
 
+    def get_queryset(self):
+        return Ventas.objects.filter(negocio=self.request.user.negocio)
+
+class detalleVentaView(LoginRequiredMixin, DetailView):
+    model = Ventas
+    template_name = "ventas/detalleVenta.html"
+    context_object_name = "detalles"
+    pk_url_kwarg = 'venta_id'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['detalles_venta'] = DetalleVentas.objects.filter(venta=self.object)
+        context['igv'] = (self.object.total * Decimal('0.18')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        return context
+
+@login_required
+def pdf(request, venta_id):
+    negocio = request.user.negocio
+    venta = Ventas.objects.get(venta_id=venta_id)
+    venta_detalle = DetalleVentas.objects.filter(venta_id=venta_id)
+
+    data = {
+        "nombre_negocio": negocio.nombre,
+        "direccion_negocio": negocio.direccion,
+        "venta_numero": venta.venta_numero,
+        "cliente": venta.cliente.nombre,
+        "total": venta.total,
+        "impuesto": (venta.total * Decimal('0.18')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP),
+        "fecha_venta": venta.fecha.strftime('%d/%m/%Y %H:%M:%S'),
+        "venta_detalle": venta_detalle,
+    }
+    return render(request, "ventas/pdfVenta.html", data)
+
+class eliminarVentaView(LoginRequiredMixin, View):
+    def delete(self, request, venta_id):
+        try:
+            venta = Ventas.objects.get(venta_id=venta_id)
+            
+            if venta.negocio != request.user.negocio:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'No tienes permiso para eliminar esta venta'
+                }, status=403)
+            
+            venta.delete()
+            return JsonResponse({
+                'success': True,
+                'message': 'Venta eliminada correctamente'
+            })
+        except Ventas.DoesNotExist:
+            return JsonResponse({
+                'success': False,
+                'message': 'La venta no existe'
+            }, status=404)
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'message': f'Error al eliminar: {str(e)}'
+            }, status=500)
+
+
 class listaClientesView(LoginRequiredMixin, ListView):
     model = Clientes
     template_name = "ventas/listaClientes.html"
     context_object_name = "clientes"
     paginate_by = 10
     ordering = ['fecha_creacion']
+
+    def get_queryset(self):
+        return Clientes.objects.filter(negocio=self.request.user.negocio)
 
 class crearClienteView(LoginRequiredMixin, CreateView):
     model = Clientes
@@ -99,6 +170,11 @@ class crearClienteView(LoginRequiredMixin, CreateView):
         form.instance.negocio = self.request.user.negocio
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['edicion'] = False
+        return context
+
 class editarClienteView(LoginRequiredMixin, UpdateView):
     model = Clientes
     template_name = 'ventas/formCliente.html'
@@ -106,10 +182,37 @@ class editarClienteView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('listaClientes')
     pk_url_kwarg = 'cliente_id'
 
-class eliminarClienteView(LoginRequiredMixin, DeleteView):
-    model = Clientes
-    template_name = 'ventas/eliminarCliente.html'
-    success_url = reverse_lazy('listaClientes')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['edicion'] = True
+        return context
+
+class eliminarClienteView(LoginRequiredMixin, View):
+    def delete(self, request, cliente_id):
+        try:
+            cliente = Clientes.objects.get(cliente_id=cliente_id)
+            
+            if cliente.negocio != request.user.negocio:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'No tienes permiso para eliminar este cliente'
+                }, status=403)
+            
+            cliente.delete()
+            return JsonResponse({
+                'success': True,
+                'message': 'Cliente eliminado correctamente'
+            })
+        except Clientes.DoesNotExist:
+            return JsonResponse({
+                'success': False,
+                'message': 'El cliente no existe'
+            }, status=404)
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'message': f'Error al eliminar: {str(e)}'
+            }, status=500)
 
 @csrf_exempt
 @require_POST

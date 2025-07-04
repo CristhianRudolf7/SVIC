@@ -40,7 +40,7 @@
                         </div>
 
                         <button type="button" class="btn btn-danger btn-sm mb-4 deleteAll">
-                            <i class="fas fa-trash-alt me-2"></i> Eliminar producto
+                            <i class="mdi mdi-delete"></i> Eliminar todos los productos
                         </button>
 
                         <div class="table-responsive my-3">
@@ -80,14 +80,36 @@
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label for="metodo_pago" class="form-label">Método de pago</label>
+                            <select name="metodo_pago" class="form-select" id="metodo_pago" required>
+                                <option value="EF" selected>Efectivo</option>
+                                <option value="TR">Tarjeta</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado_pago" class="form-label">Estado de pago</label>
+                            <select name="estado_pago" class="form-select" id="estado_pago" required>
+                                <option value="CT" selected>Completado</option>
+                                <option value="PD">Pendiente</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado_envio" class="form-label">Estado de envio</label>
+                            <select name="estado_envio" class="form-select" id="estado_envio" aria-label="Customer"
+                                required>
+                                <option value="ET" selected>Entregado</option>
+                                <option value="EV">En envio</option>
+                                <option value="PT">Pendiente</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="total" class="form-label">Total</label>
-                            <input name="total" type="number" class="form-control" id="total"
-                                aria-label="Subtotal" readonly>
+                            <input name="total" type="number" class="form-control" id="total" aria-label="Subtotal"
+                                readonly>
                         </div>
                         <div class="mb-3">
                             <label for="impuesto" class="form-label">Monto de impuesto (18%)</label>
-                            <input name="impuesto" type="number" class="form-control" id="impuesto"
-                            readonly>
+                            <input name="impuesto" type="number" class="form-control" id="impuesto" readonly>
                         </div>
                         <button type="submit" class="btn btn-success w-100">Crear venta</button>
                     </div>
@@ -99,7 +121,7 @@
 {% endblock content %}
 
 {% block javascripts %}
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" defer></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}" defer></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-touchspin/3.1.0/jquery.bootstrap-touchspin.min.js"
@@ -123,6 +145,9 @@
         venta: {
             cliente: "",
             total: 0.00,
+            metodo_pago: $('select[name="metodo_pago"]').val(),
+            estado_pago: $('select[name="estado_pago"]').val(),
+            estado_envio: $('select[name="estado_envio"]').val(),
             productos: []
         },
         calcularCosto: function () {
@@ -153,19 +178,19 @@
                 destroy: true,
                 data: this.venta.productos,
                 columns: [
-                    {"data": "numero"},
-                    {"data": "nombre"},
-                    {"data": "precio"},
-                    {"data": "quantity"},
-                    {"data": "total_product"},
-                    {"data": "id"},
+                    { "data": "numero" },
+                    { "data": "nombre" },
+                    { "data": "precio" },
+                    { "data": "quantity" },
+                    { "data": "total_product" },
+                    { "data": "id" },
                 ],
                 columnDefs: [
                     {
                         class: 'text-center',
                         targets: [3],
                         render: function (data, type, row) {
-                            return '<input name="quantity" type="text" class="form-control form-control-xs text-center input-sm" autocomplete="off" value="' + row.quantity + '">';
+                            return '<input name="quantity" type="text" class="form-control-xs text-center input-sm" autocomplete="off" value="' + row.quantity + '">';
                         },
                     },
                     {
@@ -352,11 +377,17 @@
             var amountPaid = parseFloat($('input[name="amount_paid"]').val());
             var grandTotal = parseFloat($('input[name="grand_total"]').val());
             var amountChange = roundTo(amountPaid - grandTotal, 2);
+            var metodo_pago = $('select[name="metodo_pago"]').val();
+            var estado_pago = $('select[name="estado_pago"]').val();
+            var estado_envio = $('select[name="estado_envio"]').val();
 
             // Gather sale details
             var formData = {
                 cliente: $('select[name="customer"]').val(),
                 total: $('input[name="total"]').val(),
+                metodo_pago: metodo_pago,
+                estado_pago: estado_pago,
+                estado_envio: estado_envio,
                 productos: sale.venta.productos
             };
 
@@ -377,8 +408,10 @@
                     $('form#form_sale').trigger('reset');
                     Swal.fire({
                         icon: 'success',
-                        title: 'Success',
+                        title: 'Venta exitosa',
                         text: 'La venta se completo exitosamente'
+                    }).then(() => {
+                        window.location.href = '/ventas/';
                     });
                 },
                 error: function (xhr) {

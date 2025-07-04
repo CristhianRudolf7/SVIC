@@ -1,49 +1,58 @@
-<!-- customer_form.html -->
 {% extends 'inventario/base.html' %}
 {% block content %}
-  <div class="container m-5">
-    <h1 class="mb-4">{% if form.instance.pk %}Editar{% else %}Crear{% endif %} cliente</h1>
-    <form method="post">
-      {% csrf_token %}
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <div class="form-group">
-            {{ form.nombre.label_tag }}
-            {{ form.nombre }}
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            {{ form.apellido.label_tag }}
-            {{ form.apellido }}
-          </div>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-md-12">
-          <div class="form-group">
-            {{ form.dni.label_tag }}
-            {{ form.dni }}
-          </div>
+<div class="container m-5">
+  <h1 class="mb-4">
+    {% if edicion %}
+      Editar
+    {% else %}
+      Crear
+    {% endif %}
+    cliente
+  </h1>
+  <form method="post">
+    {% csrf_token %}
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="form-group">
+          {{ form.nombre.label_tag }}
+          {{ form.nombre }}
         </div>
       </div>
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <div class="form-group">
-            {{ form.email.label_tag }}
-            {{ form.email }}
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            {{ form.telefono.label_tag }}
-            {{ form.telefono }}
-          </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          {{ form.apellido.label_tag }}
+          {{ form.apellido }}
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">
-        <i class="fas fa-save"></i> Guardar
-      </button>
-    </form>
-  </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <div class="form-group">
+          {{ form.dni.label_tag }}
+          {{ form.dni }}
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <div class="form-group">
+          {{ form.email.label_tag }}
+          {{ form.email }}
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          {{ form.telefono.label_tag }}
+          {{ form.telefono }}
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">
+      <i class="fas fa-save"></i> Guardar
+    </button>
+  </form>
+</div>
+<script>
+  console.log("PK:", "{{ form.instance }}");
+</script>
 {% endblock %}

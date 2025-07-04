@@ -69,9 +69,6 @@ class DetalleCompra(models.Model):
     cantidad = models.PositiveIntegerField(editable=False)
     precio_unitario = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
-    negocio = models.ForeignKey(
-        Negocios, on_delete=models.CASCADE, editable=False
-    )
 
     class Meta:
         db_table = 'DetalleCompra'

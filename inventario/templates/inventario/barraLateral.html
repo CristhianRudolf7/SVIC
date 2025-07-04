@@ -48,21 +48,14 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="#" class="side-nav-link">
+                <a href="{% url 'listaCompras' %}" class="side-nav-link">
                     <i class="uil-clipboard-alt"></i>
                     <span> Compras </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
-                <a href="#" class="side-nav-link">
-                    <i class="uil-location-point"></i>
-                    <span> Envíos </span>
-                </a>
-            </li>
-
-            <li class="side-nav-item">
-                <a href="#" class="side-nav-link">
+                <a href="{% url 'chat' %}" class="side-nav-link">
                     <i class="uil-comments-alt"></i>
                     <span> Chat </span>
                 </a>
@@ -78,13 +71,13 @@
                 <div class="collapse" id="sidebarCuentas">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="#">Trabajadores</a>
+                            <a href="{% url 'listaTrabajadores' %}">Trabajadores</a>
                         </li>
                         <li>
                             <a href="{% url 'listaClientes' %}">Clientes</a>
                         </li>
                         <li>
-                            <a href="#">Proveedores</a>
+                            <a href="{% url 'listaProveedores' %}">Proveedores</a>
                         </li>
                     </ul>
                 </div>

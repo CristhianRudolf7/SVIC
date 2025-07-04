@@ -1,0 +1,97 @@
+{% extends 'inventario/base.html' %}
+{% block content %}
+<style>
+  input[type="password"],
+  #id_password1,
+  #id_password2 {
+    border: 1px solid #8a8989;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    color: #333;
+    width: 80%;
+  }
+</style>
+
+<div class="container m-5">
+  <h1 class="mb-4">
+    {% if edicion %}
+    Editar
+    {% else %}
+    Crear
+    {% endif %}
+    trabajador
+  </h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row mb-3">
+      <div class="col-md-5">
+        {{ form.nombre.label_tag }}
+        {{ form.nombre }}
+      </div>
+      <div class="col-md-5">
+        {{ form.apellido.label_tag }}
+        {{ form.apellido }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-5">
+        {{ form.dni.label_tag }}
+        {{ form.dni }}
+      </div>
+      <div class="col-md-5">
+        {{ form.email.label_tag }}
+        {{ form.email }}
+      </div>
+    </div>
+    {% if not edicion %}
+    <div class="row mb-3">
+      <div class="col-md-5">
+        {{ form.password1.label_tag }}
+        <div class="input-group input-group-merge">
+          {{ form.password1 }}
+          <div class="input-group-text show-password" data-password="true">
+            <span class="password-eye"></span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-5">
+        {{ form.password2.label_tag }}
+        <div class="input-group input-group-merge">
+          {{ form.password2 }}
+          <div class="input-group-text show-password" data-password="true">
+            <span class="password-eye"></span>
+          </div>
+        </div>
+      </div>  
+    </div>
+    {% endif %}
+    <div class="row mb-3">
+      <div class="col-md-5">
+        {{ form.rol.label_tag }}
+        {{ form.rol }}
+      </div>
+      <div class="col-md-5">
+        {{ form.telefono.label_tag }}
+        {{ form.telefono }}
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary col-md-10">
+      <i class="mdi mdi-content-save"></i> Guardar
+    </button>
+  </form>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".input-group-text").forEach(function (toggle) {
+      toggle.addEventListener("click", function () {
+        const input = this.previousElementSibling;
+        const isPassword = input.type === "password";
+        input.type = isPassword ? "text" : "password";
+        this.setAttribute("data-password", !isPassword);
+        this.querySelector(".password-eye").classList.toggle("show-password", !isPassword);
+      });
+    });
+  });
+</script>
+{% endblock %}
