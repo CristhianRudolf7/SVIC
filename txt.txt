@@ -13,7 +13,8 @@ ver los permisos para eliminar o editar algo
 Notificaciones para realizar pagos
 corregir la paginacion hacer que se mmuestre 10 productos por tabla
 en forms trabajador corregir el select de rol
+poner codigo html en el input y ver si funciona
 
-cuentas con bancos
+cuentas con bancos (recordatorio de pagos)
 mapa con ubicacion de los lugares de los emprendimientos
 ventas por chat automatizadas
