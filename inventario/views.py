@@ -28,48 +28,40 @@ from django.db.models.functions import TruncDate
 @login_required
 def dashboard(request):
     negocio = request.user.negocio
-    ventas = Ventas.objects.filter(negocio=negocio)
-    compras = Compras.objects.filter(negocio=negocio)
-    productos = Productos.objects.filter(negocio=negocio)
-    inventario = MovimientosInventario.objects.filter(negocio=negocio)
-    alertas = Alertas.objects.filter(negocio=negocio, estado='PN')
-    total_ventas = ventas.aggregate(total=Sum('total'))['total'] or 0
-    total_compras = compras.aggregate(total=Sum('total'))['total'] or 0
-    productos_bajo_stock = productos.filter(stock__lte=5).count()
-    productos_total = productos.count()
-    alertas_pendientes = alertas.count()
-    ventas_mes_actual = ventas.filter(fecha__month=now().month).aggregate(total=Sum('total'))['total'] or 0
 
     hoy = timezone.localdate()
     hace_30_dias = hoy - timedelta(days=30)
+    hace_60_dias = hoy - timedelta(days=60)
 
-    cantidad_ventas = Ventas.objects.filter(negocio=negocio).count()
-    ventas_actual = Ventas.objects.filter(
+    ventas_30 = Ventas.objects.filter(
         negocio=negocio,
-        fecha__lte=hoy
+        fecha__lte=hoy,
+        fecha__gte=hace_30_dias
     ).count()
-    ventas_anterior = Ventas.objects.filter(
+    ventas_60 = Ventas.objects.filter(
         negocio=negocio,
-        fecha__lte=hace_30_dias
+        fecha__lte=hace_30_dias,
+        fecha__gte=hace_60_dias
     ).count()
-    if ventas_anterior > 0:
-        porcentaje_ventas = ((ventas_actual - ventas_anterior) / ventas_anterior) * 100
+    if ventas_60 > 0:
+        porcentaje_ventas = ((ventas_30 - ventas_60) / ventas_60) * 100
     else:
         porcentaje_ventas = 0
 
-    cantidad_empleados = Usuarios.objects.filter(negocio=negocio, rol='Trabajador').count()
-    empleados_actual = Usuarios.objects.filter(
+    empleados_30 = Usuarios.objects.filter(
         negocio=negocio,
         rol='Trabajador',
-        fecha_creacion__lte=hoy
+        fecha_creacion__lte=hoy,
+        fecha_creacion__gte=hace_30_dias
     ).count()
-    empleados_periodo_anterior = Usuarios.objects.filter(
+    empleados_60 = Usuarios.objects.filter(
         negocio=negocio,
         rol='Trabajador',
-        fecha_creacion__lte=hace_30_dias
+        fecha_creacion__lte=hace_30_dias,
+        fecha_creacion__gte=hace_60_dias
     ).count()
-    if empleados_periodo_anterior > 0:
-        porcentaje_empleados = ((empleados_actual - empleados_periodo_anterior) / empleados_periodo_anterior) * 100
+    if empleados_60 > 0:
+        porcentaje_empleados = ((empleados_30 - empleados_60) / empleados_60) * 100
     else:
         porcentaje_empleados = 0
 
@@ -87,22 +79,41 @@ def dashboard(request):
         for i in range(15)
     ]
 
+    compra_pendiente = Compras.objects.filter(
+        negocio=negocio,
+        estado_envio='PT',
+    ).count()
+    compra_envio = Compras.objects.filter(
+        negocio=negocio,
+        estado_envio='EV',
+    ).count()
+    compra_entregado = Compras.objects.filter(
+        negocio=negocio,
+        estado_envio='ET',
+    ).count()
+
+    total = compra_pendiente + compra_envio + compra_entregado
+    if total > 0:
+        compras_porcentaje = [round(i * 100 / total, 2) for i in [compra_pendiente, compra_envio, compra_entregado]]
+        grafico_bool = True
+    else:
+        compras_porcentaje = [0, 0, 0]
+        grafico_bool = False
+    compras_cantidad = [compra_pendiente, compra_envio, compra_entregado]
+
     context = {
-        "total_ventas": total_ventas,
-        "total_compras": total_compras,
-        "productos_total": productos_total,
-        "productos_bajo_stock": productos_bajo_stock,
-        "alertas_pendientes": alertas_pendientes,
-        "ventas_mes_actual": ventas_mes_actual,
-        "cantidad_empleados": cantidad_empleados,
-        "cantidad_ventas": cantidad_ventas,
-        "porcentaje_empleados": {'porcentaje': abs(round(porcentaje_empleados, 2)),
-                                            'signo': 'P' if porcentaje_empleados >= 0 else 'N'},
-        "porcentaje_ventas": {'porcentaje': abs(round(porcentaje_ventas, 2)),
-                                            'signo': 'P' if porcentaje_ventas >= 0 else 'N'},
+        "compras": {"porcentaje": compras_porcentaje,
+                    "cantidad": compras_cantidad,
+                    "grafico": grafico_bool},
+        "empleados": {'porcentaje': abs(round(porcentaje_empleados, 2)),
+                      'signo': 'P' if porcentaje_empleados >= 0 else 'N',
+                      'cantidad': empleados_30},
+        "ventas": {'porcentaje': abs(round(porcentaje_ventas, 2)),
+                   'signo': 'P' if porcentaje_ventas >= 0 else 'N',
+                   'cantidad': ventas_30},
         "ventas_dia": lista_cantidades
     }
-    print(lista_cantidades)
+    print(context)
     return render(request, "inventario/dashboard.html", context)
 
 class ListaProductosViews(LoginRequiredMixin, ExportMixin, SingleTableView):

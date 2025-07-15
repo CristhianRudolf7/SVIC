@@ -50,6 +50,15 @@
             }
         };
         new ApexCharts(document.querySelector("#cantidad-ventas"), r).render();
+
+        colores = ["#fa5c7c", "#ffbc00", "#0acf97"]; 
+        var circular = { 
+            chart: { height: 203, type: "donut" }, 
+            legend: { show: !1 }, stroke: { colors: ["transparent"] }, 
+            series: window.comprasPorcentaje, labels: ["Pendiente", "En envio", "Entregado"], 
+            colors: colores, responsive: [{ breakpoint: 480, options: { chart: { width: 200 }, legend: { position: "bottom" } } }]
+        }; 
+        new ApexCharts(document.querySelector("#totalCompras"), circular).render()
     },
 
     graficas.prototype.init = function () {

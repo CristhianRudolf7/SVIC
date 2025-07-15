@@ -7,13 +7,6 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
-                <div class="page-title-right">
-                    <form class="d-flex">
-                        <a href="javascript: void(0);" class="btn btn-primary ms-2">
-                            <i class="mdi mdi-autorenew"></i>
-                        </a>
-                    </form>
-                </div>
                 <h4 class="page-title">Dashboard</h4>
             </div>
         </div>
@@ -25,16 +18,16 @@
                 <div class="card-body">
                     <i class="mdi mdi-cash-register float-end"></i>
                     <h6 class="text-uppercase mt-0">Cantidad de ventas</h6>
-                    <h2 class="my-2">{{ cantidad_ventas }}</h2>
+                    <h2 class="my-2">{{ ventas.cantidad }}</h2>
                     <p class="mb-0 text-muted">
-                        {% if porcentaje_ventas.signo == 'N' %}
-                        <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span> 
-                        {{ porcentaje_ventas.porcentaje }}%</span>
-                        {% else %}
-                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 
-                        {{ porcentaje_ventas.porcentaje }}%</span>
-                        {% endif %}
-                        <span class="text-nowrap">En los últimos 30 días</span>
+                    {% if ventas.signo == 'N' %}
+                        <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span>
+                            {{ ventas.porcentaje }}%</span>
+                    {% else %}
+                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span>
+                            {{ ventas.porcentaje }}%</span>
+                    {% endif %}
+                    <span class="text-nowrap">En los últimos 30 días</span>
                     </p>
                 </div>
             </div>
@@ -43,21 +36,20 @@
                 <div class="card-body">
                     <i class="mdi mdi-account-group float-end"></i>
                     <h6 class="text-uppercase mt-0">Cantidad de empleados</h6>
-                    <h2 class="my-2">{{ cantidad_empleados }}</h2>
+                    <h2 class="my-2">{{ empleados.cantidad }}</h2>
                     <p class="mb-0 text-muted">
-                        {% if porcentaje_empleados.signo == 'N' %}
-                        <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span> 
-                        {{ porcentaje_empleados.porcentaje }}%</span>
-                        {% else %}
-                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 
-                        {{ porcentaje_empleados.porcentaje }}%</span>
-                        {% endif %}
-                        <span class="text-nowrap">En los últimos 30 días</span>
+                    {% if empleados.signo == 'N' %}
+                        <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span>
+                            {{ empleados.porcentaje }}%</span>
+                    {% else %}
+                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span>
+                            {{ empleados.porcentaje }}%</span>
+                    {% endif %}
+                    <span class="text-nowrap">En los últimos 30 días</span>
                     </p>
                 </div>
             </div>
         </div>
-
         <div class="col-xl-9 col-lg-8">
             <div class="card card-h-100">
                 <div class="card-body">
@@ -70,12 +62,217 @@
         </div>
     </div>
 
-</div>
+    <div class="row">
+        <div class="col-xl-4 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="header-title">Total de compras</h4>
+                    </div>
+                    {% if compras.grafico %}
+                        <div id="totalCompras" class="apex-charts mb-4 mt-3" data-colors="#727cf5,#0acf97,#fa5c7c,#ffbc00">
+                        </div>
+                    {% endif %}
 
+                    <div class="chart-widget-list">
+                        <p>
+                            <i class="mdi mdi-square text-success"></i> Entregado
+                            <span class="float-end">{{ compras.cantidad.2 }}</span>
+                        </p>
+                        <p class="mb-0">
+                            <i class="mdi mdi-square text-warning"></i> En envio
+                            <span class="float-end">{{ compras.cantidad.1 }}</span>
+                        </p>
+                        <p>
+                            <i class="mdi mdi-square text-danger"></i> Pendiente
+                            <span class="float-end">{{ compras.cantidad.0 }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="header-title">Ventas por empleado</h4>
+                    </div>
+
+                    <div id="views-min" class="apex-charts mt-2" data-colors="#0acf97"></div>
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm mb-0 font-13">
+                            <thead>
+                                <tr>
+                                    <th>Page</th>
+                                    <th>Views</th>
+                                    <th>Bounce Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="javascript:void(0);" class="text-muted">/hyper/dashboard-analytics</a>
+                                    </td>
+                                    <td>25</td>
+                                    <td>87.5%</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="javascript:void(0);" class="text-muted">/hyper/dashboard-crm</a>
+                                    </td>
+                                    <td>15</td>
+                                    <td>21.48%</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="javascript:void(0);" class="text-muted">/ubold/dashboard</a>
+                                    </td>
+                                    <td>10</td>
+                                    <td>63.59%</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="javascript:void(0);" class="text-muted">/minton/home</a>
+                                    </td>
+                                    <td>7</td>
+                                    <td>56.12%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div>
+        <div class="col-xl-4 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-1 mb-3">Porcentaje de productos por categorias</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-centered mb-0 font-14">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Channel</th>
+                                    <th>Visits</th>
+                                    <th style="width: 40%;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Direct</td>
+                                    <td>2,050</td>
+                                    <td>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar" role="progressbar"
+                                                style="width: 65%; height: 20px;" aria-valuenow="65" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Organic Search</td>
+                                    <td>1,405</td>
+                                    <td>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-info" role="progressbar"
+                                                style="width: 45%; height: 20px;" aria-valuenow="45" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Refferal</td>
+                                    <td>750</td>
+                                    <td>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-warning" role="progressbar"
+                                                style="width: 30%; height: 20px;" aria-valuenow="30" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Social</td>
+                                    <td>540</td>
+                                    <td>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-danger" role="progressbar"
+                                                style="width: 25%; height: 20px;" aria-valuenow="25" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> <!-- end table-responsive-->
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div>
+        <div class="col-xl-4 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-1 mb-3">Productos con menos stock</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-centered mb-0 font-14">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Duration (Secs)</th>
+                                    <th style="width: 30%;">Sessions</th>
+                                    <th style="width: 30%;">Views</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0-30</td>
+                                    <td>2,250</td>
+                                    <td>4,250</td>
+                                </tr>
+                                <tr>
+                                    <td>31-60</td>
+                                    <td>1,501</td>
+                                    <td>2,050</td>
+                                </tr>
+                                <tr>
+                                    <td>61-120</td>
+                                    <td>750</td>
+                                    <td>1,600</td>
+                                </tr>
+                                <tr>
+                                    <td>121-240</td>
+                                    <td>540</td>
+                                    <td>1,040</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> <!-- end table-responsive-->
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div>
+        <div class="col-xl-8 col-lg-12">
+            <div class="card card-h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h4 class="header-title">Productos más vendidos</h4>
+                    </div>
+
+                    <div dir="ltr">
+                        <div id="high-performing-product" class="apex-charts" data-colors="#727cf5,#e3eaef"></div>
+                    </div>
+
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+
+        </div>
+    </div>
+
+</div>
 {% endblock content %}
 {% block javascripts %}
 <script>
-    window.ventasDia = {{ ventas_dia|safe }};
+    window.ventasDia = {{ ventas_dia | safe }};
+    window.comprasPorcentaje = {{ compras.porcentaje | safe }};
 </script>
 <script src="{% static 'js/graficos.js' %}"></script>
 <script src="{% static 'js/jquery-jvectormap-1.2.2.min.js' %}"></script>

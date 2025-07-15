@@ -7,3 +7,5 @@ botones para regresar a pestaña anterior
 corregir PDF de factura
 corregir estado de compras y vetas
 interfaz de ver productos
+correjir notificaciones
+coregir barra superior
