@@ -120,7 +120,5 @@ class UsuarioEditarForm(forms.ModelForm):
             }),
         }
 
-
-
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='DNI', max_length=8)

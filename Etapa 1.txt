@@ -9,3 +9,8 @@ corregir estado de compras y vetas
 interfaz de ver productos
 correjir notificaciones
 coregir barra superior
+corregir permiso
+ver diseño responsivo en cada pagina
+corregir el landing para el precio
+validar los archivos que ingresa el usuario con tipo de dato
+gestionar los permisos de @login_required

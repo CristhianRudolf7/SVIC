@@ -101,7 +101,49 @@ def dashboard(request):
         grafico_bool = False
     compras_cantidad = [compra_pendiente, compra_envio, compra_entregado]
 
+    ventas_empleado = []
+    for empleado in Usuarios.objects.filter(negocio=negocio):
+        ventas_empleado.append({
+            "nombre": f"{empleado.nombre} {empleado.apellido}",
+            "cantidad": Ventas.objects.filter(negocio=negocio, usuario=empleado).count(),
+            "ventas": float(Ventas.objects.filter(negocio=negocio, usuario=empleado)
+            .aggregate(Sum('total'))['total__sum'] or 0)
+        })
+    
+    def calcular_clase_progreso(porcentaje):
+        porcentaje = round(porcentaje / 5) * 5
+        return f"progress-{porcentaje}"
+
+    categorias_productos = []
+    total_stock = Productos.objects.filter(negocio=negocio).aggregate(Sum('stock'))['stock__sum'] or 0
+    for categorias in Categorias.objects.filter(negocio=negocio):
+        productos = Productos.objects.filter(categoria=categorias)
+        cantidad_productos = productos.count()
+        stock = productos.aggregate(Sum('stock'))['stock__sum'] or 0
+        stock_porcentaje = int(stock / total_stock * 100) if total_stock > 0 else 0
+        categorias_productos.append({
+            "nombre": categorias.nombre,
+            "cantidad_productos": cantidad_productos,
+            "stock_porcentaje": stock_porcentaje,
+            "progress_class": calcular_clase_progreso(stock_porcentaje)
+        })
+
+    menor_stock = Productos.objects.filter(negocio=negocio).order_by('stock')[:5]
+
+    ventas_por_producto = DetalleVentas.objects.values('producto__nombre').annotate(
+        total_vendido=Sum('cantidad')
+    ).order_by('-total_vendido')[:10]
+
+    ventas_producto = {
+        "nombre": [v["producto__nombre"] for v in ventas_por_producto],
+        "cantidad": [v["total_vendido"] for v in ventas_por_producto],
+    }
+        
     context = {
+        "ventas_producto": ventas_producto,
+        "menor_stock": menor_stock,
+        "categorias_productos": categorias_productos,
+        "ventas_empleado": ventas_empleado,
         "compras": {"porcentaje": compras_porcentaje,
                     "cantidad": compras_cantidad,
                     "grafico": grafico_bool},
@@ -113,8 +155,71 @@ def dashboard(request):
                    'cantidad': ventas_30},
         "ventas_dia": lista_cantidades
     }
-    print(context)
     return render(request, "inventario/dashboard.html", context)
+
+@login_required
+def dashboard_data(request):
+    negocio = request.user.negocio
+
+    hoy = timezone.localdate()
+
+    hace_15_dias = hoy - timedelta(days=14)
+    ventas = (
+        Ventas.objects
+        .filter(fecha__date__range=(hace_15_dias, hoy))
+        .annotate(dia=TruncDate('fecha'))
+        .values('dia')
+        .annotate(cantidad=Count('venta_id'))
+    )
+    ventas_dict = {v['dia']: v['cantidad'] for v in ventas}
+    lista_cantidades = [
+        ventas_dict.get(hace_15_dias + timedelta(days=i), 0)
+        for i in range(15)
+    ]
+
+    compra_pendiente = Compras.objects.filter(
+        negocio=negocio,
+        estado_envio='PT',
+    ).count()
+    compra_envio = Compras.objects.filter(
+        negocio=negocio,
+        estado_envio='EV',
+    ).count()
+    compra_entregado = Compras.objects.filter(
+        negocio=negocio,
+        estado_envio='ET',
+    ).count()
+
+    total = compra_pendiente + compra_envio + compra_entregado
+    if total > 0:
+        compras_porcentaje = [round(i * 100 / total, 2) for i in [compra_pendiente, compra_envio, compra_entregado]]
+    else:
+        compras_porcentaje = [0, 0, 0]
+
+    ventas_empleado = []
+    for empleado in Usuarios.objects.filter(negocio=negocio):
+        ventas_empleado.append({
+            "nombre": f"{empleado.nombre} {empleado.apellido}",
+            "cantidad": Ventas.objects.filter(negocio=negocio, usuario=empleado).count(),
+            "ventas": float(Ventas.objects.filter(negocio=negocio, usuario=empleado)
+            .aggregate(Sum('total'))['total__sum'] or 0)
+        })
+
+
+    ventas_por_producto = DetalleVentas.objects.values('producto__nombre').annotate(
+        total_vendido=Sum('cantidad')
+    ).order_by('-total_vendido')[:10]
+
+    ventas_producto = {
+        "nombre": [v["producto__nombre"] for v in ventas_por_producto],
+        "cantidad": [v["total_vendido"] for v in ventas_por_producto],
+    }
+    return JsonResponse({
+        "ventas_empleado": ventas_empleado,
+        "ventas_producto": ventas_producto,
+        "comprasPorcentaje": compras_porcentaje,
+        "ventas_dia": lista_cantidades
+    })
 
 class ListaProductosViews(LoginRequiredMixin, ExportMixin, SingleTableView):
     model = Productos

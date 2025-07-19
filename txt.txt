@@ -16,6 +16,9 @@ en forms trabajador corregir el select de rol
 poner codigo html en el input y ver si funciona
 corregir la seleccion (color azul) el la barra lateral
 recordatorios en calendario
+mejorar los graficos
+configurar detalladamente https
+Evita href="#" en producción; usa javascript:void(0) o un url real
 
 cuentas con bancos (recordatorio de pagos)
 mapa con ubicacion de los lugares de los emprendimientos

@@ -10,7 +10,7 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Inventario</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'listaProductos' %}">Inventario</a></li>
                         <li class="breadcrumb-item active">Productos</li>
                     </ol>
                 </div>
@@ -29,11 +29,8 @@
                         </div>
                         <div class="col-sm-7">
                             <div class="text-sm-end">
-                                <button type="button" class="btn btn-success mb-2 me-1"><i
-                                        class="mdi mdi-cog-outline"></i></button>
-                                <button type="button" class="btn btn-light mb-2 me-1">Importar</button>
                                 <a class="btn btn-light mb-2" href="{% querystring '_export'='xlsx' %}">
-                                    <i class="fa-solid fa-file-excel"></i> Exportar a excel
+                                    <i class="mdi mdi-file-excel"></i> Exportar a excel
                                 </a>
                             </div>
                         </div>
@@ -242,7 +239,7 @@
         toastEl.className = `toast align-items-center text-white bg-${tipo} border-0`;
         toastEl.innerHTML = `
         <div class="d-flex">
-            <div class="toast-body">${mensaje}</div>
+            <div class="toast-body">${DOMPurify.sanitize(mensaje)}</div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     `;
@@ -311,24 +308,24 @@
                     <label class="form-check-label" for="customCheck2">&nbsp;</label>
                 </div>
             </td>
-            <td>${producto.nombre}</td>
-            <td>${producto.categoria || ''}</td>
-            <td>${producto.precio}</td>
-            <td>${producto.stock}</td>
-            <td>${producto.unidad}</td>
+            <td>${DOMPurify.sanitize(producto.nombre)}</td>
+            <td>${DOMPurify.sanitize(producto.categoria || '')}</td>
+            <td>${DOMPurify.sanitize(producto.precio)}</td>
+            <td>${DOMPurify.sanitize(producto.stock)}</td>
+            <td>${DOMPurify.sanitize(producto.unidad)}</td>
             <td class="table-action d-flex justify-content-center gap-2">
                 <button type="button"
                     class="btn btn-bg font-14 btn-success btn-ver d-inline-flex"
-                    data-id="${producto.producto_id}">
+                    data-id="${DOMPurify.sanitize(producto.producto_id)}">
                     <i class="mdi mdi-eye-outline"></i> Ver
                 </button>
                 <button type="button"
                     class="btn btn-bg font-14 btn-warning btn-editar d-inline-flex"
-                    data-id="${producto.producto_id}">
+                    data-id="${DOMPurify.sanitize(producto.producto_id)}">
                     <i class="mdi mdi-square-edit-outline"></i> Editar
                 </button>
                 <button type="button" class="btn btn-danger btn-sm btn-eliminar d-inline-flex"
-                    data-id="${producto.producto_id}">
+                    data-id="${DOMPurify.sanitize(producto.producto_id)}">
                     <i class="mdi mdi-delete"></i> Eliminar
                 </button>
             </td>

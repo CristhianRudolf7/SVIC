@@ -160,7 +160,7 @@ function mostrarToast(tipo, mensaje) {
     toastEl.className = `toast align-items-center text-white bg-${tipo} border-0`;
     toastEl.innerHTML = `
         <div class="d-flex">
-            <div class="toast-body">${mensaje}</div>
+            <div class="toast-body">${DOMPurify.sanitize(mensaje)}</div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     `;
@@ -238,9 +238,9 @@ function agregarUnidadATabla(unidad) {
                 <label class="form-check-label" for="customCheck2">&nbsp;</label>
             </div>
         </td>
-        <td>${unidad.nombre}</td>
-        <td>${unidad.simbolo || ''}</td>
-        <td>${formatearFecha(unidad.fecha_creacion)}</td>
+        <td>${DOMPurify.sanitize(unidad.nombre)}</td>
+        <td>${DOMPurify.sanitize(unidad.simbolo || '')}</td>
+        <td>${DOMPurify.sanitize(formatearFecha(unidad.fecha_creacion))}</td>
         <td class="table-action d-flex justify-content-center gap-2">
             <a href="javascript:void(0);" class="btn btn-bg font-14 btn-success d-inline-flex" id="btn-new-event">
                 <i class="mdi mdi-square-edit-outline"></i>Editar

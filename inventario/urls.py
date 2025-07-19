@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from inventario import views as inventario_views
 from .views import (
     ListaProductosViews, ListaCategoriasViews, CategoriaDetalleViews, 
-    ListaUnidadesViews, UnidadDetalleViews, ProductoDetalleViews, obtenerProductos
+    ListaUnidadesViews, UnidadDetalleViews, ProductoDetalleViews, obtenerProductos, dashboard_data
 )
 
 urlpatterns = [
@@ -14,6 +14,6 @@ urlpatterns = [
     path('categorias/<uuid:categoria_id>/', CategoriaDetalleViews.as_view(), name='metodosCategorias'),
     path('unidades/', ListaUnidadesViews.as_view(), name='listaUnidades'),
     path('unidades/<uuid:unidad_id>/', UnidadDetalleViews.as_view(), name='metodosUnidades'),
-
+    path('api/dashboard-data/', dashboard_data, name='dashboard-data'),
     path('obtener-productos/', obtenerProductos, name='obtenerProductos')
 ]

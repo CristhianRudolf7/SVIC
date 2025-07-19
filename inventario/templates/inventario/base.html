@@ -3,20 +3,19 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>SynaptIA</title>
+  <title>Inventa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta content="Sistema de ventase e inventariado" name="description" />
   {% load static %}
   {% block stylesheets %}{% endblock stylesheets %}
-  <!--<link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/dripicons@2.0.0/webfont/css/dripicons.css" rel="stylesheet">-->
   <link href="{% static 'css/app.min.css' %}" rel="stylesheet" />
   <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" />
   <link href="{% static 'css/dataTables.bootstrap5.css' %}" rel="stylesheet" />
   <link href="{% static 'css/responsive.bootstrap5.css' %}" rel="stylesheet" />
   <link href="{% static 'imagenes/logo.png' %}" rel="icon"/>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  
+  <link href="{% static 'css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/SVIC.css' %}" rel="stylesheet">
+  <link href="{% static 'css/mdi.css' %}" rel="stylesheet">
 
 </head>
 
@@ -36,6 +35,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
                 <form class="p-3">
+                  {% csrf_token %}
                   <input type="text" class="form-control" placeholder="Buscar....." aria-label="Recipient's username">
                 </form>
               </div>
@@ -60,8 +60,7 @@
                   </h5>
                 </div>  
 
-                <div class="px-3" style="max-height: 300px;" data-simplebar>
-
+                <div class="px-3 simplebar-max-height" data-simplebar>
                   <h5 class="text-muted font-13 fw-normal mt-0">Hoy</h5>
                   <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-2">
                     <div class="card-body">
@@ -221,6 +220,7 @@
           </button>
           <div class="app-search dropdown d-none d-lg-block">
             <form>
+              {% csrf_token %}
               <div class="input-group">
                 <input type="text" class="form-control dropdown-toggle" placeholder="Buscar..." id="top-search">
                 <span class="mdi mdi-magnify search-icon"></span>
@@ -281,7 +281,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-6">
-              <script>document.write(new Date().getFullYear())</script> © SynaptIA - Desarrollado por Egoavil Huaman
+              <span id="current-year"></span> © SynaptIA - Desarrollado por Egoavil Huaman
               Cristhian Rudolf
             </div>
             <div class="col-md-6">
@@ -300,7 +300,7 @@
 
   <div class="rightbar-overlay"></div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{% static 'js/jquery.js' %}"></script>
   <script src="{% static 'js/vendor.min.js' %}"></script>
   <script src="{% static 'js/app.min.js' %}"></script>
 

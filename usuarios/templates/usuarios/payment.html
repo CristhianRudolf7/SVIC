@@ -21,7 +21,7 @@
                     <div class="d-flex justify-content-end pt-3 pt-sm-0">
                         <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal"
                             data-bs-target="#paymentModal">
-                            <i class="bx bx-credit-card fs-xl me-lg-1 me-xl-2"></i>
+                            <i class="mdi mdi-credit-card-outline fs-xl me-lg-1 me-xl-2"></i>
                             Adquirir </a>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                     <div class="d-flex justify-content-end pt-3 pt-sm-0">
                         <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal"
                             data-bs-target="#paymentModal">
-                            <i class="bx bx-credit-card fs-xl me-lg-1 me-xl-2"></i>
+                            <i class="mdi mdi-credit-card-outline fs-xl me-lg-1 me-xl-2"></i>
                             Adquirir </a>
                     </div>
                 </div>
@@ -55,14 +55,14 @@
                     <div class="d-flex justify-content-end pt-3 pt-sm-0">
                         <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal"
                             data-bs-target="#paymentModal">
-                            <i class="bx bx-credit-card fs-xl me-lg-1 me-xl-2"></i>
+                            <i class="mdi mdi-credit-card-outline fs-xl me-lg-1 me-xl-2"></i>
                             Adquirir </a>
                     </div>
                 </div>
 
                 <div class="py-2">
                     <button type="button" class="btn btn-primary ps-4 mx-auto d-block">
-                        <i class="bx bx-user fs-xl me-2"></i>
+                        <i class="mdi mdi-account-outline fs-xl me-2"></i>
                         Contacta a un asesor
                     </button>
                 </div>
@@ -85,6 +85,7 @@
             <div class="modal-body">
                 <div>
                     <form class="row mb-4">
+                        {% csrf_token %}
                         <div class="mb-3 col-12 col-md-12 mb-4">
                             <h5 class="mb-3">Tarjeta de credito o débito</h5>
                             <div class="d-inline-flex">
