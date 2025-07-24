@@ -42,3 +42,11 @@
 .progress-90  { width: 90%; }
 .progress-95  { width: 95%; }
 .progress-100 { width: 100%; }
+
+.w-20 {
+    width: 20px;
+}
+
+.w-85 {
+    width: 85px;
+}
