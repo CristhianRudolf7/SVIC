@@ -75,6 +75,7 @@ class UsuarioForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.username = self.cleaned_data['dni']
+        user.dni = self.cleaned_data['dni'] 
         if commit:
             user.save()
         return user

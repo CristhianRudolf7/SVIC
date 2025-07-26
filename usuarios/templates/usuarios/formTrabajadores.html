@@ -1,17 +1,7 @@
 {% extends 'inventario/base.html' %}
+{% load static %}
 {% block content %}
-<style>
-  input[type="password"],
-  #id_password1,
-  #id_password2 {
-    border: 1px solid #8a8989;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    color: #333;
-    width: 80%;
-  }
-</style>
-
+<link href="{% static 'css/form/formTrabajadores.css' %}" rel="stylesheet" />
 <div class="container m-5">
   <h1 class="mb-4">
     {% if edicion %}
@@ -81,17 +71,5 @@
     </button>
   </form>
 </div>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".input-group-text").forEach(function (toggle) {
-      toggle.addEventListener("click", function () {
-        const input = this.previousElementSibling;
-        const isPassword = input.type === "password";
-        input.type = isPassword ? "text" : "password";
-        this.setAttribute("data-password", !isPassword);
-        this.querySelector(".password-eye").classList.toggle("show-password", !isPassword);
-      });
-    });
-  });
-</script>
+<script src="{% static 'js/form/formTrabajadores.js' %}"></script>
 {% endblock %}

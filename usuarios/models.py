@@ -50,7 +50,7 @@ class Usuarios(AbstractUser):
         primary_key=True, default=uuid.uuid4, editable=False
     )
     negocio = models.ForeignKey(
-        Negocios, on_delete=models.CASCADE, editable=False
+        Negocios, on_delete=models.CASCADE
     )
     nombre = models.CharField(
         max_length=30, verbose_name='Nombre'

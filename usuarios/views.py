@@ -63,7 +63,6 @@ class crearTrabajadorView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.negocio = self.request.user.negocio
-        form.instance.rol = 'Trabajador'
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
