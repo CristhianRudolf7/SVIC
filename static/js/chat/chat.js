@@ -1,3 +1,5 @@
+const chatUrl = document.getElementById('url-chat').value;
+const imagenUrl = document.getElementById('url-imagen').value;
 function actualizarHora(nombre) {
     const ahora = new Date();
     let horas = ahora.getHours();
@@ -47,7 +49,7 @@ function enviarMensaje() {
 
     document.getElementById('chat-mensajes').insertAdjacentHTML('beforeend', mensajeHTML);
     mensajeInput.value = '';
-    fetch("{% url 'chat_api' %}", {
+    fetch(chatUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -59,7 +61,7 @@ function enviarMensaje() {
             const botHTML = `
         <div class="d-flex mb-1">
           <div class="flex-shrink-0 avatar avatar-xs me-2">
-            <img class="avatar-img rounded-circle max-100" src="{% static 'imagenes/bot.png' %}">
+            <img class="avatar-img rounded-circle max-100" src=${imagenUrl}>
           </div>
           <div class="flex-grow-1">
             <div class="max-75 w-auto">
