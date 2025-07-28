@@ -1,98 +1,179 @@
 .bg-white-10 {
-    background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .page-loading {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    -webkit-transition: all .4s .2s ease-in-out;
-    transition: all .4s .2s ease-in-out;
-    background-color: #fff;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: all 0.4s 0.2s ease-in-out;
+  transition: all 0.4s 0.2s ease-in-out;
+  background-color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9999;
 }
 
 .page-loading.active {
-    opacity: 1;
-    visibility: visible;
+  opacity: 1;
+  visibility: visible;
 }
 
 .page-loading-inner {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    -webkit-transition: opacity .2s ease-in-out;
-    transition: opacity .2s ease-in-out;
-    opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
 }
 
-.page-loading.active>.page-loading-inner {
-    opacity: 1;
+.page-loading.active > .page-loading-inner {
+  opacity: 1;
 }
 
-.page-loading-inner>span {
-    display: block;
-    font-size: 1rem;
-    font-weight: normal;
-    color: #9397ad;
+.page-loading-inner > span {
+  display: block;
+  font-size: 1rem;
+  font-weight: normal;
+  color: #9397ad;
 }
 
 .page-spinner {
-    display: inline-block;
-    width: 2.75rem;
-    height: 2.75rem;
-    margin-bottom: .75rem;
-    vertical-align: text-bottom;
-    border: .15em solid #b4b7c9;
-    border-right-color: transparent;
-    border-radius: 50%;
-    -webkit-animation: spinner .75s linear infinite;
-    animation: spinner .75s linear infinite;
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.75rem;
+  vertical-align: text-bottom;
+  border: 0.15em solid #b4b7c9;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner 0.75s linear infinite;
+  animation: spinner 0.75s linear infinite;
 }
 
 @-webkit-keyframes spinner {
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spinner {
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
 @media (min-width: 992px) {
-    .dropdown-toggle.hide-caret-lg::after {
-        display: none !important;
-    }
+  .dropdown-toggle.hide-caret-lg::after {
+    display: none !important;
+  }
 }
 
 .progress-height {
-    height: 7px;
+  height: 7px;
 }
 
 .ellipsis-style {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-height: 200px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 200px;
 }
 
 .text-highlight-warning {
-    background-color: #fff3cd;
-    padding: 0 5px;
-    border-radius: 4px;
+  background-color: #fff3cd;
+  padding: 0 5px;
+  border-radius: 4px;
+}
+
+/*
+AQUI EDITAR
+*/
+
+.card-asesor {
+  background: linear-gradient(145deg, #ffffff, var(--si-gray-100));
+  border: none;
+  border-radius: var(--si-border-radius-2xl);
+  box-shadow: 0 5px 2px rgba(var(--si-primary-rgb), 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-asesor:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(var(--si-primary-rgb), 0.2);
+}
+
+.card-asesor img {
+  border: 4px solid white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-asesor h4 {
+  color: var(--si-heading-color);
+  margin-bottom: 0.5rem;
+}
+
+.card-asesor p {
+  color: var(--si-gray-700);
+  font-size: 0.95rem;
+}
+
+.card-asesor .btn-whatsapp {
+  background-color: rgb(var(--si-primary-rgb));
+  color: white;
+  font-weight: 600;
+  border-radius: var(--si-border-radius-pill);
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.card-asesor .btn-whatsapp:hover {
+  background-color: rgba(var(--si-primary-rgb), 0.9);
+  color: white;
+}
+.asesor-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 10px solid white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/*Color de la principal hero*/
+.hero-section {
+  min-height: 90vh;
+  background-color: #fff;
+}
+
+/*para los h2 su coloreado ,  */
+.bg-armonioso {
+  background: var(--si-secondary);
+}
+
+/*para el footer */
+.bg-footer-dark {
+  background: var(--si-dark); /* variable de tu root: #0b0f19 */
+  color: var(--si-light); /* texto blanco */
+}
+
+.footer a,
+.footer a.nav-link {
+  color: var(--si-gray-100); /* enlaces gris claro, para mejor contraste */
+  transition: color 0.2s;
+}
+.footer a:hover {
+  color: var(--si-primary); /* enlaces en hover con tu color primario */
 }

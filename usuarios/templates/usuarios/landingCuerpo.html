@@ -1,116 +1,186 @@
-{% extends "usuarios/landing.html" %}
-{% load static %}
-
-{% block content %}
-<section class="position-relative overflow-hidden py-1 mb-3">
+{% extends "usuarios/landing.html" %} {% load static %} {% block content %}
+<section class="hero-section d-flex align-items-center py-5 mb-4">
   <div class="container">
-    <div class="row flex-lg-nowrap">
-      <div class="col-lg-6 col-xl-5 text-center text-lg-start pt-4">
+    <div class="row align-items-center">
+      <!-- Texto a la izquierda -->
+      <div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
         <h1 class="display-4 mb-3">
           Asistente de
           <span class="text-primary text-highlight-warning">
             <span id="typed-output"></span>
           </span>
         </h1>
-        <p class="fs-lg mb-4 mb-lg-5">"Automatiza tu negocio, controla tu stock y aumenta tus ventas desde cualquier
-          dispositivo."
+        <p class="fs-lg mb-4">
+          "Automatiza tu negocio, controla tu stock y aumenta tus ventas desde
+          cualquier dispositivo."
         </p>
-        <a href="{% url 'home' %}#caracteristicas" class="btn btn-primary btn-lg">Leer más</a>
+        <a
+          href="{% url 'home' %}#caracteristicas"
+          class="btn btn-primary btn-lg"
+        >
+          Leer más
+        </a>
       </div>
 
-      <div class="col-md-5 offset-md-2 pt-3 mt-xl-1">
-        <div class="text-md-end mt-1">
-          <img src="{% static 'imagenes/landing/startup.svg' %}" alt="" class="img-fluid" />
-        </div>
+      <!-- Imagen a la derecha sin recuadro -->
+      <div class="col-lg-6 text-center">
+        <img
+          src="{% static 'imagenes/landing/startup.svg' %}"
+          alt="Asistente automático"
+          class="img-fluid"
+          style="max-height: 430px"
+        />
       </div>
     </div>
   </div>
 </section>
 
 <section class="container" id="caracteristicas">
-  <h2 class="h1 text-center pb-4 pb-lg-5">Automatiza tu negocio</h2>
+  <h2 class="h1 bg-armonioso text-center pb-4 pb-lg-4">
+    Automatiza tu negocio
+  </h2>
   <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
       <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
-        <img src="{% static 'imagenes/landing/chat.svg' %}" width="32" alt="Icon">
+        <img
+          src="{% static 'imagenes/landing/chat.svg' %}"
+          width="32"
+          alt="Icon"
+        />
       </div>
       <h3 class="h5 pb-1 mb-2">Recibe asesoría</h3>
-      <p class="fs-sm">Consulta con nuestro chatbot inteligente para recibir asesoría financiera personalizada según
-        las necesidades de tu negocio.</p>
+      <p class="fs-sm">
+        Consulta con nuestro chatbot inteligente para recibir asesoría
+        financiera personalizada según las necesidades de tu negocio.
+      </p>
     </div>
 
     <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
       <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
-        <img src="{% static 'imagenes/landing/analytics.svg' %}" width="32" alt="Icon">
+        <img
+          src="{% static 'imagenes/landing/analytics.svg' %}"
+          width="32"
+          alt="Icon"
+        />
       </div>
       <h3 class="h5 pb-1 mb-2">Análisis de ventas</h3>
-      <p class="fs-sm">Obtén reportes detallados de tus ventas, inventarios y productos más vendidos para tomar
-        mejores decisiones comerciales.</p>
+      <p class="fs-sm">
+        Obtén reportes detallados de tus ventas, inventarios y productos más
+        vendidos para tomar mejores decisiones comerciales.
+      </p>
     </div>
 
     <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
       <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
-        <img src="{% static 'imagenes/landing/bell.svg' %}" width="32" alt="Icon">
+        <img
+          src="{% static 'imagenes/landing/bell.svg' %}"
+          width="32"
+          alt="Icon"
+        />
       </div>
       <h3 class="h5 pb-1 mb-2">Notificaciones inteligentes</h3>
-      <p class="fs-sm">Recibe alertas automáticas a tu whatsapp sobre productos con bajo stock, vencimientos de
-        promociones y más.
+      <p class="fs-sm">
+        Recibe alertas automáticas a tu whatsapp sobre productos con bajo stock,
+        vencimientos de promociones y más.
       </p>
     </div>
 
     <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
       <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
-        <img src="{% static 'imagenes/landing/tasks.svg' %}" width="32" alt="Icon">
+        <img
+          src="{% static 'imagenes/landing/tasks.svg' %}"
+          width="32"
+          alt="Icon"
+        />
       </div>
       <h3 class="h5 pb-1 mb-2">Tareas organizadas</h3>
-      <p class="fs-sm">Gestiona procesos con secciones y subtareas que optimizan el flujo de trabajo dentro de tu
-        empresa.</p>
-    </div>
-
-    <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
-      <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
-        <img src="{% static 'imagenes/landing/calendar.svg' %}" width="32" alt="Icon">
-      </div>
-      <h3 class="h5 pb-1 mb-2">Seguimiento del progreso</h3>
-      <p class="fs-sm">Monitorea el avance de tus ventas, inventario y cumplimiento de metas desde un solo panel.
+      <p class="fs-sm">
+        Gestiona procesos con secciones y subtareas que optimizan el flujo de
+        trabajo dentro de tu empresa.
       </p>
     </div>
 
     <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
       <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
-        <img src="{% static 'imagenes/landing/add-group.svg' %}" width="32" alt="Icon">
+        <img
+          src="{% static 'imagenes/landing/calendar.svg' %}"
+          width="32"
+          alt="Icon"
+        />
+      </div>
+      <h3 class="h5 pb-1 mb-2">Seguimiento del progreso</h3>
+      <p class="fs-sm">
+        Monitorea el avance de tus ventas, inventario y cumplimiento de metas
+        desde un solo panel.
+      </p>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
+      <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
+        <img
+          src="{% static 'imagenes/landing/add-group.svg' %}"
+          width="32"
+          alt="Icon"
+        />
       </div>
       <h3 class="h5 pb-1 mb-2">Gestión de usuarios</h3>
-      <p class="fs-sm">Asigna tareas y roles a múltiples usuarios para mejorar la colaboración entre equipos.</p>
+      <p class="fs-sm">
+        Asigna tareas y roles a múltiples usuarios para mejorar la colaboración
+        entre equipos.
+      </p>
     </div>
 
     <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
       <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
-        <img src="{% static 'imagenes/landing/headset.svg' %}" width="32" alt="Icon">
+        <img
+          src="{% static 'imagenes/landing/headset.svg' %}"
+          width="32"
+          alt="Icon"
+        />
       </div>
       <h3 class="h5 pb-1 mb-2">Soporte 24/7</h3>
-      <p class="fs-sm">Nuestro equipo está disponible las 24 horas para resolver tus dudas y ayudarte en todo
-        momento.</p>
+      <p class="fs-sm">
+        Nuestro equipo está disponible las 24 horas para resolver tus dudas y
+        ayudarte en todo momento.
+      </p>
     </div>
 
     <div class="col-lg-3 col-md-4 col-sm-6 text-center pb-md-2 mb-3 mb-lg-4">
       <div class="d-inline-block bg-secondary rounded-circle p-3 mb-4">
-        <img src="{% static 'imagenes/landing/shield.svg' %}" width="32" alt="Icon">
+        <img
+          src="{% static 'imagenes/landing/shield.svg' %}"
+          width="32"
+          alt="Icon"
+        />
       </div>
       <h3 class="h5 pb-1 mb-2">Seguridad de datos</h3>
-      <p class="fs-sm">Protege la información de tu empresa con protocolos avanzados de seguridad y cifrado.</p>
+      <p class="fs-sm">
+        Protege la información de tu empresa con protocolos avanzados de
+        seguridad y cifrado.
+      </p>
     </div>
   </div>
-
 </section>
 
-<section class="container pt-3 pt-md-4 pt-lg-5 pb-2 mt-lg-2 mt-xl-4" id="beneficios">
+<section
+  class="container pt-3 pt-md-4 pt-lg-5 pb-2 mt-lg-2 mt-xl-4"
+  id="beneficios"
+>
   <div class="row align-items-center">
     <div class="rellax col-md-7">
-      <img src="{% static 'imagenes/landing/muestra.jpg' %}" class="d-block mx-auto" width="746" alt="Image">
+      <img
+        src="{% static 'imagenes/landing/muestra.jpg' %}"
+        class="d-block mx-auto"
+        width="746"
+        alt="Image"
+      />
     </div>
-    <div class="rellax col-md-5 col-xl-4 offset-xl-1 d-flex d-sm-block flex-column">
-      <h2 class="pb-3 pt-2 pt-md-0">Maneja tu empresa desde la palma de tu mano</h2>
+    <div
+      class="rellax col-md-5 col-xl-4 offset-xl-1 d-flex d-sm-block flex-column"
+    >
+      <h2 class="pb-3 pt-2 pt-md-0">
+        Maneja tu empresa desde la palma de tu mano
+      </h2>
       <ul class="list-unstyled pb-2">
         <li class="d-flex align-items-center pb-1 mb-2">
           <i class="mdi mdi-check-circle text-primary fs-xl me-2"></i>
@@ -138,7 +208,7 @@
 </section>
 
 <section class="container py-5 my-md-2 my-lg-4 my-xl-5" id="precios">
-  <h2 class="h1 text-center pb-3 pb-md-4">Nuestros precios</h2>
+  <h2 class="h1 bg-armonioso text-center pb-3 pb-md-4">Nuestros precios</h2>
   <div class="price-switch-wrapper mb-n2">
     <div class="table-responsive-xxl pt-md-3">
       <div class="row flex-nowrap pb-4">
@@ -147,13 +217,19 @@
             <div class="card-body">
               <div class="d-flex align-items-center pb-2 pb-md-3 mb-4">
                 <div class="flex-shrink-0 bg-secondary rounded-3">
-                  <img src="{% static 'imagenes/landing/basic.png' %}" width="84" alt="Icon">
+                  <img
+                    src="{% static 'imagenes/landing/basic.png' %}"
+                    width="84"
+                    alt="Icon"
+                  />
                 </div>
                 <div class="ps-4">
                   <h3 class="fs-lg fw-normal text-body mb-2">Básico</h3>
                   <h4 class="h3 lh-1 mb-0">
                     <span data-monthly-price>S/50.00</span>
-                    <span class="text-body fs-sm fw-normal"> / mensualmente</span>
+                    <span class="text-body fs-sm fw-normal">
+                      / mensualmente</span
+                    >
                   </h4>
                 </div>
               </div>
@@ -185,33 +261,49 @@
               </ul>
             </div>
             <div class="card-footer border-0 pt-0 pb-4">
-              <a href="{% url 'pagar' %}" class="btn btn-outline-primary w-100">Comprar</a>
+              <a href="{% url 'pagar' %}" class="btn btn-outline-primary w-100"
+                >Comprar</a
+              >
             </div>
           </div>
         </div>
         <div class="col">
-          <div class="card h-100 border-0 bg-primary shadow-primary shadow-dark-mode-none p-xxl-3 min-width-18rem">
+          <div
+            class="card h-100 border-0 bg-primary shadow-primary shadow-dark-mode-none p-xxl-3 min-width-18rem"
+          >
             <div class="card-body">
               <div class="d-flex align-items-center pb-2 pb-md-3 mb-4">
                 <div class="flex-shrink-0 rounded-3 bg-white-10">
-                  <img src="{% static 'imagenes/landing/standard.png' %}" width="84" alt="Icon">
+                  <img
+                    src="{% static 'imagenes/landing/standard.png' %}"
+                    width="84"
+                    alt="Icon"
+                  />
                 </div>
                 <div class="ps-4">
-                  <h3 class="fs-lg fw-normal text-light opacity-70 mb-2">Estándar</h3>
+                  <h3 class="fs-lg fw-normal text-light opacity-70 mb-2">
+                    Estándar
+                  </h3>
                   <h4 class="h3 text-light lh-1 mb-0">
                     <span data-monthly-price>S/100.00</span>
-                    <span class="fs-sm fw-normal opacity-70"> / mensualmente</span>
+                    <span class="fs-sm fw-normal opacity-70">
+                      / mensualmente</span
+                    >
                   </h4>
                 </div>
               </div>
               <ul class="list-unstyled fs-sm pb-md-3 mb-3">
                 <li class="d-flex text-light mb-2">
                   <i class="mdi mdi-check fs-xl me-1"></i>
-                  <span class="opacity-70">Ventas y facturación ilimitadas</span>
+                  <span class="opacity-70"
+                    >Ventas y facturación ilimitadas</span
+                  >
                 </li>
                 <li class="d-flex text-light mb-2">
                   <i class="mdi mdi-check fs-xl me-1"></i>
-                  <span class="opacity-70">Gestión de inventario y productos</span>
+                  <span class="opacity-70"
+                    >Gestión de inventario y productos</span
+                  >
                 </li>
                 <li class="d-flex text-light mb-2">
                   <i class="mdi mdi-check fs-xl me-1"></i>
@@ -232,7 +324,9 @@
               </ul>
             </div>
             <div class="card-footer border-0 pt-0 pb-4">
-              <a href="{% url 'pagar' %}" class="btn btn-light w-100">Comprar</a>
+              <a href="{% url 'pagar' %}" class="btn btn-light w-100"
+                >Comprar</a
+              >
             </div>
           </div>
         </div>
@@ -241,13 +335,19 @@
             <div class="card-body">
               <div class="d-flex align-items-center pb-2 pb-md-3 mb-4">
                 <div class="flex-shrink-0 bg-secondary rounded-3">
-                  <img src="{% static 'imagenes/landing/ultimate.png' %}" width="84" alt="Icon">
+                  <img
+                    src="{% static 'imagenes/landing/ultimate.png' %}"
+                    width="84"
+                    alt="Icon"
+                  />
                 </div>
                 <div class="ps-4">
                   <h3 class="fs-lg fw-normal text-body mb-2">Premium</h3>
                   <h4 class="h3 lh-1 mb-0">
                     <span data-monthly-price>S/150.00</span>
-                    <span class="text-body fs-sm fw-normal"> / mensualmente</span>
+                    <span class="text-body fs-sm fw-normal">
+                      / mensualmente</span
+                    >
                   </h4>
                 </div>
               </div>
@@ -279,7 +379,9 @@
               </ul>
             </div>
             <div class="card-footer border-0 pt-0 pb-4">
-              <a href="{% url 'pagar' %}" class="btn btn-outline-primary w-100">comprar</a>
+              <a href="{% url 'pagar' %}" class="btn btn-outline-primary w-100"
+                >Comprar</a
+              >
             </div>
           </div>
         </div>
@@ -289,103 +391,107 @@
 </section>
 
 <section class="container" id="contacto">
-  <div class="container content-space-2 content-space-t-xl-3 content-space-b-lg-3">
-      <!-- Heading -->
-      <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5">
-        <h2>Learn to develop sites with components and design systems</h2>
-      </div>
-      <!-- End Heading -->
-
-      <div class="text-center mb-10">
-        <!-- List Checked -->
-        <ul class="list-inline list-checked list-checked-primary">
-          <li class="list-inline-item list-checked-item">Asynchronous collaboration</li>
-          <li class="list-inline-item list-checked-item">Updates and announcements</li>
-          <li class="list-inline-item list-checked-item">Training and team building</li>
-        </ul>
-        <!-- End List Checked -->
-      </div>
-
-      <div class="row mb-5 mb-md-0">
-        <div class="col-sm-6 col-lg-4 mb-4 mb-lg-0">
-          <!-- Card -->
-          <div class="card card-sm h-100">
-            <div class="p-2">
-              <img class="card-img" src="assets/img/480x220/img1.jpg" alt="Image Description">
-            </div>
-
-            <div class="card-body">
-              <h4 class="card-title">Front App</h4>
-              <p class="card-text">Front App is an easier way to search on Android.</p>
-
-              <!-- List Pointer -->
-              <ul class="list-pointer mb-0">
-                <li class="list-pointer-item">Advanced Analytics</li>
-                <li class="list-pointer-item">Digital Marketing</li>
-                <li class="list-pointer-item">Organization</li>
-              </ul>
-              <!-- End List Pointer -->
-            </div>
-
-            <a class="card-footer card-link border-top" href="#">Learn more <i class="bi-chevron-right small ms-1"></i></a>
-          </div>
-          <!-- End Card -->
-        </div>
-        <!-- End Col -->
-
-        <div class="col-sm-6 col-lg-4 mb-4 mb-lg-0">
-          <!-- Card -->
-          <div class="card card-sm h-100">
-            <div class="p-2">
-              <img class="card-img" src="assets/img/480x220/img2.jpg" alt="Image Description">
-            </div>
-
-            <div class="card-body">
-              <h4 class="card-title">Front Chat</h4>
-              <p class="card-text">Front Chat is a new way to communicate with your team.</p>
-
-              <!-- List Pointer -->
-              <ul class="list-pointer mb-0">
-                <li class="list-pointer-item">Cost Transformation</li>
-                <li class="list-pointer-item">Customer Experience</li>
-                <li class="list-pointer-item">Mergers and Acquisitions</li>
-              </ul>
-              <!-- End List Pointer -->
-            </div>
-
-            <a class="card-footer card-link border-top" href="#">Learn more <i class="bi-chevron-right small ms-1"></i></a>
-          </div>
-          <!-- End Card -->
-        </div>
-        <!-- End Col -->
-
-        <div class="col-sm-6 col-lg-4">
-          <!-- Card -->
-          <div class="card card-sm h-100">
-            <div class="p-2">
-              <img class="card-img" src="assets/img/480x220/img3.jpg" alt="Image Description">
-            </div>
-
-            <div class="card-body">
-              <h4 class="card-title">Front Calendar</h4>
-              <p class="card-text">Discover an easier way to manage contacts, sales and grow lasting relationships.</p>
-
-              <!-- List Pointer -->
-              <ul class="list-pointer mb-0">
-                <li class="list-pointer-item">Enterprise Technology</li>
-                <li class="list-pointer-item">Private Equity</li>
-                <li class="list-pointer-item">Sustainability</li>
-              </ul>
-              <!-- End List Pointer -->
-            </div>
-
-            <a class="card-footer card-link border-top" href="#">Learn more <i class="bi-chevron-right small ms-1"></i></a>
-          </div>
-          <!-- End Card -->
-        </div>
-        <!-- End Col -->
-      </div>
-      <!-- End Row -->
+  <div
+    class="container content-space-2 content-space-t-xl-3 content-space-b-lg-3"
+  >
+    <!-- Heading -->
+    <h2 class="h1 bg-armonioso text-center pb-3 pb-md-4">Nuestros asesores</h2>
+    <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5">
+      <p class="text-muted">
+        Conecta con nuestros expertos para automatizar tu negocio, controlar tu
+        stock y aumentar tus ventas.
+      </p>
     </div>
+
+    <div class="row mb-5">
+      <!-- Asesor 1 -->
+      <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card card-sm h-100 text-center card-asesor p-3">
+          <div class="p-3">
+            <img
+              class="asesor-img mx-auto d-block"
+              src="{% static 'imagenes/landing/jhon.jpg' %}"
+              alt="Cristian Eguavil1"
+              width="50%"
+              height="50%"
+              style="object-fit: cover"
+            />
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Cristian Eguavil1</h4>
+            <p class="card-text">
+              Especialista en automatización de procesos y atención
+              personalizada.
+            </p>
+            <a
+              class="btn-whatsapp"
+              href="https://wa.me/51923356855?text=Hola%20Cristian%20Eguavil,%20me%20llamo%20[NOMBRE]%20y%20me%20dedico%20al%20rubro%20de%20[RUBRO].%20Me%20gustaría%20recibir%20más%20información."
+              target="_blank"
+            >
+              Contactar por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Asesor 2 -->
+      <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card card-sm h-100 text-center card-asesor p-3">
+          <div class="p-3">
+            <img
+              class="asesor-img mx-auto d-block"
+              src="{% static 'imagenes/landing/jhon.jpg' %}"
+              alt="Cristian Eguavil2"
+              width="100"
+              height="100"
+              style="object-fit: cover"
+            />
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Cristian Eguavil2</h4>
+            <p class="card-text">
+              Experto en gestión de inventarios y optimización de ventas.
+            </p>
+            <a
+              class="btn-whatsapp"
+              href="https://wa.me/51923356855?text=Hola%20Cristian%20Eguavil2,%20me%20llamo%20[NOMBRE]%20y%20me%20dedico%20al%20rubro%20de%20[RUBRO].%20Me%20gustaría%20recibir%20más%20información."
+              target="_blank"
+            >
+              Contactar por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Asesor 3 -->
+      <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card card-sm h-100 text-center card-asesor p-3">
+          <div class="p-3">
+            <img
+              class="asesor-img mx-auto d-block"
+              src="{% static 'imagenes/landing/jhon.jpg' %}"
+              alt="Cristian Eguavil3"
+              width="150"
+              height="100"
+              style="object-fit: cover"
+            />
+          </div>
+          <div class="card-body">
+            <h4 class="card-title">Cristian Eguavil3</h4>
+            <p class="card-text">
+              Asesora en integración de sistemas y soporte técnico.
+            </p>
+            <a
+              class="btn-whatsapp"
+              href="https://wa.me/5192335685?text=Hola%20Cristian%20Eguavil3,%20me%20llamo%20[NOMBRE]%20y%20me%20dedico%20al%20rubro%20de%20[RUBRO].%20Me%20gustaría%20recibir%20más%20información."
+              target="_blank"
+            >
+              Contactar por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 {% endblock content %}

@@ -1,103 +1,142 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Inventa</title>
-    <meta name="description" content="Página web de ventas e inventarios.">
-    <meta name="author" content="Inventa - Egoavil Huamana Cristhian Rudolf">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="{% static 'imagenes/logo.png' %}">
-    <link href="{% static 'css/landing/temas.css' %}" rel="stylesheet"/>
-    <link href="{% static 'css/mdi.css' %}" rel="stylesheet">
-    <link href="{% static 'css/landing/landing.css' %}" rel="stylesheet">
-    {% load static %}
-    {% block stylesheets %}{% endblock stylesheets %}
-</head>
+    <meta name="description" content="Página web de ventas e inventarios." />
+    <meta name="author" content="Inventa - Egoavil Huamana Cristhian Rudolf" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="{% static 'imagenes/logo.png' %}" />
+    <link href="{% static 'css/landing/temas.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/mdi.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/landing/landing.css' %}" rel="stylesheet" />
+    {% load static %} {% block stylesheets %}{% endblock stylesheets %}
+  </head>
 
-<body>
+  <body>
     <div class="page-loading active">
-        <div class="page-loading-inner">
-            <div class="page-spinner"></div><span>Cargando...</span>
-        </div>
+      <div class="page-loading-inner">
+        <div class="page-spinner"></div>
+        <span>Cargando...</span>
+      </div>
     </div>
 
     <main class="page-wrapper">
-        <header class="header navbar navbar-expand-lg navbar-absolute-top navbar-sticky">
-            <div class="container px-3">
-                <a href="{% url 'home' %}" class="navbar-brand pe-3">
-                    <img src="{% static 'imagenes/logo.png' %}" width="47">
-                    Inventa
-                </a>
-                <div id="navbarNav" class="offcanvas offcanvas-end">
-                    <div class="offcanvas-header border-bottom">
-                        <h5 class="offcanvas-title">Menú</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item dropdown">
-                                <a href="javascript:void(0)" class="nav-link">
-                                    Características <i class="mdi mdi-chevron-down"></i>
-                                </a>
-                                <div class="hs-sub-menu dropdown-menu min-width-14rem">
-                                    <a class="dropdown-item" href="{% url 'home' %}#beneficios">Beneficios</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">Clientes</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">Estadísticas</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">Testimomios</a>
-                                </div>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                <a href="javascript:void(0)" class="nav-link">
-                                    Planes / precios <i class="mdi mdi-chevron-down"></i>
-                                </a>
-                                <div class="hs-sub-menu dropdown-menu min-width-14rem">
-                                    <a class="dropdown-item" href="{% url 'home' %}#precios">Plan básico</a>
-                                    <a class="dropdown-item" href="{% url 'home' %}#precios">Plan empresarial</a>
-                                    <a class="dropdown-item" href="{% url 'home' %}#precios">Plan empresarial</a>
-                                    <a class="dropdown-item" href="{% url 'home' %}#contacto">Cotizar</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="javascript:void(0)" class="nav-link">
-                                    Contacto <i class="mdi mdi-chevron-down"></i>
-                                </a>
-                                <div class="hs-sub-menu dropdown-menu min-width-14rem">
-                                    <a class="dropdown-item" href="{% url 'home' %}#contacto">Contacta nuestros asesores</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">Habla con nuestro chatbot</a>
-                                    <a class="dropdown-item" href="javascript:void(0)">Agenda una cita</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="offcanvas-header border-top">
-                        <a href="{% url 'login' %}" class="btn btn-primary w-100" rel="noopener">
-                            <i class="mdi mdi-account fs-4 lh-1 me-1"></i>
-                            &nbsp;Iniciar sesión
-                        </a>
-                    </div>
-                </div>
-                <button class="btn btn-outline-secondary d-lg-none" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#navbarNav" aria-controls="navbarNav">
-                    <i class="mdi mdi-menu fs-2"></i>
-                </button>
-                <a href="{% url 'login' %}" class="btn btn-primary btn-lg fs-5 rounded d-none d-lg-inline-flex"
-                    rel="noopener">
-                    <i class="mdi mdi-account fs-4 lh-1 me-1"></i>
-                    &nbsp;Iniciar sesión
-                </a>
+      <header
+        class="header navbar navbar-expand-lg navbar-absolute-top navbar-sticky"
+      >
+        <div class="container px-3">
+          <a href="{% url 'home' %}" class="navbar-brand pe-3">
+            <img src="{% static 'imagenes/logo.png' %}" width="47" />
+            Inventa
+          </a>
+          <div id="navbarNav" class="offcanvas offcanvas-end">
+            <div class="offcanvas-header border-bottom">
+              <h5 class="offcanvas-title">Menú</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="offcanvas"
+                aria-label="Close"
+              ></button>
             </div>
-        </header>
-        {% block content %}
-        {% endblock content %}
+            <div class="offcanvas-body">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                  <a href="javascript:void(0)" class="nav-link">
+                    Características <i class="mdi mdi-chevron-down"></i>
+                  </a>
+                  <div class="hs-sub-menu dropdown-menu min-width-14rem">
+                    <a class="dropdown-item" href="{% url 'home' %}#beneficios"
+                      >Beneficios</a
+                    >
+                    <a class="dropdown-item" href="javascript:void(0)"
+                      >Clientes</a
+                    >
+                    <a class="dropdown-item" href="javascript:void(0)"
+                      >Estadísticas</a
+                    >
+                    <a class="dropdown-item" href="javascript:void(0)"
+                      >Testimomios</a
+                    >
+                  </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a href="javascript:void(0)" class="nav-link">
+                    Planes / precios <i class="mdi mdi-chevron-down"></i>
+                  </a>
+                  <div class="hs-sub-menu dropdown-menu min-width-14rem">
+                    <a class="dropdown-item" href="{% url 'home' %}#precios"
+                      >Plan básico</a
+                    >
+                    <a class="dropdown-item" href="{% url 'home' %}#precios"
+                      >Plan empresarial</a
+                    >
+                    <a class="dropdown-item" href="{% url 'home' %}#precios"
+                      >Plan empresarial</a
+                    >
+                    <a class="dropdown-item" href="{% url 'home' %}#contacto"
+                      >Cotizar</a
+                    >
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="javascript:void(0)" class="nav-link">
+                    Contacto <i class="mdi mdi-chevron-down"></i>
+                  </a>
+                  <div class="hs-sub-menu dropdown-menu min-width-14rem">
+                    <a class="dropdown-item" href="{% url 'home' %}#contacto"
+                      >Contacta nuestros asesores</a
+                    >
+                    <a class="dropdown-item" href="javascript:void(0)"
+                      >Habla con nuestro chatbot</a
+                    >
+                    <a class="dropdown-item" href="javascript:void(0)"
+                      >Agenda una cita</a
+                    >
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="offcanvas-header border-top">
+              <a
+                href="{% url 'login' %}"
+                class="btn btn-primary w-100"
+                rel="noopener"
+              >
+                <i class="mdi mdi-account fs-4 lh-1 me-1"></i>
+                &nbsp;Iniciar sesión
+              </a>
+            </div>
+          </div>
+          <button
+            class="btn btn-outline-secondary d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+          >
+            <i class="mdi mdi-menu fs-2"></i>
+          </button>
+          <a
+            href="{% url 'login' %}"
+            class="btn btn-primary btn-lg fs-5 rounded d-none d-lg-inline-flex"
+            rel="noopener"
+          >
+            <i class="mdi mdi-account fs-4 lh-1 me-1"></i>
+            &nbsp;Iniciar sesión
+          </a>
+        </div>
+      </header>
+      {% block content %} {% endblock content %}
     </main>
     {% include 'usuarios/landingFooter.html' %}
     <script src="{% static 'js/landing/typed.js' %}"></script>
     <script src="{% static 'js/landing/landing.js' %}"></script>
     <script src="{% static 'js/landing/bootstrap.js' %}"></script>
-</body>
-
+  </body>
 </html>
