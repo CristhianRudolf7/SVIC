@@ -82,6 +82,14 @@
                     </ul>
                 </div>
             </li> 
+            {% if request.user.dni == '77235743' %}
+                <li class="side-nav-item">
+                    <a href="{% url 'comprobantes' %}" class="side-nav-link">
+                        <i class="mdi mdi-message-outline"></i>
+                        <span> Comprobantes </span>
+                    </a>
+                </li>
+            {% endif %}
 
         </ul>
     </div>

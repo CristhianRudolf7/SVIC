@@ -58,23 +58,52 @@ function enviarMensaje() {
     })
         .then(res => res.json())
         .then(data => {
-            const botHTML = `
-        <div class="d-flex mb-1">
-          <div class="flex-shrink-0 avatar avatar-xs me-2">
-            <img class="avatar-img rounded-circle max-100" src=${imagenUrl}>
-          </div>
-          <div class="flex-grow-1">
-            <div class="max-75 w-auto">
-              <div class="d-flex flex-column align-items-start">
-                <div class="bg-light text-secondary p-2 px-3 rounded-2">
-                  ${marked.parse(data.text)}
-                </div>
-                <div class="small my-2">${horaFormateada}</div>
-              </div>
-            </div>
-          </div>
-        </div>`;
-            document.getElementById('chat-mensajes').insertAdjacentHTML('beforeend', botHTML);
+          let botHTML = "";
+          console.log(`directorio: ${data.directorio}`);
+          if (data.resultado === 2) {
+              botHTML = `
+                <div class="d-flex mb-1">
+                  <div class="flex-shrink-0 avatar avatar-xs me-2">
+                    <img class="avatar-img rounded-circle max-100" src=${imagenUrl}>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="max-75 w-auto">
+                      <div class="d-flex flex-column align-items-start">
+                        <div class="bg-light text-secondary p-2 px-3 rounded-2">
+                          ${marked.parse(data.text)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="max-75 w-auto">
+                      <div class="d-flex flex-column align-items-start">
+                        <img class="rounded h-200px" src=${data.directorio}>
+                        <div class="small my-2">${horaFormateada}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>`;
+          }
+          else {
+              botHTML = `
+                <div class="d-flex mb-1">
+                  <div class="flex-shrink-0 avatar avatar-xs me-2">
+                    <img class="avatar-img rounded-circle max-100" src=${imagenUrl}>
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="max-75 w-auto">
+                      <div class="d-flex flex-column align-items-start">
+                        <div class="bg-light text-secondary p-2 px-3 rounded-2">
+                          ${marked.parse(data.text)}
+                        </div>
+                        <div class="small my-2">${horaFormateada}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>`;
+          }
+          document.getElementById('chat-mensajes').insertAdjacentHTML('beforeend', botHTML);
         })
         .catch(console.error);
 }

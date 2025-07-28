@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
-from .forms import LoginForm, NegocioForm, UsuarioForm, UsuarioEditarForm
-from .models import Usuarios
+from .forms import LoginForm, NegocioForm, UsuarioForm, UsuarioEditarForm, PagoForm
+from django.contrib.auth.decorators import login_required
+from .models import Usuarios, Pago
 from datetime import date, timedelta
+from django.contrib import messages
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
@@ -10,6 +12,52 @@ from django.views.generic import (
 )
 from django.urls import reverse_lazy
 from django.http import JsonResponse
+from django.shortcuts import redirect, get_object_or_404
+import random
+
+def crear_pago(request):
+    pago_exitoso = False
+
+    if request.method == 'POST':
+        form = PagoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            pago_exitoso = True
+    else:
+        form = PagoForm()
+
+    return render(request, 'usuarios/payment.html', {
+        'form': form,
+        'pago_exitoso': pago_exitoso
+    })
+
+@login_required
+def vista_comprobantes(request):
+    if request.user.dni != '77235743':
+        return redirect('dashboard')
+
+    pagos = Pago.objects.all().order_by('-fecha_pago')
+    return render(request, 'usuarios/listaPagos.html', {'pagos': pagos})
+
+@login_required
+def aprobar_pago(request, pago_id):
+    if request.method == 'POST':
+        pago = get_object_or_404(Pago, pago_id=pago_id)
+        pago.estado = 'CO'
+        pago.codigo_autorizacion = str(random.randint(10000, 99999))
+        pago.estado_codigo = 'PE'
+        pago.save()
+    return redirect('comprobantes')
+
+@login_required
+def desaprobar_pago(request, pago_id):
+    if request.method == 'POST':
+        pago = get_object_or_404(Pago, pago_id=pago_id)
+        pago.estado = 'EL'
+        pago.codigo_autorizacion = None
+        pago.estado_codigo = 'PE' 
+        pago.save()
+    return redirect('comprobantes')
 
 def landing(request):
     return render(request, 'usuarios/landingCuerpo.html')
@@ -20,6 +68,50 @@ class LoginView(LoginView):
     redirect_authenticated_user = True
 
 def crearEmpresa(request):
+    if not request.session.get('codigo_validado'):
+        if request.method == 'POST' and 'codigo_autorizacion' in request.POST:
+            codigo = request.POST['codigo_autorizacion']
+            pago = Pago.objects.filter(codigo_autorizacion=codigo, estado_codigo='PE').first()
+            if pago:
+                request.session['codigo_validado'] = True
+                request.session['codigo_pago'] = pago.codigo_autorizacion
+                return redirect('crearEmpresa')
+            else:
+                return render(request, 'usuarios/codigo_verificacion.html', {'error': 'Código inválido o ya usado'})
+
+        return render(request, 'usuarios/codigo_verificacion.html')
+
+    # Si el código ya fue validado
+    if request.method == 'POST':
+        negocio_form = NegocioForm(request.POST, request.FILES, prefix='negocio')
+        gerente_form = UsuarioForm(request.POST, prefix='gerente')
+        if negocio_form.is_valid() and gerente_form.is_valid():
+            negocio = negocio_form.save(commit=False)
+            negocio.inicio_suscripcion = date.today()
+            negocio.fin_suscripcion = date.today() + relativedelta(months=1)
+            negocio.tipo_suscripcion = 'Básico'
+            negocio.save()
+
+            gerente = gerente_form.save(commit=False)
+            gerente.negocio = negocio
+            gerente.rol = 'EX'
+            gerente.save()
+
+            # Marcar código como usado
+            Pago.objects.filter(codigo_autorizacion=request.session.get('codigo_pago')).update(estado_codigo='US')
+
+            # Limpiar sesión
+            request.session.pop('codigo_validado')
+            request.session.pop('codigo_pago')
+
+            return redirect('login')
+    else:
+        negocio_form = NegocioForm(prefix='negocio')
+        gerente_form = UsuarioForm(prefix='gerente')
+
+    return render(request, 'usuarios/crearEmpresa.html', {'negocio': negocio_form, 'gerente': gerente_form})
+
+def crearAdmi(request):
     if request.method == 'POST':
         negocio_form = NegocioForm(request.POST, request.FILES, prefix='negocio')
         gerente_form = UsuarioForm(request.POST, prefix='gerente')
@@ -31,7 +123,7 @@ def crearEmpresa(request):
             negocio.save()
             gerente = gerente_form.save(commit=False)
             gerente.negocio = negocio
-            gerente.rol =' Ejecutivo'
+            gerente.rol ='AD'
             gerente.save()
             return redirect('login')
         else:
@@ -41,10 +133,7 @@ def crearEmpresa(request):
         negocio_form = NegocioForm(prefix='negocio')
         gerente_form = UsuarioForm(prefix='gerente')
 
-    return render(request, 'usuarios/crearEmpresa.html', {'negocio': negocio_form, 'gerente': gerente_form})
-
-def pagar(request):
-    return render(request, 'usuarios/payment.html')
+    return render(request, 'usuarios/crearAdmi.html', {'negocio': negocio_form, 'gerente': gerente_form})
 
 class listaTrabajadoresView(LoginRequiredMixin, ListView):
     model = Usuarios

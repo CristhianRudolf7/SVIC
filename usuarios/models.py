@@ -105,3 +105,28 @@ class Usuarios(AbstractUser):
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
         db_table = 'Usuarios'
+
+class Pago(models.Model):
+    pago_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    fecha_pago = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de Pago')
+    monto = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Monto', null=True, blank=True)
+    numero_celular = models.CharField(
+        max_length=15, verbose_name='Número de Celular'
+    )
+    comprobante_pago = models.ImageField(upload_to='comprobantes/', verbose_name='Comprobante de Pago')
+    estado = models.CharField(
+        max_length=10, choices=[('PE', 'Pendiente'), ('CO', 'Completado'), ('EL', 'Eliminado')],
+        default='PE', verbose_name='Estado'
+    )
+    codigo_autorizacion = models.CharField(
+        max_length=5, null=True, blank=True, verbose_name='Código de Autorización'
+    )
+    estado_codigo = models.CharField(
+        max_length=10, choices=[('PE', 'Pendiente'), ('US', 'Usado')],
+        default='PE', verbose_name='Estado del Código'
+    )
+
+    class Meta:
+        verbose_name = 'Pago'
+        verbose_name_plural = 'Pagos'
+        db_table = 'Pagos'

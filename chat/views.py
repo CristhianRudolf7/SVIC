@@ -4,10 +4,12 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import google.generativeai as genai
 import re
+from django.contrib.auth.decorators import login_required
 
 genai.configure(api_key="AIzaSyAAQpaF0tuDW5J7l5HXBJkJCwYoPMvaACM")
 model = genai.GenerativeModel('gemini-2.5-flash-lite')
 
+@login_required
 def chatView(request):
     return render(request, 'chat/chat.html')
 
@@ -18,7 +20,7 @@ def extraer_codigo_python(texto):
         return match.group(1).strip()
     else:
         return None
-
+@login_required
 @csrf_exempt
 def chatApi(request):
     if request.method == 'POST':
@@ -32,7 +34,7 @@ def chatApi(request):
             clasificacion = re.search(r"\*\*(.*?)\*\*", clasificacion.text).group(1)
         except:
             return JsonResponse({'text': "Vuelva a ingresar su consulta por favor.", 'resultado': 0})
-
+        print(f"Clasificacion: {clasificacion}")
         if clasificacion:
             clasificacion = int(clasificacion)
             contexto = f"""
@@ -192,16 +194,36 @@ No te olvides importar las clases que vas usar.
 La consulta del usuario es: {prompt}"""
                     query = model.generate_content(user_msg)
                     query = extraer_codigo_python(query)
+                    print(f"Query: {query}")
                     variables = {
                         "usuario": request.user
                     }
                     exec(query, globals(), variables)
                     return JsonResponse({'text': variables['resultado_final'], 'resultado': 1})
                 elif clasificacion == 2:
-                    resp = model.generate_content(f"Genera un grafico sobre: {user_msg}")
+                    user_msg = f"""{contexto}
+Dame un grafico con matplotlib y guardalo en el directorio "media/graficos" con el nombre: {prompt[:10]}.png.
+Obten los datos con el ORM de django y haz que el resultado de la consulta ORM se guarde en una variable string llamada resultado_final.
+No te olvides de guardar el resultado en la variable resultado_final, eso es lo mas importante del codigo.
+El texto que se guarde en esa varible trata que sea lo mas explicativo posible.
+Es muy necesarop que uses matplotlib.use('Agg') para que no genere errores.
+Si hay algun error dame un mensaje en la variable resultado_final que diga "Vuelva a ingresar su consulta por favor.".
+No te olvides importar las clases que vas usar.
+La consulta del usuario es: {prompt}"""
+                    query = model.generate_content(user_msg)
+                    query = extraer_codigo_python(query)
+                    print(f"Query: {query}")
+                    variables = {
+                        "usuario": request.user
+                    }
+                    exec(query, globals(), variables)
+                    directorio = f"/media/graficos/{prompt[:10]}.png"
+                    print(f"Directorio: {directorio}")
+                    return JsonResponse({'text': variables['resultado_final'], 'resultado': 2, 'directorio': directorio})
                 elif clasificacion == 3:
                     return JsonResponse({'text': "Vuelva a ingresar su consulta por favor.", 'resultado': 0})
-            except:
+            except Exception as e:
+                    print(f"Error: {e}")
                     return JsonResponse({'text': "Vuelva a ingresar su consulta por favor.", 'resultado': 0})
         else:
             return JsonResponse({'text': "Vuelva a ingresar su consulta por favor.", 'resultado': 0})

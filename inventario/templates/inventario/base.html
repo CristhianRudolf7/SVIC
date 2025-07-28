@@ -90,7 +90,7 @@
                     />
                   </span>
                   <span>
-                    <span class="account-user-name">Cristhian Egoavil</span>
+                    <span class="account-user-name">{{ request.user.nombre }}</span>
                     <span class="account-position">Administrador</span>
                   </span>
                 </a>
@@ -133,13 +133,13 @@
                     <span>Cambiar de contraseña</span>
                   </a>
 
-                  <a
-                    href="{% url 'logout' %}"
-                    class="dropdown-item notify-item"
-                  >
-                    <i class="mdi mdi-logout me-1"></i>
-                    <span>Salir</span>
-                  </a>
+                  <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="dropdown-item notify-item">
+                      <i class="mdi mdi-logout me-1"></i>
+                      <span>Salir</span>
+                    </button>
+                  </form>
                 </div>
               </li>
             </ul>
@@ -157,9 +157,9 @@
                     id="top-search"
                   />
                   <span class="mdi mdi-magnify search-icon"></span>
-                  <button class="input-group-text btn-primary" type="submit">
+                  <a class="input-group-text btn-primary" href="#">
                     Buscar
-                  </button>
+                  </a>
                 </div>
               </form>
             </div>

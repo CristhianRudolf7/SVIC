@@ -1,0 +1,86 @@
+{% extends "inventario/base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- En <head> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Antes del cierre de </body> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container mt-4">
+    <h2 class="mb-4">Lista de Pagos</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Fecha de Pago</th>
+                    <th>Monto</th>
+                    <th>Número de Celular</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                    <th>Codigo</th>
+                    <th>Estado codigo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pago in pagos %}
+                <tr>
+                    <td>{{ pago.fecha_pago|date:"d/m/Y H:i" }}</td>
+                    <td>S/. {{ pago.monto }}</td>
+                    <td>{{ pago.numero_celular }}</td>
+                    <td>
+                        {% if pago.estado == 'PE' %}
+                            <span class="badge bg-warning">Pendiente</span>
+                        {% elif pago.estado == 'CO' %}
+                            <span class="badge bg-success">Completado</span>
+                        {% elif pago.estado == 'EL' %}
+                            <span class="badge bg-danger">Eliminado</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-info mb-1" data-bs-toggle="modal" data-bs-target="#modal{{ pago.pago_id }}">
+                            Ver Foto
+                        </button>
+
+                        <form action="{% url 'aprobar_pago' pago.pago_id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-success mb-1">Aprobar</button>
+                        </form>
+                        <form action="{% url 'desaprobar_pago' pago.pago_id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger mb-1">Desaprobar</button>
+                        </form>
+                    </td>
+                    <td>{{ pago.codigo_autorizacion }}</td>
+                    <td>
+                        {% if pago.estado_codigo == 'PE' %}
+                            <span class="badge bg-warning">Pendiente</span>
+                        {% elif pago.estado_codigo == 'US' %}
+                            <span class="badge bg-success">Usado</span>
+                        {% endif %}
+                    </td>
+                </tr>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal{{ pago.pago_id }}" tabindex="-1" aria-labelledby="modalLabel{{ pago.pago_id }}" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel{{ pago.pago_id }}">Comprobante de Pago</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                      </div>
+                      <div class="modal-body text-center">
+                        <img src="{{ pago.comprobante_pago.url }}" class="img-fluid" alt="Comprobante de Pago">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

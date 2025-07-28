@@ -1,3 +1,10 @@
+corregir pago, generar tabla y codigo
+corregir generador de imagenes
+corregir permisos, toast y logout y crear empresa ver si se cruza datos
+ec2
+
+ver el login_required
+asegurar que no se repita dni y otros
 paginacion en listas
 corregir logout
 diseño responsivo en formularios

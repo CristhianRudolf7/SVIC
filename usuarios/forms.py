@@ -1,5 +1,5 @@
 from django import forms
-from .models import Negocios, Usuarios
+from .models import Negocios, Usuarios, Pago
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -29,7 +29,6 @@ class UsuarioForm(UserCreationForm):
             'email',
             'password1', 
             'password2',
-            'rol',
             'telefono',
             'foto',
         ]
@@ -60,10 +59,6 @@ class UsuarioForm(UserCreationForm):
                 'placeholder': 'Repita la contraseña',
                 'id': 'password'
             }),
-            'rol': forms.Select(attrs={
-                'class': 'form-control',
-                'placeholder': 'Seleccione el rol del trabajador'
-            }), 
             'telefono': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Ingrese el número de teléfono'
@@ -122,3 +117,8 @@ class UsuarioEditarForm(forms.ModelForm):
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='DNI', max_length=8)
+
+class PagoForm(forms.ModelForm):
+    class Meta:
+        model = Pago
+        fields = ['numero_celular', 'comprobante_pago']

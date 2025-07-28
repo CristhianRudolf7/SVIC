@@ -1,7 +1,7 @@
 {% extends "usuarios/landing.html" %} {% load static %} {% block content %}
 <section class="container">
   <div class="row">
-    <div class="col-md-8 mx-auto pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
+    <div class="col-md-6 mx-auto pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
       <div class="ps-md-3 pb-md-2">
         <h1 class="h2 pt-xl-1 mb-3 pb-2 pb-lg-3 text-center">Realizar pago</h1>
         <h2 class="h5 text-primary mb-4 text-center">
@@ -10,201 +10,35 @@
 
         <!-- PLAN BÁSICO -->
         <div
-          class="card d-sm-flex flex-sm-row align-items-sm-center justify-content-between border-0 shadow-sm p-3 p-md-4 mb-4"
-        >
+          class="card d-sm-flex flex-sm-row align-items-sm-center justify-content-between border-0 shadow-sm p-3 p-md-4 mb-4">
           <div class="d-flex align-items-center pe-sm-3">
-            <img
-              src="{% static 'imagenes/landing/basic.png' %}"
-              width="84"
-              alt="Mastercard"
-            />
+            <img src="{% static 'imagenes/landing/basic.png' %}" width="84" alt="Mastercard" />
             <div class="ps-3 ps-sm-4">
               <h6 class="mb-2">Plan básico</h6>
               <div class="fs-sm">S/50.00 / mensualmente</div>
             </div>
           </div>
           <div class="d-flex flex-wrap gap-3 justify-content-end pt-3 pt-sm-0">
-            <button
-              class="btn btn-outline-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalAmexBasico"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/american-express.svg' %}"
-                width="32"
-                class="me-2"
-              />
-            </button>
-            <button
-              class="btn btn-outline-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalMastercardBasico"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/mastercard.svg' %}"
-                width="32"
-                class="me-2"
-              />
-            </button>
-            <button
-              class="btn btn-outline-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalVisaBasico"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/visa.svg' %}"
-                width="32"
-                class="me-2"
-              />
-            </button>
-            <button
-              class="btn btn-outline-success"
-              data-bs-toggle="modal"
-              data-bs-target="#modalYapeBasico"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/yape.png' %}"
-                width="32"
-                class="me-2"
-              />
+            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalYapeBasico"
+              type="button">
+              <img src="{% static 'imagenes/pago/yape.png' %}" width="32" class="me-2" />
             </button>
           </div>
         </div>
-
-        <!-- PLAN ESTÁNDAR -->
-        <div
-          class="card d-sm-flex flex-sm-row align-items-sm-center justify-content-between border-0 shadow-sm p-3 p-md-4 mb-4"
-        >
-          <div class="d-flex align-items-center pe-sm-3">
-            <img
-              src="{% static 'imagenes/landing/standard.png' %}"
-              width="84"
-              alt="Visa"
-            />
-            <div class="ps-3 ps-sm-4">
-              <h6 class="mb-2">Plan estándar</h6>
-              <div class="fs-sm">S/100.00 / mensualmente</div>
-            </div>
-          </div>
-          <div class="d-flex flex-wrap gap-3 justify-content-end pt-3 pt-sm-0">
-            <button
-              class="btn btn-outline-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalAmexEstandar"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/american-express.svg' %}"
-                width="32"
-                class="me-2"
-              />
-            </button>
-            <button
-              class="btn btn-outline-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalMastercardEstandar"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/mastercard.svg' %}"
-                width="32"
-                class="me-2"
-              />
-            </button>
-            <button
-              class="btn btn-outline-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalVisaEstandar"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/visa.svg' %}"
-                width="32"
-                class="me-2"
-              />
-            </button>
-            <button
-              class="btn btn-outline-success"
-              data-bs-toggle="modal"
-              data-bs-target="#modalYapeEstandar"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/yape.png' %}"
-                width="32"
-                class="me-2"
-              />
-            </button>
-          </div>
-        </div>
-
         <!-- PLAN PREMIUM -->
         <div
-          class="card d-sm-flex flex-sm-row align-items-sm-center justify-content-between border-0 shadow-sm p-3 p-md-4 mb-4"
-        >
+          class="card d-sm-flex flex-sm-row align-items-sm-center justify-content-between border-0 shadow-sm p-3 p-md-4 mb-4">
           <div class="d-flex align-items-center pe-sm-3">
-            <img
-              src="{% static 'imagenes/landing/ultimate.png' %}"
-              width="84"
-              alt="Amex"
-            />
+            <img src="{% static 'imagenes/landing/ultimate.png' %}" width="84" alt="Amex" />
             <div class="ps-3 ps-sm-4">
               <h6 class="mb-2">Plan premium</h6>
-              <div class="fs-sm">S/150.00 / mensualmente</div>
+              <div class="fs-sm">S/80.00 / mensualmente</div>
             </div>
           </div>
           <div class="d-flex flex-wrap gap-3 justify-content-end pt-3 pt-sm-0">
-            <button
-              class="btn btn-outline-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalAmexPremium"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/american-express.svg' %}"
-                width="32"
-                class="me-2"
-              />
-            </button>
-            <button
-              class="btn btn-outline-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalMastercardPremium"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/mastercard.svg' %}"
-                width="32"
-                class="me-2"
-              />
-            </button>
-            <button
-              class="btn btn-outline-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#modalVisaPremium"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/visa.svg' %}"
-                width="32"
-                class="me-2"
-              />
-            </button>
-            <button
-              class="btn btn-outline-success"
-              data-bs-toggle="modal"
-              data-bs-target="#modalYapePremium"
-              type="button"
-            >
-              <img
-                src="{% static 'imagenes/pago/yape.png' %}"
-                width="32"
-                class="me-2"
-              />
+            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalYapePremium"
+              type="button">
+              <img src="{% static 'imagenes/pago/yape.png' %}" width="32" class="me-2" />
             </button>
           </div>
         </div>
@@ -214,256 +48,63 @@
 </section>
 
 <!-- MODALES BÁSICO -->
-<div class="modal fade" id="modalAmexBasico" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Amex — Plan básico</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de documento</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Número de DNI"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Mes</label>
-            <select class="form-select">
-              <option>Enero</option>
-              <option>Febrero</option>
-              <option>Marzo</option>
-              <option>Abril</option>
-              <option>Mayo</option>
-              <option>Junio</option>
-              <option>Julio</option>
-              <option>Agosto</option>
-              <option>Setiembre</option>
-              <option>Octubre</option>
-              <option>Noviembre</option>
-              <option>Diciembre</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Año</label>
-            <select class="form-select">
-              <option>2025</option>
-              <option>2026</option>
-              <option>2027</option>
-              <option>2028</option>
-              <option>2029</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de tarjeta</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="xxxx-xxxx-xxxx-xxxx"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">CVV</label>
-            <input type="password" class="form-control" placeholder="xxx" />
-          </div>
-
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div
-  class="modal fade"
-  id="modalMastercardBasico"
-  tabindex="-1"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Mastercard — Plan básico</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <!-- REPITE CAMPOS DE TARJETA -->
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de documento</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Número de DNI"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Mes</label>
-            <select class="form-select">
-              <option>Enero</option>
-              <option>Febrero</option>
-              <option>Marzo</option>
-              <option>Abril</option>
-              <option>Mayo</option>
-              <option>Junio</option>
-              <option>Julio</option>
-              <option>Agosto</option>
-              <option>Setiembre</option>
-              <option>Octubre</option>
-              <option>Noviembre</option>
-              <option>Diciembre</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Año</label>
-            <select class="form-select">
-              <option>2025</option>
-              <option>2026</option>
-              <option>2027</option>
-              <option>2028</option>
-              <option>2029</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de tarjeta</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="xxxx-xxxx-xxxx-xxxx"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">CVV</label>
-            <input type="password" class="form-control" placeholder="xxx" />
-          </div>
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="modalVisaBasico" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Visa — Plan básico</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <!-- REPITE CAMPOS DE TARJETA -->
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de documento</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Número de DNI"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Mes</label>
-            <select class="form-select">
-              <option>Enero</option>
-              <option>Febrero</option>
-              <option>Marzo</option>
-              <option>Abril</option>
-              <option>Mayo</option>
-              <option>Junio</option>
-              <option>Julio</option>
-              <option>Agosto</option>
-              <option>Setiembre</option>
-              <option>Octubre</option>
-              <option>Noviembre</option>
-              <option>Diciembre</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Año</label>
-            <select class="form-select">
-              <option>2025</option>
-              <option>2026</option>
-              <option>2027</option>
-              <option>2028</option>
-              <option>2029</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de tarjeta</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="xxxx-xxxx-xxxx-xxxx"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">CVV</label>
-            <input type="password" class="form-control" placeholder="xxx" />
-          </div>
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="modal fade" id="modalYapeBasico" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5>Pago con Yape — Plan básico</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form>
-          <div
-            class="alert alert-info d-flex align-items-center mb-3 mt-2"
-            role="alert"
-          >
-            <img
-              src="{% static 'imagenes/pago/yape.svg' %}"
-              style="width: 32px"
-              class="me-2"
-            />
+        <form method="POST" enctype="multipart/form-data" id="form-pago" action="{% url 'crear_pago' %}">
+          {% csrf_token %}
+          <div class="alert alert-info d-flex align-items-center mb-3 mt-2" role="alert">
+            <img src="{% static 'imagenes/pago/yape.png' %}" class="me-2 yape-img" alt="Logo Yape" />
+            <strong>Paga fácilmente con Yape.</strong>
+          </div>
+
+          <div class="mb-3">
+            <p class="mb-2 fw-bold">Realiza el pago a:</p>
+            <ul class="list-unstyled mb-2">
+              <li>
+                <span class="fw-bold">Número Yape:</span>
+                <span class="text-primary">923 356 855 (Egoavil Huaman Cristhian Rudolf)</span>
+              </li>
+            </ul>
+            <p>Adjunta la captura del pago (voucher) para continuar.</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Ingresa tu número de celular:</label>
+            <input type="text" class="form-control" name="numero_celular" required />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Adjunta tu captura de Yape:</label>
+            <input type="file" class="form-control" name="comprobante_pago" accept="image/*" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Pagar</button>
+          <button type="button" class="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">Cerrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALES PREMIUM -->
+<div class="modal fade" id="modalYapePremium" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Pago con Yape — Plan premium</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data" id="form-pago" action="{% url 'crear_pago' %}">
+          {% csrf_token %}
+          <div class="alert alert-info d-flex align-items-center mb-3 mt-2" role="alert">
+            <img src="{% static 'imagenes/pago/yape.png' %}" style="width: 32px" class="me-2" />
             <strong>Paga fácilmente con Yape.</strong>
           </div>
           <div class="mb-3">
@@ -481,11 +122,7 @@
             <input type="file" class="form-control" accept="image/*" />
           </div>
           <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">
             Cerrar
           </button>
         </form>
@@ -494,561 +131,22 @@
   </div>
 </div>
 
-<!-- MODALES ESTÁNDAR -->
-<div class="modal fade" id="modalAmexEstandar" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Amex — Plan estándar</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de documento</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Número de DNI"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Mes</label>
-            <select class="form-select">
-              <option>Enero</option>
-              <option>Febrero</option>
-              <option>Marzo</option>
-              <option>Abril</option>
-              <option>Mayo</option>
-              <option>Junio</option>
-              <option>Julio</option>
-              <option>Agosto</option>
-              <option>Setiembre</option>
-              <option>Octubre</option>
-              <option>Noviembre</option>
-              <option>Diciembre</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Año</label>
-            <select class="form-select">
-              <option>2025</option>
-              <option>2026</option>
-              <option>2027</option>
-              <option>2028</option>
-              <option>2029</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de tarjeta</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="xxxx-xxxx-xxxx-xxxx"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">CVV</label>
-            <input type="password" class="form-control" placeholder="xxx" />
-          </div>
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div
-  class="modal fade"
-  id="modalMastercardEstandar"
-  tabindex="-1"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Mastercard — Plan estándar</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <!-- Misma estructura/campos que Amex -->
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de documento</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Número de DNI"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Mes</label>
-            <select class="form-select">
-              <option>Enero</option>
-              <option>Febrero</option>
-              <option>Marzo</option>
-              <option>Abril</option>
-              <option>Mayo</option>
-              <option>Junio</option>
-              <option>Julio</option>
-              <option>Agosto</option>
-              <option>Setiembre</option>
-              <option>Octubre</option>
-              <option>Noviembre</option>
-              <option>Diciembre</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Año</label>
-            <select class="form-select">
-              <option>2025</option>
-              <option>2026</option>
-              <option>2027</option>
-              <option>2028</option>
-              <option>2029</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de tarjeta</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="xxxx-xxxx-xxxx-xxxx"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">CVV</label>
-            <input type="password" class="form-control" placeholder="xxx" />
-          </div>
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="modalVisaEstandar" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Visa — Plan estándar</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <!-- Misma estructura/campos que Amex -->
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de documento</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Número de DNI"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Mes</label>
-            <select class="form-select">
-              <option>Enero</option>
-              <option>Febrero</option>
-              <option>Marzo</option>
-              <option>Abril</option>
-              <option>Mayo</option>
-              <option>Junio</option>
-              <option>Julio</option>
-              <option>Agosto</option>
-              <option>Setiembre</option>
-              <option>Octubre</option>
-              <option>Noviembre</option>
-              <option>Diciembre</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Año</label>
-            <select class="form-select">
-              <option>2025</option>
-              <option>2026</option>
-              <option>2027</option>
-              <option>2028</option>
-              <option>2029</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de tarjeta</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="xxxx-xxxx-xxxx-xxxx"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">CVV</label>
-            <input type="password" class="form-control" placeholder="xxx" />
-          </div>
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="modalYapeEstandar" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Yape — Plan estándar</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div
-            class="alert alert-info d-flex align-items-center mb-3 mt-2"
-            role="alert"
-          >
-            <img
-              src="{% static 'imagenes/pago/yape.svg' %}"
-              style="width: 32px"
-              class="me-2"
-            />
-            <strong>Paga fácilmente con Yape.</strong>
-          </div>
-          <div class="mb-3">
-            <p class="mb-2 fw-bold">Realiza el pago a:</p>
-            <ul class="list-unstyled mb-2">
-              <li>
-                <span class="fw-bold">Número Yape:</span>
-                <span class="text-primary">923 356 855</span>
-              </li>
-            </ul>
-            <p>Adjunta la captura del pago (voucher) para continuar.</p>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Adjunta tu captura de Yape:</label>
-            <input type="file" class="form-control" accept="image/*" />
-          </div>
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- MODALES PREMIUM -->
-<div class="modal fade" id="modalAmexPremium" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Amex — Plan premium</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de documento</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Número de DNI"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Mes</label>
-            <select class="form-select">
-              <option>Enero</option>
-              <option>Febrero</option>
-              <option>Marzo</option>
-              <option>Abril</option>
-              <option>Mayo</option>
-              <option>Junio</option>
-              <option>Julio</option>
-              <option>Agosto</option>
-              <option>Setiembre</option>
-              <option>Octubre</option>
-              <option>Noviembre</option>
-              <option>Diciembre</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Año</label>
-            <select class="form-select">
-              <option>2025</option>
-              <option>2026</option>
-              <option>2027</option>
-              <option>2028</option>
-              <option>2029</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de tarjeta</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="xxxx-xxxx-xxxx-xxxx"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">CVV</label>
-            <input type="password" class="form-control" placeholder="xxx" />
-          </div>
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div
-  class="modal fade"
-  id="modalMastercardPremium"
-  tabindex="-1"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Mastercard — Plan premium</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <!-- Misma estructura -->
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de documento</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Número de DNI"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Mes</label>
-            <select class="form-select">
-              <option>Enero</option>
-              <option>Febrero</option>
-              <option>Marzo</option>
-              <option>Abril</option>
-              <option>Mayo</option>
-              <option>Junio</option>
-              <option>Julio</option>
-              <option>Agosto</option>
-              <option>Setiembre</option>
-              <option>Octubre</option>
-              <option>Noviembre</option>
-              <option>Diciembre</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Año</label>
-            <select class="form-select">
-              <option>2025</option>
-              <option>2026</option>
-              <option>2027</option>
-              <option>2028</option>
-              <option>2029</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de tarjeta</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="xxxx-xxxx-xxxx-xxxx"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">CVV</label>
-            <input type="password" class="form-control" placeholder="xxx" />
-          </div>
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="modalVisaPremium" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Visa — Plan premium</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <!-- Misma estructura -->
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de documento</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Número de DNI"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Mes</label>
-            <select class="form-select">
-              <option>Enero</option>
-              <option>Febrero</option>
-              <option>Marzo</option>
-              <option>Abril</option>
-              <option>Mayo</option>
-              <option>Junio</option>
-              <option>Julio</option>
-              <option>Agosto</option>
-              <option>Setiembre</option>
-              <option>Octubre</option>
-              <option>Noviembre</option>
-              <option>Diciembre</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Año</label>
-            <select class="form-select">
-              <option>2025</option>
-              <option>2026</option>
-              <option>2027</option>
-              <option>2028</option>
-              <option>2029</option>
-            </select>
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">Número de tarjeta</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="xxxx-xxxx-xxxx-xxxx"
-            />
-          </div>
-          <div class="mb-3 col-12">
-            <label class="form-label">CVV</label>
-            <input type="password" class="form-control" placeholder="xxx" />
-          </div>
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="modalYapePremium" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5>Pago con Yape — Plan premium</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div
-            class="alert alert-info d-flex align-items-center mb-3 mt-2"
-            role="alert"
-          >
-            <img
-              src="{% static 'imagenes/pago/yape.svg' %}"
-              style="width: 32px"
-              class="me-2"
-            />
-            <strong>Paga fácilmente con Yape.</strong>
-          </div>
-          <div class="mb-3">
-            <p class="mb-2 fw-bold">Realiza el pago a:</p>
-            <ul class="list-unstyled mb-2">
-              <li>
-                <span class="fw-bold">Número Yape:</span>
-                <span class="text-primary">923 356 855</span>
-              </li>
-            </ul>
-            <p>Adjunta la captura del pago (voucher) para continuar.</p>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Adjunta tu captura de Yape:</label>
-            <input type="file" class="form-control" accept="image/*" />
-          </div>
-          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
-          <button
-            type="button"
-            class="btn btn-outline-secondary ms-2"
-            data-bs-dismiss="modal"
-          >
-            Cerrar
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+{% if pago_exitoso %}
+  <script src="{% static 'js/sweetalert.js' %}"></script>
+  <script>
+    Swal.fire({
+      icon: 'success',
+      title: '¡Pago exitoso!',
+      text: 'Gracias por confiar en nosotros, nos comunicaremos contigo en menos de 5 minutos.',
+      confirmButtonText: 'Aceptar',
+      timer: 10000,
+      timerProgressBar: true,
+      didClose: () => {
+        window.location.href = "{% url 'home' %}";
+      }
+    });
+  </script>
+{% endif %}
+
 
 {% endblock content %}
