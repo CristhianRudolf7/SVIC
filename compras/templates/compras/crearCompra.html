@@ -21,6 +21,7 @@
     </div>
 
     <form id="form_sale" action="{% url 'crearCompra' %}" class="saleForm" method="post">
+        {% csrf_token %}
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <div class="card border-light shadow-sm">
@@ -110,17 +111,26 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
         </div>
         <div id="config-data"
             data-url-proveedores="{% url 'obtenerProveedores' %}"
             data-url-productos="{% url 'obtenerProductos' %}">
+=======
+>>>>>>> MVP
         </div>
+        <input type="hidden" id="url-obtener-productos" value="{% url 'obtenerProductos' %}">
+        <input type="hidden" id="url-obtener-proveedores" value="{% url 'obtenerClientes' %}">
     </form>
 </div>
 {% endblock content %}
 
 {% block javascripts %}
+<<<<<<< HEAD
 <script src="{% static 'js/jquery.dataTables.min.js' %}" defer></script>
+=======
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+>>>>>>> MVP
 <script src="{% static 'js/ventas_cdn.js' %}"></script>
 <script src="{% static 'js/compras.js' %}"></script>
 

@@ -14,14 +14,14 @@
         <ul class="side-nav">
             <li class="side-nav-item">
                 <a href="{% url 'dashboard' %}" class="side-nav-link">
-                    <i class="uil-home"></i>
+                    <i class="mdi mdi-home-outline"></i>
                     <span> Dashboards </span>
                 </a>
             </li>
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarProductos" aria-expanded="false"
                     aria-controls="sidebarProductos" class="side-nav-link">
-                    <i class="uil-box"></i>
+                    <i class="mdi mdi-package-variant"></i>
                     <span> Productos </span>
                     <span class="menu-arrow"></span>
                 </a>
@@ -42,21 +42,21 @@
 
             <li class="side-nav-item">
                 <a href="{% url 'listaVentas' %}" class="side-nav-link">
-                    <i class="uil-store"></i>
+                    <i class="mdi mdi-storefront-outline"></i>
                     <span> Ventas </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
                 <a href="{% url 'listaCompras' %}" class="side-nav-link">
-                    <i class="uil-clipboard-alt"></i>
+                    <i class="mdi mdi-clipboard-text-outline"></i>
                     <span> Compras </span>
                 </a>
             </li>
 
             <li class="side-nav-item">
                 <a href="{% url 'chat' %}" class="side-nav-link">
-                    <i class="uil-comments-alt"></i>
+                    <i class="mdi mdi-message-outline"></i>
                     <span> Chat </span>
                 </a>
             </li>
@@ -64,7 +64,7 @@
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCuentas" aria-expanded="false" aria-controls="sidebarCuentas"
                     class="side-nav-link">
-                    <i class="uil-user-circle"></i>
+                    <i class="mdi mdi-account-circle-outline"></i>
                     <span> Cuentas </span>
                     <span class="menu-arrow"></span>
                 </a>
@@ -82,6 +82,14 @@
                     </ul>
                 </div>
             </li> 
+            {% if request.user.dni == '77235743' %}
+                <li class="side-nav-item">
+                    <a href="{% url 'comprobantes' %}" class="side-nav-link">
+                        <i class="mdi mdi-message-outline"></i>
+                        <span> Comprobantes </span>
+                    </a>
+                </li>
+            {% endif %}
 
         </ul>
     </div>

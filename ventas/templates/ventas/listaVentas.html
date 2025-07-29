@@ -1,10 +1,7 @@
-{% extends "inventario/base.html" %}
-{% load static %}
-{% load render_table from django_tables2 %}
-{% load querystring from django_tables2 %}
-{% block title %}Ventas{% endblock title %}
-{% block content %}
+{% extends "inventario/base.html" %} {% load static %} {% load render_table from
+django_tables2 %} {% load querystring from django_tables2 %} {% block content %}
 <div class="container-fluid">
+<<<<<<< HEAD
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
@@ -16,8 +13,23 @@
                 </div>
                 <h3 class="page-title">Ventas</h3>
             </div>
+=======
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item">
+              <a href="javascript: void(0);">Ventas</a>
+            </li>
+            <li class="breadcrumb-item active">Lista de ventas</li>
+          </ol>
+>>>>>>> MVP
         </div>
+        <h3 class="page-title">Ventas</h3>
+      </div>
     </div>
+<<<<<<< HEAD
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -26,94 +38,132 @@
                         <a class="btn btn-success btn-sm rounded-pill shadow-sm" href="{% url 'crearVenta' %}">
                             <i class="mdi mdi-plus"></i> Agregar venta
                         </a>
+=======
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <a
+              class="btn btn-success btn-sm rounded-pill shadow-sm"
+              href="{% url 'crearVenta' %}"
+            >
+              <i class="mdi mdi-plus"></i> Agregar venta
+            </a>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-centered table-nowrap mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Cliente</th>
+                  <th scope="col">Costo Total</th>
+                  <th scope="col">Método de pago</th>
+                  <th scope="col">Estado de pago</th>
+                  <th scope="col">Estado de envio</th>
+                  <th scope="col">Descuento</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for venta in ventas %}
+                <tr>
+                  <td>
+                    <i class="mdi mdi-calendar me-1"></i>{{ venta.fecha }}
+                  </td>
+                  <td>
+                    <div class="flex-grow-1 ms-2">
+                      {{ venta.cliente.nombre }}
+>>>>>>> MVP
                     </div>
+                  </td>
+                  <td>{{ venta.total }}</td>
+                  <td>
+                    {% if venta.metodo_pago == 'EF' %}
+                    <span class="badge bg-success-lighten text-success"
+                      >Efectivo</span
+                    >
+                    {% elif venta.metodo_pago == 'TR' %}
+                    <span class="badge bg-primary-lighten text-primary"
+                      >Tarjeta</span
+                    >
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if venta.estado_pago == 'CT' %}
+                    <span class="badge bg-success-lighten text-success"
+                      >Completado</span
+                    >
+                    {% elif venta.estado_pago == 'PD' %}
+                    <span class="badge bg-danger-lighten text-danger"
+                      >Pendiente</span
+                    >
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if venta.estado_envio == 'ET' %}
+                    <span class="badge bg-success-lighten text-success"
+                      >Entregado</span
+                    >
+                    {% elif venta.estado_envio == 'EV' %}
+                    <span class="badge bg-warning-lighten text-warning"
+                      >En envio</span
+                    >
+                    {% elif venta.estado_envio == 'PT' %}
+                    <span class="badge bg-danger-lighten text-danger"
+                      >Pendiente</span
+                    >
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if venta.descuento != '' %} Sin descuento {% else %} {{
+                    venta.descuento.nombre }} {% endif %}
+                  </td>
 
-                    <div class="table-responsive">
-                        <table class="table table-centered table-nowrap mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th scope="col">Fecha</th>
-                                    <th scope="col">Cliente</th>
-                                    <th scope="col">Costo Total</th>
-                                    <th scope="col">Método de pago</th>
-                                    <th scope="col">Estado de pago</th>
-                                    <th scope="col">Estado de envio</th>
-                                    <th scope="col">Descuento</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for venta in ventas %}
-                                <tr>
-                                    <td>
-                                        <i class="mdi mdi-calendar me-1"></i>{{ venta.fecha }}
-                                    </td>
-                                    <td>
-                                        <div class="flex-grow-1 ms-2">
-                                            {{ venta.cliente.nombre }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {{ venta.total }}
-                                    </td>
-                                    <td>
-                                        {% if venta.metodo_pago == 'EF' %}
-                                        <span class="badge bg-success-lighten text-success">Efectivo</span>
-                                        {% elif venta.metodo_pago == 'TR' %}
-                                        <span class="badge bg-primary-lighten text-primary">Tarjeta</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if venta.estado_pago == 'CT' %}
-                                        <span class="badge bg-success-lighten text-success">Completado</span>
-                                        {% elif venta.estado_pago == 'PD' %}
-                                        <span class="badge bg-danger-lighten text-danger">Pendiente</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if venta.estado_envio == 'ET' %}
-                                        <span class="badge bg-success-lighten text-success">Entregado</span>
-                                        {% elif venta.estado_envio == 'EV' %}
-                                        <span class="badge bg-warning-lighten text-warning">En envio</span>
-                                        {% elif venta.estado_envio == 'PT' %}
-                                        <span class="badge bg-danger-lighten text-danger">Pendiente</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if venta.descuento == '' %}
-                                            Sin descuento
-                                        {% else %}
-                                            {{ venta.descuento.nombre }}
-                                        {% endif %}
-                                    </td>
-
-                                    <td class="table-action d-flex justify-content-center gap-2">
-                                        <a class="btn btn-bg font-14 btn-success btn-ver d-inline-flex"
-                                            href="{% url 'detalleVenta' venta.venta_id %}">
-                                            <i class="mdi mdi-eye-outline"></i>Ver detalles
-                                        </a>
-                                        <a class="btn btn-bg font-14 btn-info btn-ver d-inline-flex"
-                                            href="{% url 'pdfVenta' venta.venta_id %}">
-                                            PDF
-                                        </a>
-                                        <button type="button" class="btn btn-danger btn-sm btn-eliminar d-inline-flex"
-                                            data-id="{{ venta.venta_id }}">
-                                            <i class="mdi mdi-delete"></i>Eliminar
-                                        </button>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3"></div>
+                  <td class="table-action d-flex justify-content-center gap-2">
+                    <a
+                      class="btn btn-bg font-14 btn-success btn-ver d-inline-flex"
+                      href="{% url 'detalleVenta' venta.venta_id %}"
+                    >
+                      <i class="mdi mdi-eye-outline"></i>Ver detalles
+                    </a>
+                    <a
+                      class="btn btn-bg font-14 btn-info btn-ver d-inline-flex"
+                      href="javascript: void(0);"
+                    >
+                      PDF
+                    </a>
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm btn-eliminar d-inline-flex"
+                      data-id="{{ venta.venta_id }}"
+                    >
+                      <i class="mdi mdi-delete"></i>Eliminar
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
+
+      <div
+        id="toastContainer"
+        class="toast-container position-fixed top-0 end-0 p-3"
+      ></div>
     </div>
+  </div>
 </div>
 
+<<<<<<< HEAD
 <script src="{% static 'js/listas/listas.js' %}"></script>
 <script src="{% static 'js/listas/listaVentas.js' %}"></script>
 {% endblock content %}
+=======
+<script src="{% static 'js/listas/listaVentas.js' %}"></script>
+{% endblock content %}
+>>>>>>> MVP

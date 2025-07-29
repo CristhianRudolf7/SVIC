@@ -61,7 +61,8 @@
                                     </td>
 
                                     <td class="table-action d-flex justify-content-center gap-2">
-                                        <button type="button" class="btn btn-bg font-14 btn-success btn-editar-unidad d-inline-flex" data-id="{{ unidad.unidad_id }}">
+                                        <button type="button" class="btn btn-bg font-14 btn-success btn-editar-unidad d-inline-flex" 
+                                            data-id="{{ unidad.unidad_id }}">
                                             <i class="mdi mdi-square-edit-outline"></i> Editar
                                         </button>
                                         <button type="button" class="btn btn-danger btn-sm btn-eliminar d-inline-flex" 
@@ -73,7 +74,11 @@
                                 </tr>
                                 {% endfor %}
                             </tbody>
+<<<<<<< HEAD
                             <div id="unidades-config"
+=======
+                            <div id="productos-config"
+>>>>>>> MVP
                                 data-metodo-url="{% url 'metodosUnidades' '00000000-0000-0000-0000-000000000000' %}">
                             </div>
                         </table>
@@ -128,11 +133,16 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 
 <script src="{% static 'js/listas/listaUnidad.js' %}"></script>
 <script src="{% static 'js/listas/listas.js' %}"></script>
 <<<<<<< Updated upstream
 =======
 
+=======
+<script src="{% static 'js/listas/listaUnidad.js' %}"></script>
+<script src="{% static 'js/listas/listas.js' %}"></script>
+>>>>>>> MVP
 {% endblock content %}
 >>>>>>> Stashed changes

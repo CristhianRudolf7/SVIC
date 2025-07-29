@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 const configEl = document.getElementById('config-data');
 const obtenerProveedoresURL = configEl.dataset.urlProveedores;
 const obtenerProductosURL = configEl.dataset.urlProductos;
 
+=======
+const urlObtenerProductos = document.getElementById('url-obtener-productos').value;
+const urlObtenerProveedores = document.getElementById('url-obtener-proveedores').value;
+>>>>>>> MVP
 function roundTo(n, digits) {
     if (digits === undefined) {
         digits = 0;
@@ -101,7 +106,11 @@ $(document).ready(function () {
         allowClear: true,
         minimumInputLength: 1,
         ajax: {
+<<<<<<< HEAD
             url: obtenerProveedoresURL,
+=======
+            url: urlObtenerProveedores,
+>>>>>>> MVP
             type: 'POST',
             data: function (params) {
                 return {
@@ -127,7 +136,11 @@ $(document).ready(function () {
         allowClear: true,
         templateResult: template_item_searchbox,
         ajax: {
+<<<<<<< HEAD
             url: obtenerProductosURL,
+=======
+            url: urlObtenerProductos,
+>>>>>>> MVP
             type: 'POST',
             data: function (params) {
                 return {
@@ -158,7 +171,10 @@ $(document).ready(function () {
         sale.venta.productos.splice(tr.row, 1);
         sale.listarProductos();
         alert(`El producto ${producto_nombre} ha sido eliminado de la compra`);
+<<<<<<< HEAD
                 
+=======
+>>>>>>> MVP
     }).on('change keyup', 'input[name="quantity"]', function () {
         var quantity = parseInt($(this).val());
         var tr = tblItems.cell($(this).closest('td, li')).index();
@@ -169,9 +185,15 @@ $(document).ready(function () {
 
     $('.deleteAll').on('click', function () {
         if (sale.venta.productos.length === 0) return false;
+<<<<<<< HEAD
             sale.venta.productos = [];
             sale.listarProductos();
             alert("Todos los productos han sido eliminados de la compra");
+=======
+        sale.venta.productos = [];
+        sale.listarProductos();
+        alert('Todos los productos han sido eliminados de la compra');
+>>>>>>> MVP
     });
 
     tblItems = $('#table_items').DataTable({
@@ -241,10 +263,17 @@ $(document).ready(function () {
                 sale.venta.productos = [];
                 sale.listarProductos();
                 $('form#form_sale').trigger('reset');
+<<<<<<< HEAD
                 alert("La compra se ha realizado exitosamente");
             },
             error: function (xhr) {
                 alert("Error al realizar la compra: " + xhr.responseJSON.message);
+=======
+                alert('Compra realizada exitosamente');
+            },
+            error: function (xhr) {
+                alert(xhr.responseJSON.message || 'Ocurrio un error en la compra');
+>>>>>>> MVP
             }
         });
     });

@@ -7,13 +7,6 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
-                <div class="page-title-right">
-                    <form class="d-flex">
-                        <a href="javascript: void(0);" class="btn btn-primary ms-2">
-                            <i class="mdi mdi-autorenew"></i>
-                        </a>
-                    </form>
-                </div>
                 <h4 class="page-title">Dashboard</h4>
             </div>
         </div>
@@ -25,16 +18,16 @@
                 <div class="card-body">
                     <i class="mdi mdi-cash-register float-end"></i>
                     <h6 class="text-uppercase mt-0">Cantidad de ventas</h6>
-                    <h2 class="my-2">{{ cantidad_ventas }}</h2>
+                    <h2 class="my-2">{{ ventas.cantidad }}</h2>
                     <p class="mb-0 text-muted">
-                        {% if porcentaje_ventas.signo == 'N' %}
-                        <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span> 
-                        {{ porcentaje_ventas.porcentaje }}%</span>
-                        {% else %}
-                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 
-                        {{ porcentaje_ventas.porcentaje }}%</span>
-                        {% endif %}
-                        <span class="text-nowrap">En los últimos 30 días</span>
+                    {% if ventas.signo == 'N' %}
+                        <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span>
+                            {{ ventas.porcentaje }}%</span>
+                    {% else %}
+                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span>
+                            {{ ventas.porcentaje }}%</span>
+                    {% endif %}
+                    <span class="text-nowrap">En los últimos 30 días</span>
                     </p>
                 </div>
             </div>
@@ -43,21 +36,20 @@
                 <div class="card-body">
                     <i class="mdi mdi-account-group float-end"></i>
                     <h6 class="text-uppercase mt-0">Cantidad de empleados</h6>
-                    <h2 class="my-2">{{ cantidad_empleados }}</h2>
+                    <h2 class="my-2">{{ empleados.cantidad }}</h2>
                     <p class="mb-0 text-muted">
-                        {% if porcentaje_empleados.signo == 'N' %}
-                        <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span> 
-                        {{ porcentaje_empleados.porcentaje }}%</span>
-                        {% else %}
-                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span> 
-                        {{ porcentaje_empleados.porcentaje }}%</span>
-                        {% endif %}
-                        <span class="text-nowrap">En los últimos 30 días</span>
+                    {% if empleados.signo == 'N' %}
+                        <span class="text-danger me-2"><span class="mdi mdi-arrow-down-bold"></span>
+                            {{ empleados.porcentaje }}%</span>
+                    {% else %}
+                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span>
+                            {{ empleados.porcentaje }}%</span>
+                    {% endif %}
+                    <span class="text-nowrap">En los últimos 30 días</span>
                     </p>
                 </div>
             </div>
         </div>
-
         <div class="col-xl-9 col-lg-8">
             <div class="card card-h-100">
                 <div class="card-body">
@@ -70,13 +62,150 @@
         </div>
     </div>
 
-</div>
+    <div class="row">
+        <div class="col-xl-4 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="header-title">Total de compras</h4>
+                    </div>
+                    {% if compras.grafico %}
+                        <div id="totalCompras" class="apex-charts mb-4 mt-3" data-colors="#727cf5,#0acf97,#fa5c7c,#ffbc00">
+                        </div>
+                    {% endif %}
 
+                    <div class="chart-widget-list">
+                        <p>
+                            <i class="mdi mdi-square text-success"></i> Entregado
+                            <span class="float-end">{{ compras.cantidad.2 }}</span>
+                        </p>
+                        <p class="mb-0">
+                            <i class="mdi mdi-square text-warning"></i> En envio
+                            <span class="float-end">{{ compras.cantidad.1 }}</span>
+                        </p>
+                        <p>
+                            <i class="mdi mdi-square text-danger"></i> Pendiente
+                            <span class="float-end">{{ compras.cantidad.0 }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8 col-lg-12">
+            <div class="card card-h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h4 class="header-title">Productos más vendidos</h4>
+                    </div>
+                    <div dir="ltr">
+                        <div id="productosMasvendidos" class="apex-charts" data-colors="#727cf5,#e3eaef"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="header-title">Ventas por empleado</h4>
+                    </div>
+
+                    <div id="ventasEmpleado" class="apex-charts mt-2" data-colors="#0acf97"></div>
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm mb-0 font-13">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre del empleado</th>
+                                    <th>Cantidad</th>
+                                    <th>Ventas (S/.)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for empleado in ventas_empleado %}
+                                    <tr>
+                                        <th>{{ forloop.counter }}</th>
+                                        <th>{{ empleado.nombre }}</th>
+                                        <th>{{ empleado.cantidad }}</th>
+                                        <th>{{ empleado.ventas }}</th>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div>
+        <div class="col-xl-4 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-1 mb-3">Porcentaje de productos por categorias</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-centered mb-0 font-14">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Categoria</th>
+                                    <th>Cantidad de productos</th>
+                                    <th>Porcentaje del total de stock</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for categoria in categorias_productos %}
+                                    <tr>
+                                        <td>{{ categoria.nombre }}</td>
+                                        <td>{{ categoria.cantidad_productos }}</td>
+                                        <td>
+                                            <div class="progress custom-progress">
+                                                <div class="progress-bar bg-info {{ categoria.progress_class }}" role="progressbar"></div>
+                                                <span class="progress-label">{{ categoria.stock_porcentaje }}%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-1 mb-3">Productos con menos stock</h4>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-centered mb-0 font-14">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th class="col-menor-stock">Stock</th>
+                                    <th class="col-menor-stock">Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for menor in menor_stock %}
+                                    <tr>
+                                        <td>{{ menor.nombre }}</td>
+                                        <td>{{ menor.stock }}</td>
+                                        <td>{{ menor.precio }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
 {% endblock content %}
 {% block javascripts %}
-<script>
-    window.ventasDia = {{ ventas_dia|safe }};
-</script>
 <script src="{% static 'js/graficos.js' %}"></script>
 <script src="{% static 'js/dashboard.js' %}"></script>
+<script src="{% static 'js/SVIC.js' %}"></script>
+
 {% endblock %}

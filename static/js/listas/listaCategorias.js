@@ -155,6 +155,10 @@ function eliminarUnidad(btnEliminar) {
     const categoriaId = btnEliminar.getAttribute('data-id');
     const fila = btnEliminar.closest('tr');
 
+<<<<<<< HEAD
+=======
+    console.log("ID a eliminar:", categoriaId);  // ← Agrega esto
+>>>>>>> MVP
     const configDiv = document.getElementById('categorias-config');
     if (!configDiv) {
         console.error('No se encontró el elemento productos-config');

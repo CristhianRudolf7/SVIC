@@ -1,70 +1,84 @@
-{% extends "usuarios/landing.html" %}
-{% load crispy_forms_tags %}{% load static %}
-
-{% block content %}
-<div class="container mt-5 content-space-3 content-space-t-lg-4 content-space-b-lg-3">
-    <div class=" flex-grow-1 mx-auto" style="max-width: 28rem;">
-        <div class="card-header pt-2 pb-1 text-center bg-primary rounded-top">
-            <h4 class="text-white text-center pb-0 fw-bold fs-3">Iniciar sesión</h4>
-        </div>
-
-        <div class="text-center mb-3 mb-md-4">
-            <p class="text-muted mb-5 fs-5">Ingresa tu dni y contraseña para acceder a la plataforma.</p>
-        </div>
-
-        <form class="login-form" method="POST">
-            {% csrf_token %}
-            <div class="mb-4">
-                <label for="dniInput" class="form-label">DNI</label>
-                <input class="form-control" id="dniInput" name="username" required=""
-                    placeholder="Ingresa tu número de DNI">
-            </div>
-
-            <div class="mb-4">
-                <a href="#" class="text-muted float-end"><small>¿Olvidaste tu contraseña?</small></a>
-                <label for="password" class="form-label">Contraseña</label>
-                <div class="input-group input-group-merge">
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Ingresa tu contraseña">
-                    <div class="input-group-text" data-password="false">
-                        <span class="password-eye"></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-3 mb-0 text-center">
-                <button class="btn btn-primary" type="submit"> Iniciar sesión </button>
-            </div>
-
-            <div class="text-center mt-4">
-                <p class="text-muted font-16">Inicia sesión con:</p>
-                <ul class="social-list list-inline mt-3">
-                        rel="stylesheet">
-                    <li class="list-inline-item">
-                        <a href="#" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"
-                                style="font-size: 30px;"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"
-                                style="font-size: 30px;"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" class="social-list-item border-info text-info"><i class="mdi mdi-twitter"
-                                style="font-size: 30px;"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"
-                                style="font-size: 30px;"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </form>
-
-        <div class="row mt-3">
-            <div class="col-12 text-center">
-                <p class="text-muted">¿Tu EMPRESA no esta registrada? Accede a nuestra prueba gratuita. <a href="{% url 'crearEmpresa' %}" class="text-muted ms-1"><b>Crear cuenta</b></a>
-                </p>
-            </div>
-        </div>
+{% extends "usuarios/landing.html" %} {% load crispy_forms_tags %}{% load static
+%} {% block content %}
+<section
+  class="container d-flex align-items-center justify-content-center min-vh-100"
+>
+  <div class="card shadow-lg" style="max-width: 28rem; width: 100%">
+    <div class="card-header text-center bg-primary rounded-top">
+      <h4 class="text-white fw-bold fs-3 mb-0">Iniciar sesión</h4>
     </div>
-</div>
+
+    <div class="card-body px-4">
+      <p class="text-muted text-center fs-5">
+        Ingresa tu DNI y contraseña para acceder a la plataforma.
+      </p>
+
+      <form class="login-form" method="POST">
+        {% csrf_token %}
+        <div class="mb-4">
+          <label for="dniInput" class="form-label">DNI</label>
+          <input
+            class="form-control"
+            id="dniInput"
+            name="username"
+            required=""
+            placeholder="Ingresa tu número de DNI"
+          />
+        </div>
+
+        <div class="mb-4">
+          <div class="d-flex justify-content-between">
+            <label for="password" class="form-label">Contraseña</label>
+            <a href="#" class="text-muted"
+              ><small>¿Olvidaste tu contraseña?</small></a
+            >
+          </div>
+          <div class="input-group input-group-merge">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              placeholder="Ingresa tu contraseña"
+            />
+            <span class="input-group-text" data-password="false">
+              <i class="mdi mdi-eye-outline"></i>
+            </span>
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button class="btn btn-primary" type="submit">Iniciar sesión</button>
+        </div>
+
+        <div class="text-center mt-4">
+          <p class="text-muted font-16">Inicia sesión con:</p>
+          <div class="d-flex justify-content-center gap-3">
+            <a href="#" class="text-primary"
+              ><i class="mdi mdi-facebook fs-3"></i
+            ></a>
+            <a href="#" class="text-danger"
+              ><i class="mdi mdi-google fs-3"></i
+            ></a>
+            <a href="#" class="text-info"
+              ><i class="mdi mdi-twitter fs-3"></i
+            ></a>
+            <a href="#" class="text-secondary"
+              ><i class="mdi mdi-github fs-3"></i
+            ></a>
+          </div>
+        </div>
+      </form>
+
+      <div class="text-center mt-4">
+        <p class="text-muted">
+          ¿Tu EMPRESA no está registrada? Accede a nuestra prueba gratuita.
+          <a href="{% url 'crearEmpresa' %}" class="text-primary fw-bold"
+            >Crear cuenta</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock content %}

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> MVP
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {

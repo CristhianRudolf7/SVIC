@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> MVP
 // Función para cargar datos de unidad en el modal
 function cargarDatosUnidad(unidadId) {
     fetch(`/inventario/unidades/${unidadId}/`, {
@@ -12,11 +16,23 @@ function cargarDatosUnidad(unidadId) {
     })
     .then(data => {
         if (data.success) {
+<<<<<<< HEAD
             document.getElementById('unidad_id').value = data.unidad.unidad_id;
             document.getElementById('nombreUnidad').value = data.unidad.nombre;
             document.getElementById('simboloUnidad').value = data.unidad.simbolo || '';
             document.getElementById('modalTitle').textContent = 'Editar unidad de medida';
             
+=======
+            // Actualizar campos del formulario
+            document.getElementById('unidad_id').value = data.unidad.unidad_id;
+            document.getElementById('nombreUnidad').value = data.unidad.nombre;
+            document.getElementById('simboloUnidad').value = data.unidad.simbolo || '';
+            
+            // Actualizar título del modal
+            document.getElementById('modalTitle').textContent = 'Editar unidad de medida';
+            
+            // Mostrar modal
+>>>>>>> MVP
             const ventana = new bootstrap.Modal(document.getElementById("ventanaUnidad"));
             ventana.show();
         } else {
@@ -66,7 +82,12 @@ function agregarUnidadATabla(unidad) {
                 <i class="mdi mdi-square-edit-outline"></i> Editar
             </button>
             <button type="button" class="btn btn-danger btn-sm btn-eliminar d-inline-flex" 
+<<<<<<< HEAD
                 data-id="${DOMPurify.sanitize(unidad.id)}">
+=======
+                data-id="${DOMPurify.sanitize(unidad.id)}"
+                data-metodo-url="{% url 'metodosUnidades' '00000000-0000-0000-0000-000000000000' %}">
+>>>>>>> MVP
                 <i class="mdi mdi-delete"></i> Eliminar
             </button>
         </td>
@@ -95,11 +116,17 @@ function guardarUnidad(event) {
     const unidadId = formData.get('unidad_id');
     const data = {};
     formData.forEach((value, key) => data[key] = value);
+<<<<<<< HEAD
 
     const urlBaseMetodos = form.dataset.metodoUrl;
     const urlLista = form.dataset.listaUrl;
 
     const method = unidadId ? 'PUT' : 'POST';
+=======
+    const method = unidadId ? 'PUT' : 'POST';
+    const urlBaseMetodos = form.dataset.metodoUrl;
+    const urlLista = form.dataset.listaUrl;
+>>>>>>> MVP
     const url = unidadId 
         ? urlBaseMetodos.replace('00000000-0000-0000-0000-000000000000', unidadId)
         : urlLista;
@@ -151,13 +178,21 @@ function guardarUnidad(event) {
 function eliminarUnidad(btnEliminar) {
     const unidadId = btnEliminar.getAttribute('data-id');
     const fila = btnEliminar.closest('tr');
+<<<<<<< HEAD
 
     const configDiv = document.getElementById('unidades-config');
+=======
+    const configDiv = document.getElementById('productos-config');
+>>>>>>> MVP
     if (!configDiv) {
         console.error('No se encontró el elemento productos-config');
         return;
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> MVP
     const urlBase = configDiv.dataset.metodoUrl;
     const url = urlBase.replace('00000000-0000-0000-0000-000000000000', unidadId);
     

@@ -5,7 +5,10 @@
 
 {% block content %}
 <link href="{% static 'css/ventas_cdn.css' %}" rel="stylesheet" />
+<<<<<<< HEAD
 
+=======
+>>>>>>> MVP
 <div class="container fluid">
     <div class="row">
         <div class="col-12">
@@ -22,6 +25,7 @@
     </div>
 
     <form id="form_sale" action="{% url 'crearVenta' %}" class="saleForm" method="post">
+        {% csrf_token %}
         <div class="row">
             <div class="col-lg-8 mb-4">
                 <div class="card border-light shadow-sm">
@@ -112,17 +116,29 @@
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         <div id="config-data"
             data-url-clientes="{% url 'obtenerClientes' %}"
             data-url-productos="{% url 'obtenerProductos' %}">
         </div>
 
+=======
+        <input type="hidden" id="url-obtener-productos" value="{% url 'obtenerProductos' %}">
+        <input type="hidden" id="url-obtener-clientes" value="{% url 'obtenerClientes' %}">
+>>>>>>> MVP
     </form>
 </div>
 {% endblock content %}
 
 {% block javascripts %}
+<<<<<<< HEAD
 <script src="{% static 'js/jquery.dataTables.min.js' %}" defer></script>
 <script src="{% static 'js/ventas_cdn.js' %}"></script>
 <script src="{% static 'js/ventas.js' %}"></script>
+=======
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/ventas_cdn.js' %}"></script>
+<script src="{% static 'js/ventas.js' %}"></script>
+
+>>>>>>> MVP
 {% endblock javascripts %}

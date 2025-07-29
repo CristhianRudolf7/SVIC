@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 input[type="password"],
 #id_password1,
 #id_password2 {
+=======
+  input[type="password"],
+  #id_password1,
+  #id_password2 {
+>>>>>>> MVP
     border: 1px solid #8a8989;
     border-radius: 0.25rem;
     font-size: 1rem;
     color: #333;
     width: 80%;
+<<<<<<< HEAD
 }
+=======
+  }
+>>>>>>> MVP

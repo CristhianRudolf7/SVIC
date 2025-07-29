@@ -53,7 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener('click', function (event) {
         const btnEliminar = event.target.closest('.btn-eliminar');
         if (btnEliminar) {
+<<<<<<< HEAD
             eliminarVenta(btnEliminar);
+=======
+            eliminarCompra(btnEliminar);
+>>>>>>> MVP
         }
     });
 });

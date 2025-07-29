@@ -1,179 +1,152 @@
-{% extends "usuarios/landing.html" %}
-{% load static %}
-
-{% block content %}
+{% extends "usuarios/landing.html" %} {% load static %} {% block content %}
 <section class="container">
-    <div class="row">
-        <div class="col-md-8 mx-auto pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
-            <div class="ps-md-3 pb-md-2">
-                <h1 class="h2 pt-xl-1 mb-3 pb-2 pb-lg-3 text-center">Realizar pago</h1>
-                <h2 class="h5 text-primary mb-4 text-center">Elija su plan y método de pago</h2>
+  <div class="row">
+    <div class="col-md-6 mx-auto pb-5 mb-2 mb-lg-4 pt-md-5 mt-n3 mt-md-0">
+      <div class="ps-md-3 pb-md-2">
+        <h1 class="h2 pt-xl-1 mb-3 pb-2 pb-lg-3 text-center">Realizar pago</h1>
+        <h2 class="h5 text-primary mb-4 text-center">
+          Elija su plan y método de pago
+        </h2>
 
-                <div
-                    class="card d-sm-flex flex-sm-row align-items-sm-center justify-content-between border-0 shadow-sm p-3 p-md-4 mb-4">
-                    <div class="d-flex align-items-center pe-sm-3">
-                        <img src="{% static 'imagenes/landing/basic.png' %}" width="84" alt="Mastercard">
-                        <div class="ps-3 ps-sm-4">
-                            <h6 class="mb-2">Plan básico</h6>
-                            <div class="fs-sm">S/50.00 / mensualmente</div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-end pt-3 pt-sm-0">
-                        <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal"
-                            data-bs-target="#paymentModal">
-                            <i class="bx bx-credit-card fs-xl me-lg-1 me-xl-2"></i>
-                            Adquirir </a>
-                    </div>
-                </div>
-
-                <div
-                    class="card d-sm-flex flex-sm-row align-items-sm-center justify-content-between border-0 shadow-sm p-3 p-md-4 mb-4">
-                    <div class="d-flex align-items-center pe-sm-3">
-                        <img src="{% static 'imagenes/landing/standard.png' %}" width="84" alt="Visa">
-                        <div class="ps-3 ps-sm-4">
-                            <h6 class="mb-2">Plan estándar</h6>
-                            <div class="fs-sm">S/100.00 / mensualmente</div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-end pt-3 pt-sm-0">
-                        <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal"
-                            data-bs-target="#paymentModal">
-                            <i class="bx bx-credit-card fs-xl me-lg-1 me-xl-2"></i>
-                            Adquirir </a>
-                    </div>
-                </div>
-
-                <div
-                    class="card d-sm-flex flex-sm-row align-items-sm-center justify-content-between border-0 shadow-sm p-3 p-md-4 mb-4">
-                    <div class="d-flex align-items-center pe-sm-3">
-                        <img src="{% static 'imagenes/landing/ultimate.png' %}" width="84" alt="Amex">
-                        <div class="ps-3 ps-sm-4">
-                            <h6 class="mb-2">Plan premium</h6>
-                            <div class="fs-sm">S/150.00 / mensualmente</div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-end pt-3 pt-sm-0">
-                        <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal"
-                            data-bs-target="#paymentModal">
-                            <i class="bx bx-credit-card fs-xl me-lg-1 me-xl-2"></i>
-                            Adquirir </a>
-                    </div>
-                </div>
-
-                <div class="py-2">
-                    <button type="button" class="btn btn-primary ps-4 mx-auto d-block">
-                        <i class="bx bx-user fs-xl me-2"></i>
-                        Contacta a un asesor
-                    </button>
-                </div>
+        <!-- PLAN BÁSICO -->
+        <div
+          class="card d-sm-flex flex-sm-row align-items-sm-center justify-content-between border-0 shadow-sm p-3 p-md-4 mb-4">
+          <div class="d-flex align-items-center pe-sm-3">
+            <img src="{% static 'imagenes/landing/basic.png' %}" width="84" alt="Mastercard" />
+            <div class="ps-3 ps-sm-4">
+              <h6 class="mb-2">Plan básico</h6>
+              <div class="fs-sm">S/50.00 / mensualmente</div>
             </div>
+          </div>
+          <div class="d-flex flex-wrap gap-3 justify-content-end pt-3 pt-sm-0">
+            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalYapeBasico"
+              type="button">
+              <img src="{% static 'imagenes/pago/yape.png' %}" width="32" class="me-2" />
+            </button>
+          </div>
         </div>
+        <!-- PLAN PREMIUM -->
+        <div
+          class="card d-sm-flex flex-sm-row align-items-sm-center justify-content-between border-0 shadow-sm p-3 p-md-4 mb-4">
+          <div class="d-flex align-items-center pe-sm-3">
+            <img src="{% static 'imagenes/landing/ultimate.png' %}" width="84" alt="Amex" />
+            <div class="ps-3 ps-sm-4">
+              <h6 class="mb-2">Plan premium</h6>
+              <div class="fs-sm">S/80.00 / mensualmente</div>
+            </div>
+          </div>
+          <div class="d-flex flex-wrap gap-3 justify-content-end pt-3 pt-sm-0">
+            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalYapePremium"
+              type="button">
+              <img src="{% static 'imagenes/pago/yape.png' %}" width="32" class="me-2" />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 
-<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header align-items-center d-flex">
-                <h5 class="modal-title" id="paymentModalLabel">
-                    Realizar pago
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <form class="row mb-4">
-                        <div class="mb-3 col-12 col-md-12 mb-4">
-                            <h5 class="mb-3">Tarjeta de credito o débito</h5>
-                            <div class="d-inline-flex">
-                                <div class="form-check me-2">
-                                    <input type="radio" id="paymentRadioOne" name="paymentRadioOne"
-                                        class="form-check-input" />
-                                    <label class="form-check-label" for="paymentRadioOne"><img
-                                            src="{% static 'imagenes/pago/american-express.svg' %}" alt="" /></label>
-                                </div>
-                                <div class="form-check me-2">
-                                    <input type="radio" id="paymentRadioTwo" name="paymentRadioOne"
-                                        class="form-check-input" />
-                                    <label class="form-check-label" for="paymentRadioTwo"><img
-                                            src="{% static 'imagenes/pago/mastercard.svg' %}" alt="" /></label>
-                                </div>
+<!-- MODALES BÁSICO -->
+<div class="modal fade" id="modalYapeBasico" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Pago con Yape — Plan básico</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data" id="form-pago" action="{% url 'crear_pago' %}">
+          {% csrf_token %}
+          <div class="alert alert-info d-flex align-items-center mb-3 mt-2" role="alert">
+            <img src="{% static 'imagenes/pago/yape.png' %}" class="me-2 yape-img" alt="Logo Yape" />
+            <strong>Paga fácilmente con Yape.</strong>
+          </div>
 
-                                <div class="form-check">
-                                    <input type="radio" id="paymentRadioFour" name="paymentRadioOne"
-                                        class="form-check-input" />
-                                    <label class="form-check-label" for="paymentRadioFour"><img
-                                            src="{% static 'imagenes/pago/visa.svg' %}" alt="" /></label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3 col-12 col-md-4">
-                            <label for="nameoncard" class="form-label">Número de documento</label>
-                            <input id="nameoncard" type="text" class="form-control" name="nameoncard"
-                                placeholder="Número de DNI" />
-                        </div>
-                        <!-- Month -->
-                        <div class="mb-3 col-12 col-md-4">
-                            <label class="form-label">Mes</label>
-                            <select class="form-select">
-                                <option value="">Mes</option>
-                                <option value="Jan">Enero</option>
-                                <option value="Feb">Febrero</option>
-                                <option value="Mar">Marzo</option>
-                                <option value="Apr">Abril</option>
-                                <option value="May">Mayo</option>
-                                <option value="June">Junio</option>
-                                <option value="July">Julio</option>
-                                <option value="Aug">Agosto</option>
-                                <option value="Sep">Setiembre</option>
-                                <option value="Oct">Octubre</option>
-                                <option value="Nov">Noviembre</option>
-                                <option value="Dec">Diciembre</option>
-                            </select>
-                        </div>
-                        <!-- Year -->
-                        <div class="mb-3 col-12 col-md-4">
-                            <label class="form-label">Año</label>
-                            <select class="form-select">
-                                <option value="">Año</option>
-                                <option value="2025">2025</option>
-                                <option value="2026">2026</option>
-                                <option value="2027">2027</option>
-                                <option value="2028">2028</option>
-                                <option value="2029">2029</option>
-                            </select>
-                        </div>
-                        <!-- Card number -->
-                        <div class="mb-3 col-md-8 col-12">
-                            <label for="cc-mask" class="form-label">Número de tarjeta</label>
-                            <input type="text" class="form-control" id="cc-mask" placeholder="xxxx-xxxx-xxxx-xxxx" />
-                        </div>
-                        <!-- CVV -->
-                        <div class="mb-3 col-md-4 col-12">
-                            <div class="mb-3">
-                                <label for="cvv" class="form-label">CVV
-                                    <i class="feather-icon icon-help-circle ms-1" data-bs-toggle="tooltip"
-                                        data-placement="top"
-                                        title="A 3 - digit number, typically printed on the back of a card."></i></label>
-                                <input type="password" class="form-control" id="cvv" placeholder="xxx" />
-                            </div>
-                        </div>
-                        <!-- Button -->
-                        <div class="col-md-6 col-12">
-                            <a class="btn btn-primary" href="{% url 'crearEmpresa' %}">
-                                Pagar
-                            </a>
-                            <button class="btn btn-outline-gray-400 text-muted" type="button" data-bs-dismiss="modal">
-                                Cerrar
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+          <div class="mb-3">
+            <p class="mb-2 fw-bold">Realiza el pago a:</p>
+            <ul class="list-unstyled mb-2">
+              <li>
+                <span class="fw-bold">Número Yape:</span>
+                <span class="text-primary">923 356 855 (Egoavil Huaman Cristhian Rudolf)</span>
+              </li>
+            </ul>
+            <p>Adjunta la captura del pago (voucher) para continuar.</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Ingresa tu número de celular:</label>
+            <input type="text" class="form-control" name="numero_celular" required />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Adjunta tu captura de Yape:</label>
+            <input type="file" class="form-control" name="comprobante_pago" accept="image/*" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary">Pagar</button>
+          <button type="button" class="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">Cerrar</button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
+
+<!-- MODALES PREMIUM -->
+<div class="modal fade" id="modalYapePremium" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Pago con Yape — Plan premium</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" enctype="multipart/form-data" id="form-pago" action="{% url 'crear_pago' %}">
+          {% csrf_token %}
+          <div class="alert alert-info d-flex align-items-center mb-3 mt-2" role="alert">
+            <img src="{% static 'imagenes/pago/yape.png' %}" style="width: 32px" class="me-2" />
+            <strong>Paga fácilmente con Yape.</strong>
+          </div>
+          <div class="mb-3">
+            <p class="mb-2 fw-bold">Realiza el pago a:</p>
+            <ul class="list-unstyled mb-2">
+              <li>
+                <span class="fw-bold">Número Yape:</span>
+                <span class="text-primary">923 356 855</span>
+              </li>
+            </ul>
+            <p>Adjunta la captura del pago (voucher) para continuar.</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Adjunta tu captura de Yape:</label>
+            <input type="file" class="form-control" accept="image/*" />
+          </div>
+          <a href="{% url 'crearEmpresa' %}" class="btn btn-primary">Pagar</a>
+          <button type="button" class="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">
+            Cerrar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if pago_exitoso %}
+  <script src="{% static 'js/sweetalert.js' %}"></script>
+  <script>
+    Swal.fire({
+      icon: 'success',
+      title: '¡Pago exitoso!',
+      text: 'Gracias por confiar en nosotros, nos comunicaremos contigo en menos de 5 minutos.',
+      confirmButtonText: 'Aceptar',
+      timer: 10000,
+      timerProgressBar: true,
+      didClose: () => {
+        window.location.href = "{% url 'home' %}";
+      }
+    });
+  </script>
+{% endif %}
+
 
 {% endblock content %}

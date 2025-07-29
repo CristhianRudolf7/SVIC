@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 const configEl = document.getElementById('config-data');
 const obtenerClientesURL = configEl.dataset.urlClientes;
 const obtenerProductosURL = configEl.dataset.urlProductos;
 
+=======
+const urlObtenerProductos = document.getElementById('url-obtener-productos').value;
+const urlObtenerClientes = document.getElementById('url-obtener-clientes').value;
+>>>>>>> MVP
 function roundTo(n, digits) {
     if (digits === undefined) {
         digits = 0;
@@ -104,7 +109,11 @@ $(document).ready(function () {
         allowClear: true,
         minimumInputLength: 1,
         ajax: {
+<<<<<<< HEAD
             url: obtenerClientesURL,
+=======
+            url: urlObtenerClientes,
+>>>>>>> MVP
             type: 'POST',
             data: function (params) {
                 return {
@@ -130,7 +139,11 @@ $(document).ready(function () {
         allowClear: true,
         templateResult: template_item_searchbox,
         ajax: {
+<<<<<<< HEAD
             url: obtenerProductosURL,
+=======
+            url: urlObtenerProductos,
+>>>>>>> MVP
             type: 'POST',
             data: function (params) {
                 return {
@@ -173,9 +186,15 @@ $(document).ready(function () {
 
     $('.deleteAll').on('click', function () {
         if (sale.venta.productos.length === 0) return false;
+<<<<<<< HEAD
             sale.venta.productos = [];
             sale.listarProductos();
             alert("Todos los productos han sido eliminados de la venta");
+=======
+        sale.venta.productos = [];
+        sale.listarProductos();
+        alert('Todos los productos han sido eliminados de la venta');
+>>>>>>> MVP
     });
 
     tblItems = $('#table_items').DataTable({
@@ -247,10 +266,17 @@ $(document).ready(function () {
                 sale.venta.productos = [];
                 sale.listarProductos();
                 $('form#form_sale').trigger('reset');
+<<<<<<< HEAD
                 alert("La venta se completó exitosamente");
             },
             error: function (xhr) {
                 alert("Error al realizar la venta: " + xhr.responseJSON.message);
+=======
+                alert('Venta procesada exitosamente');
+            },
+            error: function (xhr) {
+                alert('Error al procesar la venta: ' + xhr.responseText);
+>>>>>>> MVP
             }
         });
     });
