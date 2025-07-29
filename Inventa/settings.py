@@ -1,11 +1,7 @@
 from pathlib import Path
 import os
-import environ
 
-env = environ.Env()
-environ.Env.read_env()
-
-SECRET_KEY = env("SECRET_KEY", default="defulta3efae,dgwertw5ert{ññ{ñm}}")
+SECRET_KEY = "django-insecure-2j8$rs9fa+%$#hz1oq&v9akvx=^!(vvyx_lw2s$%r1m-9e8c0$cree"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -65,11 +61,11 @@ WSGI_APPLICATION = "Inventa.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
+        'NAME': "inventa",
+        'USER': "usuario",
+        'PASSWORD': "clave_creh5724",
+        'HOST': "localhost",
+        'PORT': "5432",
     }
 }
 
