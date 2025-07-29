@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import dj_database_url
 
 SECRET_KEY = "django-insecure-2j8$rs9fa+%$#hz1oq&v9akvx=^!(vvyx_lw2s$%r1m-9e8c0$cree"
 
@@ -59,14 +60,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "Inventa.wsgi.application"
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "inventa",
-        'USER': "usuario",
-        'PASSWORD': "clave_creh5724",
-        'HOST': "localhost",
-        'PORT': "5432",
-    }
+    'default': dj_database_url.config(conn_max_age=600)
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
