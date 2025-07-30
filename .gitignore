@@ -1,6 +1,6 @@
 __pycache__/
 *.pyc
 db.sqlite3
-<<<<<<< HEAD
-=======
->>>>>>> MVP
+env/
+venv/
+.venv/
