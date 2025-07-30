@@ -59,12 +59,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "Inventa.wsgi.application"
 
+# Construye DATABASE_URL dinámicamente
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+# Usa dj-database-url para parsearla
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': dj_database_url.config(default=DATABASE_URL)
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
